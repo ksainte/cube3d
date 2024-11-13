@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksainte <ksainte@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:56:56 by ksainte           #+#    #+#             */
-/*   Updated: 2024/06/03 16:18:47 by ksainte          ###   ########.fr       */
+/*   Updated: 2024/11/13 14:33:51 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
+# include "./get_next_line.h"
+
 
 typedef struct s_list
 {

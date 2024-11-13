@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:37:29 by ksainte           #+#    #+#             */
-/*   Updated: 2024/11/13 12:29:20 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/13 15:07:30 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <errno.h>
 # include <fcntl.h>
+#include <string.h>
 
 
 typedef struct s_map
@@ -26,6 +27,7 @@ typedef struct s_map
     int fd;
     char *line;
     int row;
+    char *path;
     
     
 } t_map;
