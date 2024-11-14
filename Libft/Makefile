@@ -6,12 +6,12 @@
 #    By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/07 11:24:49 by ksainte           #+#    #+#              #
-#    Updated: 2024/11/12 14:10:00 by ks19             ###   ########.fr        #
+#    Updated: 2024/11/14 11:43:32 by ks19             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-GCC = gcc -c -Wall -Wextra -Werror
+GCC = gcc -c -Wall -Wextra -Werror -g
 
 SRCS =	ft_strlcat.c ft_isalpha.c ft_isdigit.c ft_strncmp.c ft_isalnum.c \
 		ft_memset.c ft_bzero.c ft_memmove.c ft_memcpy.c ft_strlen.c ft_strlcpy.c \

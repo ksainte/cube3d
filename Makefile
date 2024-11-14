@@ -6,11 +6,11 @@
 #    By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 13:51:16 by ks19              #+#    #+#              #
-#    Updated: 2024/11/13 15:58:10 by ks19             ###   ########.fr        #
+#    Updated: 2024/11/14 11:39:37 by ks19             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = gcc -g
 CFLAGS = -Wall -Wextra -Werror
 SRCS = src/main.c
 LIBFT_PATH = Libft

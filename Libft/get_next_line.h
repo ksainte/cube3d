@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:47:02 by ksainte           #+#    #+#             */
-/*   Updated: 2024/11/12 15:03:38 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/14 12:20:38 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "./libft.h"
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 32
 # endif
 
 char	*get_next_line(int fd);

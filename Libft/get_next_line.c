@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:46:50 by ksainte           #+#    #+#             */
-/*   Updated: 2024/11/12 14:21:13 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/14 12:22:12 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ char	*ft_read_str(int fd, char *buff, char *test)
 	int		nb_bytes_to_read;
 	char	*first_line;
 	char	*str;
+	char	*tmp;
 
 	nb_bytes_to_read = -1;
 	while (!ft_n_present(buff, '\n') && nb_bytes_to_read != 0)
@@ -70,11 +71,15 @@ char	*ft_read_str(int fd, char *buff, char *test)
 		{
 			ft_bzero(buff, BUFFER_SIZE);
 			free(test);
-			return (0);
+			return (NULL);
 		}
 		buff[nb_bytes_to_read] = '\0';
 		if (nb_bytes_to_read != 0)
-			test = ft_strjoin(test, buff);
+		{
+			tmp = test;
+			test = ft_strjoin(tmp, buff);
+			free(tmp);
+		}
 	}
 	str = "salut";
 	first_line = get_str(test, buff, str);
@@ -87,6 +92,7 @@ char	*get_next_line(int fd)
 	static char	buff[BUFFER_SIZE + 1];
 	char		*line;
 	char		*test;
+	char		*tmp;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
@@ -95,7 +101,11 @@ char	*get_next_line(int fd)
 		return (NULL);
 	*test = 0;
 	if (*buff != 0)
-		test = ft_strjoin(test, buff);
+	{
+		tmp = test;
+		test = ft_strjoin(tmp, buff);
+		free(tmp);
+	}
 	line = ft_read_str(fd, buff, test);
 	if (line == NULL)
 		return (NULL);

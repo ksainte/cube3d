@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/13 18:29:46 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/14 14:21:18 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,17 @@ void ft_system_error(void)
     write(2, "\n", 1);
 }
 
+char *ft_custom_error(char *str)
+{
+    if (str)
+        write(2, str, ft_strlen(str));
+    return (NULL);
+}
+
 int ft_free(t_map *map)
 {
-    if (map->path)
-        free(map->path);
-    if (close(map->fd) == -1)
+    free(map->path);
+    if (map->fd != -1 && close(map->fd) == -1)
         ft_system_error();
     return (1);
 }
@@ -34,27 +40,20 @@ int	ft_map_error(int error, t_map *map)
     str = NULL;
 	if (error == 0 && ft_free(map))
 		str = "Error\nFailed Allocation!\n";
-    if (error == 1)
-    {
+    else if (error == 1 && ft_free(map))
         ft_system_error();
-        free(map->path);
-        close(map->fd);
-    }
-    if (error == 2 && ft_free(map))
+    else if (error == 2 && ft_free(map))
         str = "Error\nWrong map format, remaining leftovers!\n";
-    if (error == 3 && ft_free(map))
+    else if (error == 3 && ft_free(map))
         str = "Error\nEmpty map!\n";
-    if (str)
-        write(1, str, ft_strlen(str));
+    ft_custom_error(str);
     return (0);
 }
 
 int	ft_check_map_left_over(t_map *map)
 {
-        printf("a");
-	while (map->line != 0)
+	while (map->line)
 	{
-        printf("a");
 		free(map->line);
 		map->line = get_next_line(map->fd);
 		if (map->line && map->line[0] != '\n')
@@ -80,15 +79,12 @@ int	ft_row_number(t_map *map)
 		if (map->line)
 			free(map->line);
 		map->line = get_next_line(map->fd);
-        // printf("%s", map->line);
 		if (map->line == 0 || *map->line == '\n')
 			break ;
 		map->row++;
 	}
-    printf("%d", map->row);
 	if (map->line != 0 && !ft_check_map_left_over(map))
 		return (0);
-    printf("%d", map->row);
     if (map->line == 0 && map->row == 0)
         return (ft_map_error(3, map));
     return (1);
@@ -99,22 +95,22 @@ char *ft_check_args(int argc, char *str)
 	char    *path;
 
     path = str;
-	if (argc != 2 || str == NULL)
+	if (argc != 2)
 	{
-		ft_printf("Error\nMust be only 2 Arguments: ./cube_3d <map>\n");
-        return (NULL);
+        str = "Error\nMust be only 2 Arguments: ./cube_3d <map>\n";
+        return (ft_custom_error(str));
 	}
 	while (*str != '.' && *str != '\0')
 		str++;
 	if (ft_strncmp(".cub", str, 4) != 0 || ft_strlen(str) != 4)
 	{
-		ft_printf("Error\nExtension of the map file not valid : <map>.cub");
-        return (NULL);
+        str = "Error\nExtension of the map file not valid : <map>.cub\n";
+        return (ft_custom_error(str));
 	}
 	if(!(path = ft_strjoin("./maps/", path)))
     {
-		ft_printf("Error\nPath allocation failed");
-        return (NULL);
+        str = "Error\nPath allocation failed\n";
+        return (ft_custom_error(str));
     }
 	return (path);
 }
