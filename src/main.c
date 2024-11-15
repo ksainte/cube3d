@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/15 18:22:47 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/15 19:03:51 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,12 @@ int ft_open_path(char *str)
     while ((*str >= 9 && *str <= 13) || *str == 32)
         str++;
     printf("%s\n", str);
+    str = ft_strjoin(getcwd(NULL, 0), str);
+    printf("%s\n", str);
     fd = open(str, O_RDONLY);
 	if (fd == -1)
     {
+        printf("%s\n", getcwd(NULL, 0));
         ft_system_error();
         return (0);
     }
@@ -174,7 +177,7 @@ int ft_valid_number_range(char *str, int range)
     int nb;
 
     nb = 0;
-    str[range] = "\0";//soit null, virgule, ou espace
+    str[range] = '\0';
     nb = ft_atoi(str);
     if (nb >= 0 && nb <= 255)
         return (1);
@@ -210,14 +213,12 @@ int ft_valid_characters(char *str, int range, int *len, int *rgb)
     *len = ft_check_until_comma_or_null(str + i);//on est sur espace ou virgule
     if (*len == -1)
         return (0);//*len est sur apres virgule ou NULL
-    if (!ft_valid_number_range(str, range))
+    if (!ft_valid_number_range(str, range) && *rgb++)
         return (0);
-    if (*rgb++ && *rgb > 3)
-        return (0);
-    if (*rgb == 3 && str[*len] == 44)
+    if (*rgb > 3 || (*rgb == 3 && str[*len] == 44))
         return (0);
     if (str[*len] == 44)
-        *len++;
+        *len = *len + 1;
     return (1);
 }
 
@@ -259,7 +260,7 @@ int ft_valid_color(char *str)
     // printf("%s\n", str);
     // str = ft_handle_spaces(str);
     printf("%s\n", str);//on arrive sur un char!
-    if (valid_color_range(str) != 3)
+    if (ft_valid_color_range(str) != 3)
         return (0);
     return (1);
 }
@@ -394,6 +395,7 @@ int main(int argc, char **argv)
     map.fd = open(map.path, O_RDONLY);
 	if (map.fd == -1)
         return (ft_map_error(1, &map));
+    close(map.fd);
     if(!ft_elements_to_parse(&map))
         return (0);
     printf("ok\n");
