@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/15 01:51:30 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/15 18:22:47 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,19 +112,17 @@ char *ft_check_args(int argc, char *str)
 	return (path);
 }
 
-int ft_open_path(char *str, int i)
+int ft_open_path(char *str)
 {
     int fd;
     
-    if (i < 4 && i >= 0)
-        str = str + 2;
-    if (i >= 4 && i < 6)
-        str = str + 1;
-    if ((*str < 9 && *str > 13) && *str != 32)
+    str = str + 2;
+    if ((*str < 9 || *str > 13) && *str != 32)
         return (0);
     while ((*str >= 9 && *str <= 13) || *str == 32)
         str++;
-	fd = open(str, O_RDONLY);
+    printf("%s\n", str);
+    fd = open(str, O_RDONLY);
 	if (fd == -1)
     {
         ft_system_error();
@@ -134,18 +132,152 @@ int ft_open_path(char *str, int i)
     return (1);
 }
 
+// char *remove_spaces(char *str)
+// {
+// 	int	i;
+// 	int	count;
+
+// 	i = 0;
+// 	count = 0;
+// 	while (str[i])
+// 	{
+// 		if (str[i] != 7)
+// 		{
+// 			str[count] = str[i];
+// 			count++;
+// 		}
+// 		i++;
+// 	}
+// 	str[count] = '\0';
+//     return (str);
+// }
+
+// char *ft_handle_spaces(char *str)
+// {
+//     int	i;
+
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		if ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+//             str[i] = 7;
+// 		i++;
+// 	}
+//     str = remove_spaces(str);
+//     return (str);
+// }
+
+
+
+int ft_valid_number_range(char *str, int range)
+{
+    int nb;
+
+    nb = 0;
+    str[range] = "\0";//soit null, virgule, ou espace
+    nb = ft_atoi(str);
+    if (nb >= 0 && nb <= 255)
+        return (1);
+    return (0);    
+    
+}
+
+int ft_check_until_comma_or_null(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i] && str[i] != 44)//on s arrete sur NULL ou une virgule
+    {
+        if (str[i] != 32 && (str[i] < 9 || str[i] > 13))//autre chose que des espaces!
+            return (-1);
+        i++;
+    }
+    return (i);
+}
+
+int ft_valid_characters(char *str, int range, int *len, int *rgb)
+{
+    int i;
+
+    i = 0;
+    while (str[i] && i < range)//len est un espace ou une virgule!
+    {
+        if (str[i] < 48 || str[i] > 57)//que des chiffres!
+            return (0);
+        i++;//un espace ou une virgule
+    }
+    *len = ft_check_until_comma_or_null(str + i);//on est sur espace ou virgule
+    if (*len == -1)
+        return (0);//*len est sur apres virgule ou NULL
+    if (!ft_valid_number_range(str, range))
+        return (0);
+    if (*rgb++ && *rgb > 3)
+        return (0);
+    if (*rgb == 3 && str[*len] == 44)
+        return (0);
+    if (str[*len] == 44)
+        *len++;
+    return (1);
+}
+
+int ft_valid_color_range(char *str)
+{
+    int rgb;
+    int i;
+    int len;
+    
+    rgb = 0;
+    len = 0;
+    i = 0;//on s arrete soit sur une virgule, un null, ou un espace!
+    while (str[i])
+    {
+        //on est pas sur virgule ou espace! je suis caractere!
+        if (str[i] != 44 && str[i] != 32 && (str[i] < 9 || str[i] > 13))
+            i++;
+        else//i est d office sur espace ou virgule!
+        {
+            if(!ft_valid_characters(str, i, &len, &rgb))
+                return (0);
+            str = str + len;//on est soit sur post virgule, soit sur NULL
+            i = 0;
+            len = 0;
+            while (str && ((*str >= 9 && *str <= 13) || *str == 32))
+                str++;
+        }
+    }
+    return (rgb);
+}
+
+int ft_valid_color(char *str)
+{
+    str = str + 1;
+    if ((*str < 9 || *str > 13) && *str != 32)//autre chose qu un espace!
+        return (0);
+    while ((*str >= 9 && *str <= 13) || *str == 32)//skip les espaces
+        str++;
+    // printf("%s\n", str);
+    // str = ft_handle_spaces(str);
+    printf("%s\n", str);//on arrive sur un char!
+    if (valid_color_range(str) != 3)
+        return (0);
+    return (1);
+}
+
+
 int ft_element_is_valid(char *str)
 {
     int value;
-    char **prefix;
+    const char *prefix[6] = {"NO", "SO", "WE", "EA", "F", "C"};
     int i;
 
-    prefix[0] = "NO";
-    prefix[1] = "SO";
-    prefix[2] = "WE";
-    prefix[3] = "EA";
-    prefix[4] = "F";
-    prefix[5] = "C";
+	// // prefix = (char **)malloc(sizeof(char *) * 6);
+    // prefix[0] = "NO";
+    // prefix[1] = "SO";
+    // prefix[2] = "WE";
+    // prefix[3] = "EA";
+    // prefix[4] = "F";
+    // prefix[5] = "C";
     while ((*str >= 9 && *str <= 13) || *str == 32)
         str++;
     value = -1;
@@ -160,7 +292,9 @@ int ft_element_is_valid(char *str)
         value = ft_strncmp(prefix[i], str, 1);
         i++;
     }
-    if (value == 0 && ft_open_path(str, i - 1))
+    if (value == 0 && i != 4 && i != 5 && ft_open_path(str))
+        return (i - 1);
+    else if (value == 0 && ft_valid_color(str))
         return (i - 1);
     return (-1);
 }
@@ -201,9 +335,16 @@ int ft_textures_and_colors(t_map *map)
     int array[6];
     int i;
 
+
+	map->line = (char *)malloc(sizeof(char *));
+	if (!map->line)
+        return (ft_map_error(0, map));
     i = 0;
-    while (i++ < 6)
+    while (i < 6)
+    {
         array[i] = 0;
+        i++;
+    }
     i = 0;
 	while (map->line != NULL)
 	{
@@ -219,27 +360,29 @@ int ft_textures_and_colors(t_map *map)
             i++;
         }
 	}
+    if (i < 6)
+        return (-4);
     if (!ft_check_array(array))
         return (-3);
-    return (1)
+    return (1);
 }
 
 char *ft_elements_to_parse(t_map *map)
 {
     int value;
 
-    value = 1;
-	map->line = (char *)malloc(sizeof(char *));
-	if (!map->line)
-        return (ft_map_error(0, map));
     value = ft_textures_and_colors(map);
+    if (value == 0)
+        return (NULL);
     if (value == -1 && ft_free_line(map))
         return (ft_custom_error("There are more than 6 elements!\n"));
     else if (value == -2 && ft_free_line(map))
-        return (ft_custom_error("Invalid element or Can't open path!\n"));
+        return (ft_custom_error("Invalid element or can't open path!\n"));
     else if (value == -3)
         return (ft_custom_error("There are duplicates in the elements!\n"));
-        
+    else if (value == -4)
+        return (ft_custom_error("There are less than 6 elements!\n"));
+    return ("ok");
 }
 
 int main(int argc, char **argv)
@@ -248,11 +391,12 @@ int main(int argc, char **argv)
 
     if(!(map.path = ft_check_args(argc, argv[1])))
         return (0);
-	map.fd = open(map.path, O_RDONLY);
+    map.fd = open(map.path, O_RDONLY);
 	if (map.fd == -1)
         return (ft_map_error(1, &map));
     if(!ft_elements_to_parse(&map))
         return (0);
+    printf("ok\n");
     // if(!(ft_row_number(&map)))
     //     return (0);
     // ft_free(&map);
