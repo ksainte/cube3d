@@ -6,12 +6,12 @@
 #    By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 13:51:16 by ks19              #+#    #+#              #
-#    Updated: 2024/11/15 12:10:36 by ks19             ###   ########.fr        #
+#    Updated: 2024/11/16 12:59:53 by ks19             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc -g
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra
 SRCS = src/main.c
 LIBFT_PATH = Libft
 MLX_PATH = mlx
