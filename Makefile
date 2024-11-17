@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+         #
+#    By: asideris <asideris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 13:51:16 by ks19              #+#    #+#              #
-#    Updated: 2024/11/12 15:48:22 by ks19             ###   ########.fr        #
+#    Updated: 2024/11/15 13:26:32 by asideris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc -g3
 CFLAGS = -Wall -Wextra
-SRCS = src/main.c
+SRCS = src/main.c src/fake_map.c
 LIBFT_PATH = Libft
 MLX_PATH = mlx
 LIBFT_ARCHIVE = $(LIBFT_PATH)/libft.a

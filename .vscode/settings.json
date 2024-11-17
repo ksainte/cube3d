@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "cube_3d.h": "c",
+        "mlx.h": "c"
+    }
+}

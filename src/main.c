@@ -1,115 +1,89 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/13 13:03:07 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/15 13:30:58 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube_3d.h"
 
-int ft_free(char *path, int fd)
+void	ft_init_player(t_mlx *mlx)
 {
-    if (path)
-        free(path);
-    if (fd != -1)
-        close(fd);
-    return (1);
+	mlx->player->player_fov_radians = FIELD_OF_VIEW * (PI / 180);
+	// FORMULA : radians=degrees×(180π​)
+	mlx->player->player_orientation_start = 'N';
+	if (mlx->player->player_orientation_start == 'N')
+		mlx->player->player_angle = (3 * PI) / 2; /// DEPEND DE LORIENTATION (N)
+	mlx->player->player_y_px = mlx->data->player_y_map * TILE_S + TILE_S / 2;
+	mlx->player->player_x_px = mlx->data->player_x_map * TILE_S + TILE_S / 2;
 }
-
-int	ft_map_error(int error, int fd, char *path)
+void	ft_init_data(t_mlx *mlx)
 {
-	char	*str;
-
-	if (error == 0 && ft_free(path, fd))
-		str = "Error\nFailed Allocation!\n";
-    if (error == 1)
-    {
-        perror("open");
-        close(fd);
-        free(path);
-    }
-    if (error == 2 && ft_free(path, fd))
-        str = "Error\nWrong map format, remaining leftovers!\n";
-    if (error == 3 && ft_free(path, fd))
-        str = "Error\nEmpty map!\n";
-	write(1, str, ft_strlen(str));
+	mlx->data->player_x_map = 0;
+	mlx->data->player_y_map = 0;
+	mlx->data->map_w = 100;
+	mlx->data->map_h = 100;
+}
+void	ft_init_structs(t_data *data, t_player *player, t_mlx *mlx, t_ray *ray)
+{
+	mlx->data = data;
+	mlx->player = player;
+	mlx->ray = ray;
+	ft_init_data(mlx);
+	ft_init_player(mlx);
+}
+int	ft_cast_rays(t_mlx *mlx)
+{
+	(void)mlx;
+	return (0);
+}
+int	ft_main_loop(void *mlx)
+{
+	(t_mlx *)mlx;
+	// ft_set_player();
+	ft_cast_rays(mlx);
+	return (0);
+}
+int	ft_launch_game(t_mlx *mlx)
+{
+	mlx->mlx_ptr = mlx_init();
+	if (mlx->mlx_ptr == NULL)
+	{
+		printf("MLX initialization failed!\n");
+		return (1);
+	}
+	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, 500, 500, "cube");
+	if (mlx->win_ptr == NULL)
+	{
+		printf("Failed to create window!\n");
+		return (1);
+	}
+	printf("Window opened!\n");
+	// mlx_key_hook(mlx->win_ptr, ft_keys_handle, mlx);
+	mlx_loop_hook(mlx->win_ptr, ft_main_loop, mlx);
+	mlx_loop(mlx->mlx_ptr);
 	return (0);
 }
 
-int	ft_check_map_left_over(t_map *map, char *path)
+int	main(int argc, char **argv)
 {
-	while (map->line != 0)
-	{
-		free(map->line);
-		map->line = get_next_line(map->fd);
-		if (map->line && map->line[0] != '\n')
-        {
-        	free(map->line);
-            return(ft_map_error(2, map->fd, path));        
-        }
-	}
-    return (1);
-}
+	t_data data;
+	t_player player;
+	t_mlx mlx;
+	t_ray ray;
 
-int	ft_row_number(t_map *map, char *path)
-{
-	map->fd = open(path, O_RDONLY);
-	if (map->fd == -1)
-        return (ft_map_error(1, map->fd, path));
-	map->line = (char *)malloc(sizeof(char *));
-	if (!map->line)
-        return (ft_map_error(0, map->fd, path));
-	while (map->line != NULL)
-	{
-		if (map->line)
-			free(map->line);
-		map->line = get_next_line(map->fd);
-		if (map->line == 0 || *map->line == '\n')
-			break ;
-		map->row++;
-	}
-	if (map->line != 0 && !ft_check_map_left_over(map, path))
-		return (0);
-	if (map->line == 0 && map->row == 0)
-        return (ft_map_error(3, map->fd, path));
-    return (1);
-}
-
-char *ft_check_args(int argc, char *str)
-{
-	char    *path;
-
-	if (argc != 2 || str == NULL)
-	{
-		ft_printf("Error\nMust be only 2 Arguments: ./cube_3d <map>\n");
-        return (NULL);
-	}
-	while (*str != '.' && *str != '\0')
-		str++;
-	if (ft_strncmp(".cub", str, 4) != 0 || ft_strlen(str) != 4)
-	{
-		ft_printf("Error\nExtension of the map file not valid : <map>.cub");
-        return (NULL);
-	}
-	if(!(path = ft_strjoin("./maps/", str)))
-        return (ft_map_error(0, -1, NULL));
-	return (path);
-}
-
-int main(int argc, char **argv)
-{
-	t_map   map;
-	char    *path;
-
-    if(!(path = ft_check_args(argc, argv[1])))
-        return (0);
-    if(!(ft_row_number(&map, path)))
-        return (0);
-    return (1);
-    
+	char *path;
+	(void)path;
+	(void)argc;
+	(void)argv;
+	ft_fake_map(&data);
+	ft_init_structs(&data, &player, &mlx, &ray);
+	ft_launch_game(&mlx);
+	return (1);
 }
