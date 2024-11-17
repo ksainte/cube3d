@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/16 16:04:43 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/17 23:33:12 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ int ft_valid_number_range(char *str, int range)
     dup = ft_strdup(str);
     dup[range] = '\0';
     nb = ft_atoi(dup);
-    printf("%d", nb);
+    printf("nb is %d\n", nb);
     if (nb >= 0 && nb <= 255)
     {
         free(dup);
@@ -192,6 +192,7 @@ int ft_valid_characters(char *str, int range, int *len, int *rgb)
         return (0);
     // printf("post str is %s\n", str);
     *rgb = *rgb + 1;
+    printf("rgb is %d\n", *rgb);
     if (*rgb > 3 || (*rgb == 3 && str[i + *len] == 44))
         return (0);
     printf("post str is %s\n", str);
@@ -232,9 +233,14 @@ int ft_valid_color_range(char *str)
             while (str && ((*str >= 9 && *str <= 13) || *str == 32))
                 str++;
         }
-            printf("test is %c\n", str[i]);
+        if (rgb == 2 && !str[i])
+            ft_valid_characters(str, i, &len, &rgb);
+        printf("test is %c\n", str[i]);
+            // if (str[i] == '\n')
+                // printf("i is %d\n", i);
     }
-    printf("%d\n", rgb);
+    // if (rgb == 2 && !str[i] && ft_valid_characters(str, i, &len, &rgb))
+    printf("final rgb is %d\n", rgb);
     return (rgb);
 }
 
