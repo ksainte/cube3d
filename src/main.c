@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/17 23:33:12 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/18 11:54:14 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ int ft_valid_number_range(char *str, int range)
     dup = ft_strdup(str);
     dup[range] = '\0';
     nb = ft_atoi(dup);
-    printf("nb is %d\n", nb);
     if (nb >= 0 && nb <= 255)
     {
         free(dup);
@@ -160,9 +159,9 @@ int ft_check_until_comma_or_null(char *str)
     int i;
 
     i = 0;
-    while (str[i] && str[i] != 44)//on s arrete sur NULL ou une virgule
+    while (str[i] && str[i] != 44)
     {
-        if (str[i] != 32 && (str[i] < 9 || str[i] > 13))//autre chose que des espaces!
+        if (str[i] != 32 && (str[i] < 9 || str[i] > 13))
             return (-1);
         i++;
     }
@@ -174,36 +173,22 @@ int ft_valid_characters(char *str, int range, int *len, int *rgb)
     int i;
 
     i = 0;
-    // printf("str is %s\n", str);
-    // if (str[1] && str[1] == '\n')
-    //     printf("ok is %c\n", str[1]);
-    while (str[i] && i < range)//len est un espace ou une virgule!
+    while (str[i] && i < range)
     {
-        if (str[i] < 48 || str[i] > 57)//que des chiffres!
+        if (str[i] < 48 || str[i] > 57)
             return (0);
-        i++;//un espace ou une virgule
+        i++;
     }
-    *len = ft_check_until_comma_or_null(str + i);//on est sur espace ou virgule
-    printf("len is %d\n", *len);
+    *len = ft_check_until_comma_or_null(str + i);
     if (*len == -1)
-        return (0);//*len est sur apres virgule ou NULL
-    // printf("pre str is %s\n", str);
+        return (0);
     if (!ft_valid_number_range(str, range))
         return (0);
-    // printf("post str is %s\n", str);
     *rgb = *rgb + 1;
-    printf("rgb is %d\n", *rgb);
     if (*rgb > 3 || (*rgb == 3 && str[i + *len] == 44))
         return (0);
-    printf("post str is %s\n", str);
     if (str[i + *len] == 44)
-    {
-        // printf("testttttttttttt%d", i + *len);
         *len = *len + 1;
-    }
-    // printf("str is %s\n", str);
-    // printf("%d", i + *len);
-    printf("c is %c\n", str[i + *len]);
     return (1);
 }
 
@@ -215,19 +200,16 @@ int ft_valid_color_range(char *str)
     
     rgb = 0;
     len = 0;
-    i = 0;//on s arrete soit sur une virgule, un null, ou un espace!
+    i = 0;
     while (str[i])
     {
-        //on est pas sur virgule ou espace! je suis caractere!
         if (str[i] != 44 && str[i] != 32 && (str[i] < 9 || str[i] > 13))
             i++;
-        else//i est d office sur espace ou virgule!
+        else
         {
-            printf("i is %d\n", i);
             if(!ft_valid_characters(str, i, &len, &rgb))
                 return (0);
-            str = str + i + len;//on est soit sur post virgule, soit sur NULL
-            printf("new str is %s\n", str);
+            str = str + i + len;
             i = 0;
             len = 0;
             while (str && ((*str >= 9 && *str <= 13) || *str == 32))
@@ -235,12 +217,7 @@ int ft_valid_color_range(char *str)
         }
         if (rgb == 2 && !str[i])
             ft_valid_characters(str, i, &len, &rgb);
-        printf("test is %c\n", str[i]);
-            // if (str[i] == '\n')
-                // printf("i is %d\n", i);
     }
-    // if (rgb == 2 && !str[i] && ft_valid_characters(str, i, &len, &rgb))
-    printf("final rgb is %d\n", rgb);
     return (rgb);
 }
 
@@ -248,12 +225,10 @@ int ft_valid_color(char *str)
 {
     printf("color is %s\n", str);
     str = str + 1;
-    if ((*str < 9 || *str > 13) && *str != 32)//autre chose qu un espace!
+    if ((*str < 9 || *str > 13) && *str != 32)
         return (0);
-    while ((*str >= 9 && *str <= 13) || *str == 32)//skip les espaces
+    while ((*str >= 9 && *str <= 13) || *str == 32)
         str++;
-    // str = ft_handle_spaces(str);
-    printf("%s\n", str);//on arrive sur un char!
     if (ft_valid_color_range(str) != 3)
         return (0);
     return (1);
@@ -266,10 +241,10 @@ int ft_element_is_valid(char *str)
     const char *prefix[6] = {"NO", "SO", "WE", "EA", "F", "C"};
     int i;
 
-    while ((*str >= 9 && *str <= 13) || *str == 32)
-        str++;
     value = -1;
     i = 0;
+    while ((*str >= 9 && *str <= 13) || *str == 32)
+        str++;
     while (value != 0 && i < 4)
     {
         value = ft_strncmp(prefix[i], str, 2);
@@ -281,7 +256,6 @@ int ft_element_is_valid(char *str)
         i++;
     }
     i--;
-    printf("is %d\n", i);
     if (value == 0 && i != 4 && i != 5 && ft_open_path(str))
         return (i);
     else if (value == 0 && ft_valid_color(str))
@@ -320,67 +294,61 @@ int ft_free_line(t_map *map)
     return (1);
 }
 
-int ft_textures_and_colors(t_map *map)
+int ft_textures_and_colors(t_map *map, int elements)
 {
     int array[6];
-    int i;
 
-
-	map->line = (char *)malloc(sizeof(char *));
-	if (!map->line)
-        return (ft_map_error(0, map));
-    i = 0;
-    while (i < 6)
-    {
-        array[i] = 0;
-        i++;
-    }
-    i = 0;
+    while (++elements < 6)
+        array[elements] = 0;
+    elements = 0;
 	while (map->line != NULL)
 	{
 		free(map->line);
 		map->line = get_next_line(map->fd);
-        // printf("%s\n", map->line);
-        if (map->line && *map->line != '\n' && i == 6)
+        if (map->line && *map->line != '\n' && elements == 6)
             return (-1);
         if (map->line && *map->line != '\n')
         {
-            array[i] = ft_element_is_valid(map->line);
-            printf("array is %d\n", array[i]);
-            if (array[i] == -1)
+            array[elements] = ft_element_is_valid(map->line);
+            if (array[elements] == -1)
                 return (-2);
-            i++;
+            elements++;
         }
 	}
-    i = 0;
-    while (i < 6)
-    {
-        printf("%d\n", array[i]);
-        i++;
-    }
-    if (i < 5)
+    if (elements < 6)
         return (-4);
-    if (!ft_check_array(array))
+    else if (!ft_check_array(array))
         return (-3);
     return (1);
 }
 
-char *ft_elements_to_parse(t_map *map)
+int ft_elements_to_parse(t_map *map)
 {
     int value;
+    int elements;
+    char *str;
 
-    value = ft_textures_and_colors(map);
-    if (value == 0)
-        return (NULL);
+    str = NULL;
+    elements = -1;
+    map->fd = open(map->path, O_RDONLY);
+	if (map->fd == -1)
+        return (ft_map_error(1, map));
+	map->line = (char *)malloc(sizeof(char *));
+	if (!map->line)
+        return (ft_map_error(0, map));
+    value = ft_textures_and_colors(map, elements);
     if (value == -1 && ft_free_line(map))
-        return (ft_custom_error("There are more than 6 elements!\n"));
+        str = "There are more than 6 elements!\n";
     else if (value == -2 && ft_free_line(map))
-        return (ft_custom_error("Invalid element or can't open path!\n"));
+        str = "Invalid element or can't open path!\n";
     else if (value == -3)
-        return (ft_custom_error("There are duplicates in the elements!\n"));
+        str = "There are duplicates in the elements!\n";
     else if (value == -4)
-        return (ft_custom_error("There are less than 6 elements!\n"));
-    return ("ok");
+        str = "There are less than 6 elements!\n";
+    if (!str)
+        return (1);
+    ft_custom_error(str);
+    return (0);
 }
 
 int main(int argc, char **argv)
@@ -389,9 +357,6 @@ int main(int argc, char **argv)
 
     if(!(map.path = ft_check_args(argc, argv[1])))
         return (0);
-    map.fd = open(map.path, O_RDONLY);
-	if (map.fd == -1)
-        return (ft_map_error(1, &map));
     if(!ft_elements_to_parse(&map))
         return (0);
     printf("ok\n");
