@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/18 11:54:14 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/18 13:58:55 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ char *ft_check_args(int argc, char *str)
 int ft_open_path(char *str)
 {
     int fd;
+    size_t len;
     
     fd = -1;
     str = str + 2;
@@ -122,12 +123,11 @@ int ft_open_path(char *str)
         return (0);
     while ((*str >= 9 && *str <= 13) || *str == 32)
         str++;
-    printf("path to open %s\n", str);
-    size_t len = strlen(str);
+    len = ft_strlen(str);
     if (len > 0 && str[len - 1] == '\n')
         str[len - 1] = '\0';
     fd = open(str, O_RDONLY);
-	if (fd == -1)
+	if (fd == -1 || close(fd) == -1)
     {
         ft_system_error();
         return (0);
@@ -142,6 +142,8 @@ int ft_valid_number_range(char *str, int range)
 
     nb = 0;
     dup = ft_strdup(str);
+    if (!dup)
+        return (0);
     dup[range] = '\0';
     nb = ft_atoi(dup);
     if (nb >= 0 && nb <= 255)
@@ -151,7 +153,6 @@ int ft_valid_number_range(char *str, int range)
     }
     free(dup);
     return (0);    
-    
 }
 
 int ft_check_until_comma_or_null(char *str)
@@ -192,13 +193,11 @@ int ft_valid_characters(char *str, int range, int *len, int *rgb)
     return (1);
 }
 
-int ft_valid_color_range(char *str)
+int ft_valid_color_range(char *str, int *rgb)
 {
-    int rgb;
     int i;
     int len;
     
-    rgb = 0;
     len = 0;
     i = 0;
     while (str[i])
@@ -207,7 +206,7 @@ int ft_valid_color_range(char *str)
             i++;
         else
         {
-            if(!ft_valid_characters(str, i, &len, &rgb))
+            if(!ft_valid_characters(str, i, &len, rgb))
                 return (0);
             str = str + i + len;
             i = 0;
@@ -215,21 +214,21 @@ int ft_valid_color_range(char *str)
             while (str && ((*str >= 9 && *str <= 13) || *str == 32))
                 str++;
         }
-        if (rgb == 2 && !str[i])
-            ft_valid_characters(str, i, &len, &rgb);
     }
-    return (rgb);
+    return (1);
 }
 
 int ft_valid_color(char *str)
 {
-    printf("color is %s\n", str);
+    int rgb;
+    
+    rgb = 0;
     str = str + 1;
     if ((*str < 9 || *str > 13) && *str != 32)
         return (0);
     while ((*str >= 9 && *str <= 13) || *str == 32)
         str++;
-    if (ft_valid_color_range(str) != 3)
+    if (!ft_valid_color_range(str, &rgb) || rgb != 3)
         return (0);
     return (1);
 }
@@ -357,11 +356,12 @@ int main(int argc, char **argv)
 
     if(!(map.path = ft_check_args(argc, argv[1])))
         return (0);
-    if(!ft_elements_to_parse(&map))
+    if(!ft_elements_to_parse(&map) && ft_free(&map))
         return (0);
     printf("ok\n");
-    // if(!(ft_row_number(&map)))
-    //     return (0);
-    // ft_free(&map);
+    if(!(ft_map_to_parse(&map)))
+        return (0);
+    // printf("ok2\n");
+    ft_free(&map);
     return (1);
 }

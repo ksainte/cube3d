@@ -61,3 +61,6 @@
 //         return (ft_custom_error("There are less than 6 elements!\n"));
 //     return ("ok");
 // }
+
+        // if (*rgb == 2 && !str[i])
+        //     ft_valid_characters(str, i, &len, rgb);
