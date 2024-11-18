@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/18 13:58:55 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/18 17:30:50 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,59 +33,23 @@ int ft_free(t_map *map)
     return (1);
 }
 
-int	ft_map_error(int error, t_map *map)
+int	ft_map_error(int error)
 {
 	char	*str;
 
     str = NULL;
-	if (error == 0 && ft_free(map))
+	if (error == 0)
 		str = "Error\nFailed Allocation!\n";
-    else if (error == 1 && ft_free(map))
+    else if (error == 1)
         ft_system_error();
-    else if (error == 2 && ft_free(map))
+    else if (error == 2)
         str = "Error\nWrong map format, remaining leftovers!\n";
-    else if (error == 3 && ft_free(map))
+    else if (error == 3)
         str = "Error\nEmpty map!\n";
     ft_custom_error(str);
     return (0);
 }
 
-int	ft_check_map_left_over(t_map *map)
-{
-	while (map->line)
-	{
-		free(map->line);
-		map->line = get_next_line(map->fd);
-		if (map->line && map->line[0] != '\n')
-        {
-        	free(map->line);
-            return(ft_map_error(2, map));        
-        }
-	}
-    return (1);
-}
-
-int	ft_row_number(t_map *map)
-{
-    map->row = 0;
-	map->line = (char *)malloc(sizeof(char *));
-	if (!map->line)
-        return (ft_map_error(0, map));
-	while (map->line != NULL)
-	{
-		if (map->line)
-			free(map->line);
-		map->line = get_next_line(map->fd);
-		if (map->line == 0 || *map->line == '\n')
-			break ;
-		map->row++;
-	}
-	if (map->line != 0 && !ft_check_map_left_over(map))
-		return (0);
-    if (map->line == 0 && map->row == 0)
-        return (ft_map_error(3, map));
-    return (1);
-}
 
 char *ft_check_args(int argc, char *str)
 {
@@ -293,6 +257,20 @@ int ft_free_line(t_map *map)
     return (1);
 }
 
+int ft_line_is_space(char *str)
+{
+    int i;
+
+    i = 0;
+    while(str[i])
+    {
+        if ((str[i] < 9 || str[i] > 13) && str[i] != 32)
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
 int ft_textures_and_colors(t_map *map, int elements)
 {
     int array[6];
@@ -304,9 +282,9 @@ int ft_textures_and_colors(t_map *map, int elements)
 	{
 		free(map->line);
 		map->line = get_next_line(map->fd);
-        if (map->line && *map->line != '\n' && elements == 6)
-            return (-1);
-        if (map->line && *map->line != '\n')
+        if (map->line && elements == 6 && !ft_line_is_space(map->line))
+            break;
+        if (map->line && !ft_line_is_space(map->line))
         {
             array[elements] = ft_element_is_valid(map->line);
             if (array[elements] == -1)
@@ -331,10 +309,10 @@ int ft_elements_to_parse(t_map *map)
     elements = -1;
     map->fd = open(map->path, O_RDONLY);
 	if (map->fd == -1)
-        return (ft_map_error(1, map));
+        return (ft_map_error(1));
 	map->line = (char *)malloc(sizeof(char *));
 	if (!map->line)
-        return (ft_map_error(0, map));
+        return (ft_map_error(0));
     value = ft_textures_and_colors(map, elements);
     if (value == -1 && ft_free_line(map))
         str = "There are more than 6 elements!\n";
@@ -350,18 +328,72 @@ int ft_elements_to_parse(t_map *map)
     return (0);
 }
 
+int	ft_check_map_left_over(t_map *map)
+{
+	while (map->line)
+	{
+		free(map->line);
+		map->line = get_next_line(map->fd);
+		if (map->line && !ft_line_is_space(map->line))
+        {
+        	free(map->line);
+            return(0);        
+        }
+	}
+    return (1);
+}
+
+int ft_has_valid_characters(char *str)
+{
+    int i;
+    int j;
+    const char array[8] = "NSEW01\n";
+
+    i = 0;
+    while (str[i])
+    {
+        j = 0;
+        while (array[j])
+        {
+            if (str[i] != array[j])
+                return (0);
+            j++;
+        }
+        i++;  
+    }
+    return (1);
+}
+
+int	ft_map_to_parse(t_map *map)//on est sur la map!
+{
+    write(1, "First 6 elements are well parsed!\n", 35);
+    map->row = 0;
+	while (map->line != NULL)
+	{
+        map->row++;
+		free(map->line);
+		map->line = get_next_line(map->fd);
+        if (!ft_has_valid_characters(map->line))
+            return (0);
+		if (map->line && *map->line == '\n')
+			break ;
+	}
+	if (map->line != 0 && !ft_check_map_left_over(map))
+		return(ft_map_error(2));
+    if (map->line == 0 && map->row == 0)
+        return (ft_map_error(3));
+    write(1, "Map is well parsed!\n", 21);
+    return (1);
+}
+
 int main(int argc, char **argv)
 {
 	t_map   map;
 
     if(!(map.path = ft_check_args(argc, argv[1])))
         return (0);
-    if(!ft_elements_to_parse(&map) && ft_free(&map))
+    if((!ft_elements_to_parse(&map) || !ft_map_to_parse(&map)) && ft_free(&map))
         return (0);
-    printf("ok\n");
-    if(!(ft_map_to_parse(&map)))
-        return (0);
-    // printf("ok2\n");
     ft_free(&map);
     return (1);
 }
