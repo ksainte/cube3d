@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/19 12:06:32 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/19 12:36:20 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,21 @@ char *ft_check_args(int argc, char *str)
 	return (path);
 }
 
+int ft_has_valid_suffix(char *str)
+{
+    int i;
+    
+    i = 1;
+    while (str[i] != '.' && str[i])
+		i++;
+	if (ft_strncmp(".xpm", str + i, 4) != 0 || ft_strlen(str + i) != 4)
+	{
+		write(2, "Error\nExtension of the texture not valid : <>.xpm\n", 51);
+        return (0);
+	}
+    return (1);
+}
+
 int ft_open_path(char *str)
 {
     int fd;
@@ -92,6 +107,8 @@ int ft_open_path(char *str)
     len = ft_strlen(str);
     if (len > 0 && str[len - 1] == '\n')
         str[len - 1] = '\0';
+    if (!ft_has_valid_suffix(str))
+        return (0);
     fd = open(str, O_RDONLY);
 	if (fd == -1 || close(fd) == -1)
     {
