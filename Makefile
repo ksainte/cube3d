@@ -6,7 +6,7 @@
 #    By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 13:51:16 by ks19              #+#    #+#              #
-#    Updated: 2024/11/19 14:05:56 by ks19             ###   ########.fr        #
+#    Updated: 2024/11/19 14:10:14 by ks19             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,11 +36,11 @@ $(LIBFT_ARCHIVE):
 	$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
 clean:
-	$(MAKE) -C $(MLX_PATH) clean
 	$(MAKE) -C $(LIBFT_PATH) clean
 	rm -f $(OBJS)
 
 fclean: clean
+	$(MAKE) -C $(MLX_PATH) clean
 	$(MAKE) -C $(LIBFT_PATH) fclean
 	rm -f $(EXEC_NAME)
 
