@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/19 21:20:03 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/19 23:02:43 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,11 @@
 // }
 
 
-int ft_init_textures(t_map *map)
-{
-    map->NO = NULL;
-    map->SO = NULL;
-    map->EA = NULL;
-    map->WE = NULL;
-    return (1);
-}
-
 int main(int argc, char **argv)
 {
 	t_map   map;
 
-    if(!(map.path = ft_check_args(argc, argv[1])) && ft_init_textures(&map))
+    if(!(map.path = ft_check_args(argc, argv[1])))
         return (0);
     if((!ft_elements_to_parse(&map) || !ft_map_to_parse(&map)) && ft_free(&map))
         return (0);

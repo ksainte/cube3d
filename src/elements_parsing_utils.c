@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:58:34 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/19 22:44:57 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/19 23:07:58 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ int ft_line_is_space(char *str)
 
 void ft_init_textures_to_null(t_map *map)
 {
+    map->index = -1;
     map->NO = NULL;
     map->SO = NULL;
     map->EA = NULL;
@@ -188,7 +189,6 @@ void ft_init_textures_to_null(t_map *map)
 int ft_textures_and_colors(t_map *map, int elements)
 {
     int array[6];
-    int index;
 
     ft_init_textures_to_null(map);
     while (++elements < 6)
@@ -205,17 +205,15 @@ int ft_textures_and_colors(t_map *map, int elements)
             array[elements] = ft_element_is_valid(map->line, map);
             if (array[elements] == -1)
                 return (-2);
-            index = array[elements];
+            map->index = array[elements];
             elements++;
             if (!ft_check_array(array, elements))
                 return (-3);
-            if (index != 4 && index != 5)
-                ft_fill_texture(map->line, index, map);
+            if (map->index != 4 && map->index != 5)
+                ft_fill_texture(map->line, map->index, map);
         }
 	}
-    if (elements < 6)
-        return (-4);
-    return (1);
+    return (elements);
 }
 
 int ft_elements_to_parse(t_map *map)
@@ -237,7 +235,7 @@ int ft_elements_to_parse(t_map *map)
         str = "Error\nInvalid element or can't open path!\n";
     else if (value == -3 && ft_free_line(map))
         str = "Error\nThere are duplicates in the elements!\n";
-    else if (value == -4)
+    else if (value < 6)
         str = "Error\nThere are less than 6 elements!\n";
     if (!str)
         return (1);
