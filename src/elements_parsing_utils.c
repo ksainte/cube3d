@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:58:34 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/19 22:05:03 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/19 22:44:57 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int ft_fill_texture(char *str, int index, t_map *map)
 {
     char *dup;
 
+    while ((*str >= 9 && *str <= 13) || *str == 32)
+        str++;
     str = str + 2;
     while ((*str >= 9 && *str <= 13) || *str == 32)
         str++;
@@ -186,6 +188,7 @@ void ft_init_textures_to_null(t_map *map)
 int ft_textures_and_colors(t_map *map, int elements)
 {
     int array[6];
+    int index;
 
     ft_init_textures_to_null(map);
     while (++elements < 6)
@@ -202,10 +205,12 @@ int ft_textures_and_colors(t_map *map, int elements)
             array[elements] = ft_element_is_valid(map->line, map);
             if (array[elements] == -1)
                 return (-2);
+            index = array[elements];
             elements++;
             if (!ft_check_array(array, elements))
                 return (-3);
-            // ft_fill_texture(map->line, i, map);
+            if (index != 4 && index != 5)
+                ft_fill_texture(map->line, index, map);
         }
 	}
     if (elements < 6)
