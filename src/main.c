@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/18 17:30:50 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/19 12:06:32 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	ft_map_error(int error)
         str = "Error\nWrong map format, remaining leftovers!\n";
     else if (error == 3)
         str = "Error\nEmpty map!\n";
+    else if (error == 4)
+        str = "Error\nThe map contains wrong characters!\n";
     ft_custom_error(str);
     return (0);
 }
@@ -314,11 +316,9 @@ int ft_elements_to_parse(t_map *map)
 	if (!map->line)
         return (ft_map_error(0));
     value = ft_textures_and_colors(map, elements);
-    if (value == -1 && ft_free_line(map))
-        str = "There are more than 6 elements!\n";
-    else if (value == -2 && ft_free_line(map))
+    if (value == -2 && ft_free_line(map))
         str = "Invalid element or can't open path!\n";
-    else if (value == -3)
+    else if (value == -3 && ft_free_line(map))
         str = "There are duplicates in the elements!\n";
     else if (value == -4)
         str = "There are less than 6 elements!\n";
@@ -343,22 +343,34 @@ int	ft_check_map_left_over(t_map *map)
     return (1);
 }
 
+int ft_char_is_space(char c)
+{
+    if ((c >= 9 && c <= 13) || c == 32)
+        return (1);
+    return (0);
+}
+
 int ft_has_valid_characters(char *str)
 {
     int i;
     int j;
-    const char array[8] = "NSEW01\n";
+    int match;
+    const char array[6] = "NSEW01";
 
     i = 0;
+    match = 0;
     while (str[i])
     {
         j = 0;
         while (array[j])
         {
-            if (str[i] != array[j])
-                return (0);
+            if (str[i] == array[j] || ft_char_is_space(str[i]))
+                match++;
             j++;
         }
+        if (match == 0)
+            return (0);
+        match = 0;
         i++;  
     }
     return (1);
@@ -370,11 +382,11 @@ int	ft_map_to_parse(t_map *map)//on est sur la map!
     map->row = 0;
 	while (map->line != NULL)
 	{
+        if (!ft_has_valid_characters(map->line) && ft_free_line(map))
+            return (ft_map_error(4));
         map->row++;
 		free(map->line);
 		map->line = get_next_line(map->fd);
-        if (!ft_has_valid_characters(map->line))
-            return (0);
 		if (map->line && *map->line == '\n')
 			break ;
 	}

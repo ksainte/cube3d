@@ -3,11 +3,12 @@ SO ./textures/wall_2.xpm
 WE ./textures/wall_3.xpm
 NO ./textures/wall_3.xpm
 
-F 255, 100 , 3        
+C 255, 100 , 3
 C 225, 30, 255
-          
-N
-    
+
+
+
+
 
 
 
