@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/19 12:36:20 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/19 12:40:51 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int ft_has_valid_suffix(char *str)
 		i++;
 	if (ft_strncmp(".xpm", str + i, 4) != 0 || ft_strlen(str + i) != 4)
 	{
-		write(2, "Error\nExtension of the texture not valid : <>.xpm\n", 51);
+		write(2, "Extension of the texture not valid : <>.xpm\n", 45);
         return (0);
 	}
     return (1);
@@ -334,11 +334,11 @@ int ft_elements_to_parse(t_map *map)
         return (ft_map_error(0));
     value = ft_textures_and_colors(map, elements);
     if (value == -2 && ft_free_line(map))
-        str = "Invalid element or can't open path!\n";
+        str = "Error\nInvalid element or can't open path!\n";
     else if (value == -3 && ft_free_line(map))
-        str = "There are duplicates in the elements!\n";
+        str = "Error\nThere are duplicates in the elements!\n";
     else if (value == -4)
-        str = "There are less than 6 elements!\n";
+        str = "Error\nThere are less than 6 elements!\n";
     if (!str)
         return (1);
     ft_custom_error(str);
