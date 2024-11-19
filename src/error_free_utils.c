@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:34:25 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/19 14:02:30 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/19 19:29:25 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ char *ft_custom_error(char *str)
 int ft_free(t_map *map)
 {
     free(map->path);
+    free(map->NO);
+    free(map->SO);
+    free(map->EA);
+    free(map->WE);
     if (map->fd != -1 && close(map->fd) == -1)
         ft_system_error();
     return (1);

@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:37:29 by ksainte           #+#    #+#             */
-/*   Updated: 2024/11/19 16:01:58 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/19 21:51:57 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef struct s_map
     char *SO;
     char *WE;
     char *EA;
-    char *F;
-    char *C;
+    int F[3];
+    int C[3];
     
     
 } t_map;
@@ -53,8 +53,8 @@ int	ft_check_map_left_over(t_map *map);
 int ft_char_is_space(char c);
 int ft_has_valid_characters(char *str);
 int	ft_map_to_parse(t_map *map);
-int ft_element_is_valid(char *str);
-int ft_check_array(int array[6]);
+int ft_element_is_valid(char *str, t_map *map);
+int ft_check_array(int array[6], int elements);
 int ft_line_is_space(char *str);
 int ft_textures_and_colors(t_map *map, int elements);
 int ft_elements_to_parse(t_map *map);
