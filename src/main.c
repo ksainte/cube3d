@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/19 23:02:43 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/19 23:17:54 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,25 @@
 // 	map->tab[i] = NULL;
 // }
 
+void ft_print(t_map *map)
+{
+    int i = 0;
+    while(i < 3)
+    {
+        printf("F %d\n", map->F[i]);
+        i++;
+    }
+    i = 0;
+    while(i < 3)
+    {
+        printf("C %d\n", map->C[i]);
+        i++;
+    }
+    printf("NO %s\n", map->NO);
+    printf("SO %s\n", map->SO);
+    printf("EA %s\n", map->EA);
+    printf("WE %s\n", map->WE);
+}
 
 int main(int argc, char **argv)
 {
@@ -57,18 +76,6 @@ int main(int argc, char **argv)
         return (0);
     if((!ft_elements_to_parse(&map) || !ft_map_to_parse(&map)) && ft_free(&map))
         return (0);
-    int i = 0;
-    while(i < 3)
-    {
-        printf("F %d\n", map.F[i]);
-        i++;
-    }
-    i = 0;
-    while(i < 3)
-    {
-        printf("C %d\n", map.C[i]);
-        i++;
-    }
     // if (!ft_reopen_fd(&map) && !ft_fill_tab(&map) && ft_free(&map))
     //     return (0);
     ft_free(&map);

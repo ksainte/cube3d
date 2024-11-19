@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:58:34 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/19 23:07:58 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/19 23:10:01 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,6 @@ int ft_textures_and_colors(t_map *map, int elements)
 {
     int array[6];
 
-    ft_init_textures_to_null(map);
     while (++elements < 6)
         array[elements] = 0;
     elements = 0;
@@ -224,6 +223,7 @@ int ft_elements_to_parse(t_map *map)
 
     str = NULL;
     elements = -1;
+    ft_init_textures_to_null(map);
     map->fd = open(map->path, O_RDONLY);
 	if (map->fd == -1)
         return (ft_map_error(1));
@@ -240,5 +240,5 @@ int ft_elements_to_parse(t_map *map)
     if (!str)
         return (1);
     ft_custom_error(str);
-    return (0);
+    return (0);    
 }
