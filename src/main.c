@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/20 16:20:20 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/20 16:44:21 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ int	ft_fill_data_from_map(t_map *map, t_data *data)
 	int	    elements;
 
     elements = 0;
-	map->line = (char *)malloc(sizeof(char *));
+    if (!ft_reopen_fd(map))
+        return (0); 
+    map->line = (char *)malloc(sizeof(char *));
 	if (!map->line)
         return (ft_map_error(0));
 	while (map->line != NULL)
@@ -99,7 +101,7 @@ int main(int argc, char **argv)
         return (0);
     // ft_print(&map);
     printf("%d\n", map.row);
-    if ((!ft_reopen_fd(&map) || !ft_fill_data_from_map(&map, &data)) && ft_free(&map))
+    if (!ft_fill_data_from_map(&map, &data) && ft_free(&map))
         return (0);
     ft_print_map(&data);
     free_table(data.tab);
