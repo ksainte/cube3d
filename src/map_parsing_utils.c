@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:48:23 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/19 13:52:33 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/20 15:01:08 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_map_to_parse(t_map *map)
         map->row++;
 		free(map->line);
 		map->line = get_next_line(map->fd);
-		if (map->line && *map->line == '\n')
+		if (map->line && ft_line_is_space(map->line))
 			break ;
 	}
 	if (map->line != 0 && !ft_check_map_left_over(map))

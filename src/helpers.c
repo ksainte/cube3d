@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:20 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/20 13:15:33 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/20 14:58:34 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,23 @@ void ft_init_textures_to_null(t_map *map)
     map->SO = NULL;
     map->EA = NULL;
     map->WE = NULL;
+}
+void ft_print(t_map *map)
+{
+    int i = 0;
+    while(i < 3)
+    {
+        printf("F %d\n", map->F[i]);
+        i++;
+    }
+    i = 0;
+    while(i < 3)
+    {
+        printf("C %d\n", map->C[i]);
+        i++;
+    }
+    printf("NO %s\n", map->NO);
+    printf("SO %s\n", map->SO);
+    printf("EA %s\n", map->EA);
+    printf("WE %s\n", map->WE);
 }
