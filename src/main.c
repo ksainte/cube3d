@@ -6,41 +6,39 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/20 19:58:01 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/20 21:43:09 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube_3d.h"
 
 
-char	**ft_copy_table(t_map *map)
+void	ft_copy_table(t_map *map)
 {
 	int	x;
-    char **table;
 
 	x = 0;
-	table = ft_calloc(map->row + 1, sizeof(char *));
-	if (!table)
-		return (0);
+	map->tmp = ft_calloc(map->row + 1, sizeof(char *));
+	if (!map->tmp)
+		return ;
 	while (map->tab[x])
 	{
-		table[x] = ft_strdup(map->tab[x]);
+		map->tmp[x] = ft_strdup(map->tab[x]);
 		x++;
 	}
-	table[x] = NULL;
-    return (table);
+	map->tmp[x] = NULL;
 }
 
-void	ft_has_valid_path(char **tab, int x, int y, char c)
+void	ft_has_valid_path(t_map *map, int x, int y)
 {
-
-	if (tab[x][y] == '0' || tab[x][y] == c)
+	if (map->tmp[x][y] == '0' || map->tmp[x][y] == map->tmp[map->starting_x][map->starting_y])
 	{
-		tab[x][y] = '2';
-		ft_has_valid_path(tab, x - 1, y, c);
-		ft_has_valid_path(tab, x + 1, y, c);
-		ft_has_valid_path(tab, x, y - 1, c);
-		ft_has_valid_path(tab, x, y + 1, c);
+        map->walls++;
+		map->tmp[x][y] = '2';
+		// ft_has_valid_path(map, x - 1, y);
+		ft_has_valid_path(map, x + 1, y);
+		// ft_has_valid_path(map, x, y - 1);
+		// ft_has_valid_path(map, x, y + 1);
 	}
 }
 
@@ -75,15 +73,19 @@ void	ft_find_start_pos(t_map *map)
 
 int	ft_is_map_valid(t_map *map)
 {
-    char **tab_copy;
-    char c;
     
     ft_find_start_pos(map);
-	tab_copy = ft_copy_table(map);
-    if (!tab_copy)
-        return (ft_map_error(0));
-    c = map->tab[map->starting_x][map->starting_y];
-	ft_has_valid_path(tab_copy, map->starting_x, map->starting_y, c);
+    ft_copy_table(map);
+    // if (!tab_copy)
+    //     return (ft_map_error(0));
+    // c = map->tab[map->starting_x][map->starting_y];
+    map->walls = 0;
+	ft_has_valid_path(map, map->starting_x, map->starting_y);
+    //de base 4
+    //a chaque bon element +2
+    ft_print_table(map->tmp);
+    printf("-----------------\n");
+    ft_print_table(map->tab);
     return (1);
 }
 
@@ -101,6 +103,7 @@ int main(int argc, char **argv)
     ft_is_map_valid(&map);
     // ft_print_table(map.tab);
     free_table(map.tab);
+    // free_table(map.tmp);
     ft_free(&map);
     return (1);
 }

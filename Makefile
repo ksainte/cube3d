@@ -6,12 +6,12 @@
 #    By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 13:51:16 by ks19              #+#    #+#              #
-#    Updated: 2024/11/20 16:56:17 by ks19             ###   ########.fr        #
+#    Updated: 2024/11/20 20:51:47 by ks19             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc -g
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra 
 SRCS = src/main.c src/error_free_utils.c src/valid_colors_utils.c src/map_parsing_utils.c src/elements_parsing_utils.c src/valid_path_utils.c src/elements_parsing_utils_2.c src/helpers.c src/helpers_2.c
 LIBFT_PATH = Libft
 MLX_PATH = mlx
