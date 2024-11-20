@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:37:29 by ksainte           #+#    #+#             */
-/*   Updated: 2024/11/19 23:05:05 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/20 13:21:09 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,10 @@ int ft_elements_to_parse(t_map *map);
 char *ft_check_args(int argc, char *str);
 int ft_has_valid_suffix(char *str);
 int ft_open_path(char *str);
-
+char *ft_remove_spaces(char *str);
+char *ft_handle_spaces(char *str);
+void ft_atoi_valid_range(char *str, int index, t_map *map, int range, int rgb);
+int ft_fill_color(char *str, t_map *map, int index);
+int ft_fill_texture(char *str, int index, t_map *map);
+void ft_init_textures_to_null(t_map *map);
 #endif

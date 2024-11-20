@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/19 23:17:54 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/20 13:26:39 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int main(int argc, char **argv)
         return (0);
     if((!ft_elements_to_parse(&map) || !ft_map_to_parse(&map)) && ft_free(&map))
         return (0);
+    // ft_print(&map);
     // if (!ft_reopen_fd(&map) && !ft_fill_tab(&map) && ft_free(&map))
     //     return (0);
     ft_free(&map);
