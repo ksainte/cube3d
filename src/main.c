@@ -6,44 +6,43 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/20 19:38:06 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/20 19:58:01 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube_3d.h"
 
 
-// void	ft_init_tmp(t_map *map)
-// {
-// 	size_t	x;
+char	**ft_copy_table(t_map *map)
+{
+	int	x;
+    char **table;
 
-// 	x = 0;
-// 	map->tmp = ft_calloc(map->row + 1, sizeof(char *));
-// 	if (!map->tmp)
-// 		return ;
-// 	while (map->tab[x])
-// 	{
-// 		map->tmp[x] = ft_strdup(map->tab[x]);
-// 		x++;
-// 	}
-// 	map->tmp[x] = NULL;
-// }
+	x = 0;
+	table = ft_calloc(map->row + 1, sizeof(char *));
+	if (!table)
+		return (0);
+	while (map->tab[x])
+	{
+		table[x] = ft_strdup(map->tab[x]);
+		x++;
+	}
+	table[x] = NULL;
+    return (table);
+}
 
-// void	ft_has_valid_path(t_map *map, int x, int y)
-// {
-// 	if (map->tmp[x][y] == 'E')
-// 		map->has_exit = 1;
-// 	if (map->tmp[x][y] == 'C')
-// 		map->has_all_cltb--;
-// 	if (map->tmp[x][y] == '0' || map->tmp[x][y] == 'C' || map->tmp[x][y] == 'P')
-// 	{
-// 		map->tmp[x][y] = '2';
-// 		ft_has_valid_path(map, x - 1, y);
-// 		ft_has_valid_path(map, x + 1, y);
-// 		ft_has_valid_path(map, x, y - 1);
-// 		ft_has_valid_path(map, x, y + 1);
-// 	}
-// }
+void	ft_has_valid_path(char **tab, int x, int y, char c)
+{
+
+	if (tab[x][y] == '0' || tab[x][y] == c)
+	{
+		tab[x][y] = '2';
+		ft_has_valid_path(tab, x - 1, y, c);
+		ft_has_valid_path(tab, x + 1, y, c);
+		ft_has_valid_path(tab, x, y - 1, c);
+		ft_has_valid_path(tab, x, y + 1, c);
+	}
+}
 
 void	ft_find_start_pos(t_map *map)
 {
@@ -76,11 +75,15 @@ void	ft_find_start_pos(t_map *map)
 
 int	ft_is_map_valid(t_map *map)
 {
-    char **temp_table;
+    char **tab_copy;
+    char c;
     
     ft_find_start_pos(map);
-	// temp_table = ft_init_tmp(map);
-	// ft_has_valid_path(map, map->starting_x, map->starting_y);
+	tab_copy = ft_copy_table(map);
+    if (!tab_copy)
+        return (ft_map_error(0));
+    c = map->tab[map->starting_x][map->starting_y];
+	ft_has_valid_path(tab_copy, map->starting_x, map->starting_y, c);
     return (1);
 }
 

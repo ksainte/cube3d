@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:37:29 by ksainte           #+#    #+#             */
-/*   Updated: 2024/11/20 19:06:08 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/20 19:39:32 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_map
     int row;
     char *path;
     char **tab;
+    char **temp;
     char *NO;
     char *SO;
     char *WE;
