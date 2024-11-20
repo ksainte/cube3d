@@ -43,11 +43,16 @@ int	ft_cast_rays(t_mlx *mlx)
 	(void)mlx;
 	return (0);
 }
-int	ft_main_loop(void *mlx)
+int	ft_main_loop(void *mlx_ptr)
 {
-	(t_mlx *)mlx;
+	t_mlx	*mlx;
+
+	mlx = mlx_ptr;
+	mlx_destroy_image(mlx->mlx_ptr, mlx->img);
+	mlx->img = mlx_new_image(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
 	// ft_set_player();
 	ft_cast_rays(mlx);
+	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img, 0, 0);
 	return (0);
 }
 int	ft_launch_game(t_mlx *mlx)
@@ -58,7 +63,8 @@ int	ft_launch_game(t_mlx *mlx)
 		printf("MLX initialization failed!\n");
 		return (1);
 	}
-	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, 500, 500, "cube");
+	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
+			"cube");
 	if (mlx->win_ptr == NULL)
 	{
 		printf("Failed to create window!\n");

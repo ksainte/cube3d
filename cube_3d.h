@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:37:29 by ksainte           #+#    #+#             */
-/*   Updated: 2024/11/17 16:15:43 by asideris         ###   ########.fr       */
+/*   Updated: 2024/11/17 17:59:57 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <string.h>
 # include <unistd.h>
 
-# define SREEN_WIDTH
-# define SREEN_HEIGHT
+# define SCREEN_WIDTH 600
+# define SCREEN_HEIGHT 600
 # define TILE_S 100
 # define FIELD_OF_VIEW 60
 # define ROTATION_S
@@ -63,6 +63,7 @@ typedef struct s_mlx
 	void		*mlx_ptr;
 	t_ray		*ray;
 	void		*win_ptr;
+	void		*img;
 }				t_mlx;
 void			ft_fake_map(t_data *map);
 #endif
