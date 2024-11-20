@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:48:23 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/20 15:01:08 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/20 18:48:58 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int ft_char_is_space(char c)
     return (0);
 }
 
-int ft_has_valid_characters(char *str)
+int ft_has_valid_characters(char *str, int *spawn)
 {
     int i;
     int j;
@@ -50,6 +50,8 @@ int ft_has_valid_characters(char *str)
         {
             if (str[i] == array[j] || ft_char_is_space(str[i]))
                 match++;
+            if (str[i] == array[j] && j < 4)
+                    *spawn = *spawn + 1;
             j++;
         }
         if (match == 0)
@@ -62,11 +64,14 @@ int ft_has_valid_characters(char *str)
 
 int	ft_map_to_parse(t_map *map)
 {
+    int spawn;
+
+    spawn = 0;
     write(1, "First 6 elements are well parsed!\n", 35);
     map->row = 0;
 	while (map->line != NULL)
 	{
-        if (!ft_has_valid_characters(map->line) && ft_free_line(map))
+        if (!ft_has_valid_characters(map->line, &spawn) && ft_free_line(map))
             return (ft_map_error(4));
         map->row++;
 		free(map->line);
@@ -74,10 +79,12 @@ int	ft_map_to_parse(t_map *map)
 		if (map->line && ft_line_is_space(map->line))
 			break ;
 	}
-	if (map->line != 0 && !ft_check_map_left_over(map))
-		return(ft_map_error(2));
     if (map->line == 0 && map->row == 0)
         return (ft_map_error(3));
+    if (spawn != 1)
+        return(ft_map_error(5));
+    if (map->line != 0 && !ft_check_map_left_over(map))
+		return(ft_map_error(2));
     write(1, "Map is well parsed!\n", 21);
     return (1);
 }

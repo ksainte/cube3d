@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:37:29 by ksainte           #+#    #+#             */
-/*   Updated: 2024/11/20 16:55:36 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/20 19:06:08 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct s_map
 {
     int fd;
     int index;
+    int starting_x;
+    int starting_y;
     char *line;
     int row;
     char *path;
@@ -59,7 +61,7 @@ int ft_valid_color_range(char *str, int *rgb);
 int ft_valid_color(char *str);
 int	ft_check_map_left_over(t_map *map);
 int ft_char_is_space(char c);
-int ft_has_valid_characters(char *str);
+int ft_has_valid_characters(char *str, int *spawn);
 int	ft_map_to_parse(t_map *map);
 int ft_element_is_valid(char *str, t_map *map);
 int ft_check_array(int array[6], int elements);
