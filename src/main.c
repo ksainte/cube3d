@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/21 17:08:12 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/21 17:32:02 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ bool	ft_has_valid_path(t_map *map, int y, int x)
     int height;
 
     height = map->row;
+    width = -1;
     if (y >= 0 && y < height)
         width = ft_strlen(map->tmp[y]);
     if (x == -1 || x >= width)
@@ -110,6 +111,7 @@ int ft_copy_to_data(t_map *map, t_data *data)
 		x++;
 	}
 	data->tab[x] = NULL;
+    ft_free(map);
     return (1);
 } 
 
@@ -123,10 +125,42 @@ int	ft_map_playable(t_map *map, t_data *data)
     if (!ft_has_valid_path(map, map->s_y, map->s_x) && ft_free_table(map->tmp))
         return (ft_map_error(6));
     ft_free_table(map->tmp);
-    if (!ft_copy_to_data(map, data))
-        return(ft_map_error(7));
+    // if (!ft_copy_to_data(map, data))
+    //     return(ft_map_error(7));
     write(1, "The player has a playable map!\n",32);
     return (1);
+}
+
+int ft_free_data(t_data *data)
+{
+    ft_free_table(data->tab);
+    free(data->NO);
+    free(data->SO);
+    free(data->EA);
+    free(data->WE);
+    return (1);
+}
+
+void ft_print_data(t_data *data)
+{
+    int i = 0;
+    while(i < 3)
+    {
+        printf("F %d\n", data->F[i]);
+        i++;
+    }
+    i = 0;
+    while(i < 3)
+    {
+        printf("C %d\n", data->C[i]);
+        i++;
+    }
+    printf("NO %s\n", data->NO);
+    printf("SO %s\n", data->SO);
+    printf("EA %s\n", data->EA);
+    printf("WE %s\n", data->WE);
+    printf("-----------------\n");
+    ft_print_table(data->tab);
 }
 
 int main(int argc, char **argv)
@@ -138,6 +172,8 @@ int main(int argc, char **argv)
         return (0);
     if((!ft_parse_valid(&map) || !ft_map_playable(&map, &data)) && ft_free(&map))
         return (0);
-    ft_free(&map);
+    // ft_free(&map);
+    // ft_print_data(&data);
+    // ft_free_data(&data);
     return (1);
 }

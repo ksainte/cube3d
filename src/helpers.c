@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:20 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/21 16:32:06 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/21 17:29:49 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void ft_init_textures_to_null(t_map *map)
     map->EA = NULL;
     map->WE = NULL;
     map->tab = NULL;
+    map->tmp = NULL;
 }
 void ft_print_elements(t_map *map)
 {
