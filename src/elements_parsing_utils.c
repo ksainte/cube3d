@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:58:34 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/20 13:18:30 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/21 16:53:10 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int ft_textures_and_colors(t_map *map, int elements)
     return (elements);
 }
 
-int ft_elements_to_parse(t_map *map)
+int ft_parse_valid(t_map *map)
 {
     int value;
     int elements;
@@ -133,7 +133,7 @@ int ft_elements_to_parse(t_map *map)
     else if (value < 6)
         str = "Error\nThere are less than 6 elements!\n";
     if (!str)
-        return (1);
+        return (ft_map_to_parse(map));
     ft_custom_error(str);
     return (0);    
 }

@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/21 16:14:43 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/21 17:08:12 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,33 @@ void	ft_find_start_pos(t_map *map)
 	}
 }
 
-int	ft_is_map_valid(t_map *map)
+int ft_copy_to_data(t_map *map, t_data *data)
+{
+    int	x;
+    
+    data->s_x = map->s_x;
+    data->s_y = map->s_y;
+    data->row = map->row;
+    data->F[3] = map->F[3];
+    data->C[3] = map->C[3];
+    data->NO = ft_strdup(map->NO);
+    data->SO = ft_strdup(map->SO);
+    data->WE = ft_strdup(map->WE);
+    data->EA = ft_strdup(map->EA);
+	data->tab = ft_calloc(map->row + 1, sizeof(char *));
+	if (!data->tab)
+		return (0);
+    x = 0;
+	while (data->tab[x])
+	{
+		data->tab[x] = ft_strdup(map->tab[x]);
+		x++;
+	}
+	data->tab[x] = NULL;
+    return (1);
+} 
+
+int	ft_map_playable(t_map *map, t_data *data)
 {
     if (!ft_fill_tab(map))
         return (ft_map_error(0));
@@ -96,24 +122,21 @@ int	ft_is_map_valid(t_map *map)
         return (ft_map_error(0));
     if (!ft_has_valid_path(map, map->s_y, map->s_x) && ft_free_table(map->tmp))
         return (ft_map_error(6));
-    // ft_print_table(map->tmp);
-    // printf("-----------------\n");
-    // ft_print_table(map->tab);
-    write(1, "Map has correct Path!\n",23);
     ft_free_table(map->tmp);
+    if (!ft_copy_to_data(map, data))
+        return(ft_map_error(7));
+    write(1, "The player has a playable map!\n",32);
     return (1);
 }
 
 int main(int argc, char **argv)
 {
 	t_map   map;
-    // t_data data;
+    t_data data;
 
     if(!(map.path = ft_check_args(argc, argv[1])))
         return (0);
-    if((!ft_elements_to_parse(&map) || !ft_map_to_parse(&map)) && ft_free(&map))
-        return (0);
-    if (!ft_is_map_valid(&map) && ft_free(&map))
+    if((!ft_parse_valid(&map) || !ft_map_playable(&map, &data)) && ft_free(&map))
         return (0);
     ft_free(&map);
     return (1);

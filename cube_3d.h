@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:37:29 by ksainte           #+#    #+#             */
-/*   Updated: 2024/11/21 14:37:26 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/21 16:53:37 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,23 @@ typedef struct s_map
     char *EA;
     int F[3];
     int C[3];
-    int walls;
-    
-    
+        
 } t_map;
 
 typedef struct s_data
 {
 
     char **tab;
+    int s_x;
+    int s_y;
+    int row;
+    char *NO;
+    char *SO;
+    char *WE;
+    char *EA;
+    int F[3];
+    int C[3];
+
 
 } t_data;
 
@@ -70,7 +78,7 @@ int ft_element_is_valid(char *str, t_map *map);
 int ft_check_array(int array[6], int elements);
 int ft_line_is_space(char *str);
 int ft_textures_and_colors(t_map *map, int elements);
-int ft_elements_to_parse(t_map *map);
+int ft_parse_valid(t_map *map);
 char *ft_check_args(int argc, char *str);
 int ft_has_valid_suffix(char *str);
 int ft_open_path(char *str);
