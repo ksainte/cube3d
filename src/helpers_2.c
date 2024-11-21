@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:52:00 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/21 14:36:25 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/21 14:52:04 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_calloc_tab(t_map *map)
 	i = 0;
 	map->tab = calloc(map->row + 1, sizeof(char *));
 	if (!map->tab)
-		return (ft_map_error(0));
+		return (0);
 	while (i < map->row)
 	{
 		len = ft_strlen(map->line);
@@ -45,7 +45,7 @@ int	ft_fill_tab(t_map *map)
         return (0); 
     map->line = (char *)malloc(sizeof(char *));
 	if (!map->line)
-        return (ft_map_error(0));
+        return (0);
 	while (map->line != NULL)
 	{
 		free(map->line);
