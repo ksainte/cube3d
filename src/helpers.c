@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:20 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/21 14:24:28 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/21 16:14:25 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void ft_init_textures_to_null(t_map *map)
     map->SO = NULL;
     map->EA = NULL;
     map->WE = NULL;
+    map->tab = NULL;
 }
 void ft_print_elements(t_map *map)
 {
@@ -44,7 +45,9 @@ int	ft_free_table(char **buffer)
 {
 	int	i;
 
-	i = -1;
+    if (!buffer)
+        return (1);
+    i = -1;
 	while (buffer[++i] != NULL)
 		free(buffer[i]);
 	free(buffer);

@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:34:25 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/21 14:10:26 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/21 16:07:48 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char *ft_custom_error(char *str)
 
 int ft_free(t_map *map)
 {
+    ft_free_table(map->tab);
     free(map->path);
     free(map->NO);
     free(map->SO);

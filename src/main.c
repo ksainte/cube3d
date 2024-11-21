@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/21 14:55:47 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/21 16:14:43 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ int	ft_is_map_valid(t_map *map)
         return (ft_map_error(0));
     if (!ft_has_valid_path(map, map->s_y, map->s_x) && ft_free_table(map->tmp))
         return (ft_map_error(6));
-    ft_print_table(map->tmp);
-    printf("-----------------\n");
-    ft_print_table(map->tab);
+    // ft_print_table(map->tmp);
+    // printf("-----------------\n");
+    // ft_print_table(map->tab);
     write(1, "Map has correct Path!\n",23);
     ft_free_table(map->tmp);
     return (1);
@@ -115,7 +115,6 @@ int main(int argc, char **argv)
         return (0);
     if (!ft_is_map_valid(&map) && ft_free(&map))
         return (0);
-    ft_free_table(map.tab);
     ft_free(&map);
     return (1);
 }
