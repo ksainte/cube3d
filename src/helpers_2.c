@@ -6,13 +6,13 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:52:00 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/20 19:34:46 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/21 14:36:25 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube_3d.h"
 
-int	ft_fill_tab(t_map *map)
+int	ft_calloc_tab(t_map *map)
 {
 	int	    i;
     int     len;
@@ -36,7 +36,7 @@ int	ft_fill_tab(t_map *map)
     return (1);
 }
 
-int	ft_fill_tab_from_fd(t_map *map)
+int	ft_fill_tab(t_map *map)
 {
 	int	    elements;
 
@@ -55,11 +55,7 @@ int	ft_fill_tab_from_fd(t_map *map)
         if (map->line && !ft_line_is_space(map->line))
             elements++;
 	}
-    if (!ft_fill_tab(map) && ft_free_line(map))
+    if (!ft_calloc_tab(map) && ft_free_line(map))
         return(0);
     return (1);
 }
-
-    // printf("x is %d\n", map->starting_x);
-    // printf("y is %d\n", map->starting_y);
-    // printf("%c\n", map->tab[map->starting_x][map->starting_y]);

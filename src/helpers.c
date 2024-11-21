@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:20 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/20 16:51:09 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/21 14:24:28 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void ft_print_elements(t_map *map)
     printf("WE %s\n", map->WE);
 }
 
-void	free_table(char **buffer)
+int	ft_free_table(char **buffer)
 {
 	int	i;
 
@@ -48,6 +48,7 @@ void	free_table(char **buffer)
 	while (buffer[++i] != NULL)
 		free(buffer[i]);
 	free(buffer);
+    return (1);
 }
 
 

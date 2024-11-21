@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:37:29 by ksainte           #+#    #+#             */
-/*   Updated: 2024/11/20 21:12:48 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/21 14:37:26 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@
 # include <errno.h>
 # include <fcntl.h>
 #include <string.h>
+#include <stdbool.h>
 
 
 typedef struct s_map
 {
     int fd;
     int index;
-    int starting_x;
-    int starting_y;
+    int s_x;
+    int s_y;
     char *line;
     int row;
     char *path;
@@ -80,9 +81,9 @@ int ft_fill_color(char *str, t_map *map, int index);
 int ft_fill_texture(char *str, int index, t_map *map);
 void ft_init_textures_to_null(t_map *map);
 void ft_print_elements(t_map *map);
-void	free_table(char **buffer);
+int	ft_free_table(char **buffer);
 void ft_print_table(char **tab);
 int ft_reopen_fd(t_map *map);
+int	ft_calloc_tab(t_map *map);
 int	ft_fill_tab(t_map *map);
-int	ft_fill_tab_from_fd(t_map *map);
 #endif

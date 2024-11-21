@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:34:25 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/20 18:40:03 by ks19             ###   ########.fr       */
+/*   Updated: 2024/11/21 14:10:26 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	ft_map_error(int error)
         str = "Error\nThe map contains wrong characters!\n";
     else if (error == 5)
         str = "Error\nThe map should have 1 spawning position!\n";
+    else if (error == 6)
+        str = "Error\nThe playable part of the map is invalid!\n";
     ft_custom_error(str);
     return (0);
 }
