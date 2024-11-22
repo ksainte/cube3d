@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:37:29 by ksainte           #+#    #+#             */
-/*   Updated: 2024/11/17 17:59:57 by asideris         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:54:31 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@
 # define ROTATION_S
 # define PLAYER_S
 # define PI 3.14159265358979323846
-
+# define VERTICAL_WALL 0
+# define HORIZONTAL_WALL 1
 typedef struct s_data
 {
 	int			fd;

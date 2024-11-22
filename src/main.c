@@ -29,6 +29,9 @@ void	ft_init_data(t_mlx *mlx)
 	mlx->data->player_y_map = 0;
 	mlx->data->map_w = 100;
 	mlx->data->map_h = 100;
+	mlx->mlx_ptr = NULL;
+	mlx->win_ptr = NULL;
+	mlx->img = NULL;
 }
 void	ft_init_structs(t_data *data, t_player *player, t_mlx *mlx, t_ray *ray)
 {
@@ -38,42 +41,54 @@ void	ft_init_structs(t_data *data, t_player *player, t_mlx *mlx, t_ray *ray)
 	ft_init_data(mlx);
 	ft_init_player(mlx);
 }
+float	get_v_inter(t_mlx *mlx, float angle)
+{
+}
 int	ft_cast_rays(t_mlx *mlx)
 {
-	(void)mlx;
+	double	angle;
+	int		loop;
+	float	hor_intersection;
+	float	ver_intersection;
+	int		i;
+
+	i = 0;
+	printf("increment rays by : %d\n", loop);
+	mlx->ray->ray_angle = mlx->player->player_angle - FIELD_OF_VIEW / 2;
+	while (i < SCREEN_WIDTH)
+	{
+		mlx->ray->wall_touch = VERTICAL_WALL;
+		hor_intersection = get_h_inter(mlx, mlx->ray->ray_angle);
+		ver_intersection = get_v_inter(mlx, mlx->ray->ray_angle);
+		if (ver_intersection <= hor_intersection)
+			mlx->ray->wall_distance = ver_intersection;
+		else
+		{
+			mlx->ray->wall_distance = hor_intersection;
+			mlx->ray->wall_touch = HORIZONTAL_WALL;
+		}
+		render_wall();
+		i++;
+		mlx->ray->ray_angle += mlx->player->player_fov_radians / SCREEN_WIDTH;
+	}
 	return (0);
 }
 int	ft_main_loop(void *mlx_ptr)
 {
 	t_mlx	*mlx;
 
+	write(2, "hello\n", 6);
 	mlx = mlx_ptr;
-	mlx_destroy_image(mlx->mlx_ptr, mlx->img);
+	(printf("destroying prev image\n"));
+	if (mlx->img)
+		mlx_destroy_image(mlx->mlx_ptr, mlx->img);
+	(printf("setting new mage\n"));
 	mlx->img = mlx_new_image(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
+	if (!mlx->img)
+		printf("no image");
 	// ft_set_player();
 	ft_cast_rays(mlx);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img, 0, 0);
-	return (0);
-}
-int	ft_launch_game(t_mlx *mlx)
-{
-	mlx->mlx_ptr = mlx_init();
-	if (mlx->mlx_ptr == NULL)
-	{
-		printf("MLX initialization failed!\n");
-		return (1);
-	}
-	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
-			"cube");
-	if (mlx->win_ptr == NULL)
-	{
-		printf("Failed to create window!\n");
-		return (1);
-	}
-	printf("Window opened!\n");
-	// mlx_key_hook(mlx->win_ptr, ft_keys_handle, mlx);
-	mlx_loop_hook(mlx->win_ptr, ft_main_loop, mlx);
-	mlx_loop(mlx->mlx_ptr);
 	return (0);
 }
 
@@ -90,6 +105,13 @@ int	main(int argc, char **argv)
 	(void)argv;
 	ft_fake_map(&data);
 	ft_init_structs(&data, &player, &mlx, &ray);
-	ft_launch_game(&mlx);
+	mlx.mlx_ptr = mlx_init();
+	if (!mlx.mlx_ptr)
+		return (0);
+	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
+			"cube");
+	mlx_loop_hook(mlx.mlx_ptr, ft_main_loop, &mlx);
+	printf("Entering mlx_loop...\n");
+	mlx_loop(mlx.mlx_ptr);
 	return (1);
 }
