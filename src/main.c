@@ -80,13 +80,11 @@ int	ft_main_loop(void *mlx_ptr)
 {
 	t_mlx	*mlx;
 
-	write(2, "hello\n", 6);
 	mlx = mlx_ptr;
-	(printf("destroying prev image\n"));
 	if (mlx->img)
 		mlx_destroy_image(mlx->mlx_ptr, mlx->img);
-	(printf("setting new mage\n"));
 	mlx->img = mlx_new_image(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
+	printf("Setting new image\n");
 	if (!mlx->img)
 		printf("no image");
 	// ft_set_player();
@@ -102,11 +100,7 @@ int	main(int argc, char **argv)
 	t_mlx		mlx;
 	t_map		map;
 	t_ray		ray;
-	char		*path;
 
-	(void)path;
-	(void)argc;
-	(void)argv;
 	if (!(map.path = ft_check_args(argc, argv[1])))
 		return (0);
 	if ((!ft_parse_valid(&map) || !ft_map_playable(&map, &data))
@@ -114,6 +108,7 @@ int	main(int argc, char **argv)
 		return (0);
 	ft_print_data(&data);
 	printf("initializing structs\n");
+	mlx.data = &data;
 	ft_init_structs(&player, &mlx, &ray);
 	printf("init struct done\n");
 	mlx.mlx_ptr = mlx_init();
