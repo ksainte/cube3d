@@ -81,15 +81,12 @@ int	ft_main_loop(void *mlx_ptr)
 	t_mlx	*mlx;
 
 	mlx = mlx_ptr;
-	if (mlx->img)
-		mlx_destroy_image(mlx->mlx_ptr, mlx->img);
+	ft_cast_rays(mlx);
 	mlx->img = mlx_new_image(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
 	printf("Setting new image\n");
-	if (!mlx->img)
-		printf("no image");
 	// ft_set_player();
-	ft_cast_rays(mlx);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img, 0, 0);
+	mlx_destroy_image(mlx->mlx_ptr, mlx->img);
 	return (0);
 }
 
