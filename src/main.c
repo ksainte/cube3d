@@ -104,6 +104,7 @@ int	main(int argc, char **argv)
 		&& ft_free(&map))
 		return (0);
 	ft_print_data(&data);
+	ft_print_data(&data);
 	printf("initializing structs\n");
 	mlx.data = &data;
 	ft_init_structs(&player, &mlx, &ray);
