@@ -99,6 +99,15 @@ bool			ft_has_valid_path(t_map *map, int y, int x);
 void			ft_find_start_pos(t_map *map);
 int				ft_copy_to_data(t_map *map, t_data *data);
 int				ft_map_playable(t_map *map, t_data *data);
+
+
+typedef struct s_image
+{
+	void		*reference_player;
+	void		*reference_walls;
+	void		*reference_bgd;
+}				t_image;
+
 typedef struct s_player
 {
 	int			player_x_px;
@@ -107,12 +116,20 @@ typedef struct s_player
 	double		player_angle;
 	float		player_fov_radians;
 }				t_player;
+
 typedef struct s_ray
 {
 	double		ray_angle;
 	double		wall_distance;
 	int			wall_touch;
 }				t_ray;
+
+typedef struct s_vector
+{
+	int			x;
+	int			y;
+}				t_vector;
+
 typedef struct s_mlx
 {
 	t_data		*data;
@@ -120,7 +137,9 @@ typedef struct s_mlx
 	void		*mlx_ptr;
 	t_ray		*ray;
 	void		*win_ptr;
-	void		*img;
+	t_image		img;
+	int			isize[2];
+	t_vector	img_pos;
 }				t_mlx;
 
 #endif
