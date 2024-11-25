@@ -290,5 +290,6 @@ int	main(int argc, char **argv)
 	printf("Entering mlx_loop...\n");
 	mlx_loop(mlx.mlx_ptr);
 	ft_free_data(&data);
+	
 	return (0);
 }
