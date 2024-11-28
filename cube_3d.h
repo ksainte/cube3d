@@ -14,11 +14,13 @@
 
 # define SCREEN_WIDTH 600
 # define SCREEN_HEIGHT 600
-# define TILE_S 64
+# define TILE 64
 # define FIELD_OF_VIEW 60
 # define ROTATION_S
 # define PLAYER_S
 # define PI 3.14159265358979323846
+# define PI_90 1.57079632679
+// # define PI_270
 # define VERTICAL_WALL 0
 # define HORIZONTAL_WALL 1
 
@@ -101,10 +103,10 @@ int				ft_copy_to_data(t_map *map, t_data *data);
 int				ft_map_playable(t_map *map, t_data *data);
 typedef struct s_player
 {
-	int			player_x_px;
-	int			player_y_px;
-	char		player_orientation_start;
-	double		player_angle;
+	int			start_x;//start x pos
+	int			start_y;//start y pos
+	char		orientation_start;
+	double		start_angle;
 	float		player_fov_radians;
 }				t_player;
 typedef struct s_ray
