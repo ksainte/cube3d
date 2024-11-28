@@ -105,6 +105,8 @@ typedef struct s_player
 {
 	int			start_x;//start x pos
 	int			start_y;//start y pos
+	float		current_x;
+	float		current_y;
 	char		orientation_start;
 	double		start_angle;
 	float		player_fov_radians;

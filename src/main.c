@@ -114,7 +114,7 @@ float ft_deg_to_rad(float ray_angle)
 
 int	ft_cast_rays(t_mlx *mlx)
 {
-	int mx,my,mp, ray_counter, i, j, ray_coord;
+	int mx,my,mp, ray_counter, i, j, ray_coord, len_line;
 	float px, py, vx,vy,rx,ry,ra,x_var,y_var,disV,disH, Tan;
 
 	ray_counter = 1;
@@ -125,35 +125,137 @@ int	ft_cast_rays(t_mlx *mlx)
 	py = mlx->player->start_y * TILE;
 	while (i < ray_counter)
 	{
-			//horizontal
-			//cas de 0 a 90 et 270 a 360 ie lorsque cos est pos!
-			if (cos(ft_deg_to_rad(ra)) > 0)
+		//horizontal
+		//cas de 0 a 90 et 270 a 360 ie lorsque cos est pos!
+		if (cos(ft_deg_to_rad(ra)) > 0)
+		{
+			if (sin(ft_deg_to_rad(ra)) > 0)//de 0 a 90
 			{
-				if (ra > 0)//de 0 a 90
-				{
-					Tan = tan(ft_deg_to_rad(ra));
-					y_var = 64;
-					x_var = y_var / Tan;
-					ry = py - y_var;
-					rx = px + x_var;
-				}
+				Tan = tan(ft_deg_to_rad(ra));
+				y_var = 64;
+				x_var = y_var / Tan;
+				ry = py - y_var;
+				rx = px + x_var;
 			}
-
+			if (sin(ft_deg_to_rad(ra)) < 0)//de 270 a 360
+			{
+				Tan = tan(ft_deg_to_rad(ra));
+				y_var = 64;
+				x_var = y_var / Tan;
+				ry = py + y_var;
+				rx = px + x_var;
+			}
+		}
+		//cas de 90 a 180 et 180 a 270 ie lorsque cos est pos!
+		if (cos(ft_deg_to_rad(ra)) < 0)
+		{
+			if (sin(ft_deg_to_rad(ra)) > 0)//de 90 a 180
+			{
+				Tan = tan(ft_deg_to_rad(ra));
+				y_var = 64;
+				x_var = y_var / Tan;
+				ry = py - y_var;
+				rx = px - x_var;
+			}
+			if (sin(ft_deg_to_rad(ra)) < 0)//de 180 a 270
+			{
+				Tan = tan(ft_deg_to_rad(ra));
+				y_var = 64;
+				x_var = y_var / Tan;
+				ry = py + y_var;
+				rx = px - x_var;
+			}
 		}
 		j = 0;
-		while (j < ray_coord)
+		while (j < (mlx->data->row - ((int)py / 64) - 1))
 		{
-			mx = rx / 64;
-			my = ry / 64;
+			mx = (int)rx / 64;
+			my = (int)ry / 64;
+			len_line = 0;
+			if (my < mlx->data->row)
+				len_line = ft_strlen(mlx->data->tab[my]);
+			if (my < mlx->data->row && mx < len_line && mlx->data->t_map[my][mx] == 1)
+			{
+				disH = (rx - px) / cos(ft_deg_to_rad(ra));
+				break;
+			}
 			ry = ry - y_var;
 			rx = rx + x_var;
 			j++;
 		}
+		vx = rx;
+		vy = ry;
+
+		//vertical
+		//cas de 0 a 90 et 270 a 360 ie lorsque cos est pos!
+		if (cos(ft_deg_to_rad(ra)) > 0)
+		{
+			if (sin(ft_deg_to_rad(ra)) > 0)//de 0 a 90
+			{
+				Tan = tan(ft_deg_to_rad(ra));
+				x_var = 64;
+				y_var = x_var * Tan;
+				ry = py - y_var;
+				rx = px + x_var;
+			}
+			if (sin(ft_deg_to_rad(ra)) < 0)//de 270 a 360
+			{
+				Tan = tan(ft_deg_to_rad(ra));
+				x_var = 64;
+				y_var = x_var * Tan;
+				ry = py + y_var;
+				rx = px + x_var;
+			}
+		}
+		if (cos(ft_deg_to_rad(ra)) < 0)
+		{
+			if (sin(ft_deg_to_rad(ra)) > 0)//de 90 a 180
+			{
+				Tan = tan(ft_deg_to_rad(ra));
+				x_var = 64;
+				y_var = x_var * Tan;
+				ry = py - y_var;
+				rx = px - x_var;
+			}
+			if (sin(ft_deg_to_rad(ra)) < 0)//de 180 a 270
+			{
+				Tan = tan(ft_deg_to_rad(ra));
+				x_var = 64;
+				y_var = x_var * Tan;
+				ry = py + y_var;
+				rx = px - x_var;
+			}
+		}
+		j = 0;
+		while (j < ray_coord)
+		{
+			mx = (int)rx / 64;
+			my = (int)ry / 64;
+			len_line = 0;
+			if (my < mlx->data->row)
+				len_line = ft_strlen(mlx->data->tab[my]);
+			if (my < mlx->data->row && mx < len_line && mlx->data->t_map[my][mx] == 1)
+			{
+				disV = (rx - px) / cos(ft_deg_to_rad(ra));
+				break;
+			}
+			ry = ry - y_var;
+			rx = rx + x_var;
+			j++;
+		}
+		if (disH < disV)
+		{
+			rx = vx;
+			ry = vy;
+			// disV = disH;
+		}
+		ra = ft_adjust_angle(ra - 1);
 		i++;
 	}
-
 	return (0);
 }
+
+
 
 int	ft_main_loop(void *mlx_ptr)
 {
