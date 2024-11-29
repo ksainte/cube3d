@@ -184,23 +184,94 @@ int	ft_cast_rays(t_mlx *mlx)
 			j++;
 		}
 		final_dist = disV;
+		mlx->ray->wall_touch = VERTICAL_WALL;
 		if (disH < disV)
 		{
 			rx = vx;
 			ry = vy;
 			final_dist - disH;
-			// disV = disH;
+			mlx->ray->wall_touch = HORIZONTAL_WALL;
 		}
 		mlx->ray->wall_distance = final_dist;
 		mlx->ray->ray_angle = ra;
-		mlx->ray->wall_touch = ft_put_wall();
+		ft_put_wall(mlx, i);
 		ra = ft_adjust_angle(ra - 1);
 		i++;
 	}
 	return (0);
 }
-int	ft_put_wall(void)
+ft_get_wall_color(t_mlx *mlx, int orientation_flag)
 {
+	mlx->ray->ray_angle = ft_adjust_angle(mlx->ray->ray_angle);
+	if (orientation_flag = VERTICAL_WALL)
+	{
+		if (mlx->ray->ray_angle > 90 && mlx->ray->ray_angle < 270)
+			return (0xB5B5B5FF); // mur regarde  gauche
+		else
+			return (0xB5B5B5FF); // mur regarde a droite
+	}
+	else
+	{
+		if (mlx->ray->ray_angle > 0 && mlx->ray->ray_angle < 180)
+			return (0xF5F5F5FF); // mur regarde vers le bas
+		else
+			return (0xF5F5F5FF); // mur regarde vers le haut
+	}
+}
+int	ft_put_pixel_to_screen(t_mlx *mlx, int x, int y, int color)
+{
+	if (x < 0 || x >= SCREEN_WIDTH || y >= SCREEN_HEIGHT || y < 0)
+		return (0);
+	mlx_put_pixel(mlx->img, x, y, color);
+}
+int	ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,
+		int wall_bot_px)
+{
+	int	color;
+	int	j;
+	int	i;
+
+	color = ft_get_wall_color(mlx, mlx->ray->wall_touch);
+	// retourne le 0x du wall celon son orientation
+	// WALL
+	j = wall_top_px;
+	while (j < wall_bot_px)
+	{
+		// apllique la couleur au bon pixel en question
+		put_pixel_to_screen(mlx, ray_num, j, color);
+		j++;
+	}
+	// FLOOR
+	i = wall_bot_px;
+	while (i < SCREEN_HEIGHT)
+	{
+		ft_put_pixel_to_screen(mlx, ray_num, i, color);
+		i++;
+	}
+	// CEILING
+	i = 0;
+	while (i < wall_top_px)
+	{
+		ft_put_pixel_to_screen(mlx, ray_num, i, color);
+		i++;
+	}
+	return (0);
+}
+int	ft_put_wall(t_mlx *mlx, int ray_num)
+{
+	double	wall_height;
+	double	bottom_px;
+	double	top_px;
+
+	wall_height = ((64 / mlx->ray->wall_distance) * ((SCREEN_WIDTH / 2)
+				/ tan(mlx->player->player_fov_radians)));
+	top_px = (SCREEN_HEIGHT / 2) - (wall_height / 2);
+	bottom_px = (SCREEN_HEIGHT / 2) + (wall_height / 2);
+	if (bottom_px > SCREEN_HEIGHT)
+		bottom_px = SCREEN_HEIGHT;
+	if (top_px < 0)
+		top_px = SCREEN_HEIGHT;
+	ft_draw_px_collumn(mlx, ray_num, top_px, bottom_px);
 }
 int	ft_main_loop(void *mlx_ptr)
 {
