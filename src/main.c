@@ -148,9 +148,9 @@ int	ft_cast_rays(t_mlx *mlx)
 		else
 			x_var = 0;
 		if (sin(ft_deg_to_rad(ra)) > 0)//de 0 a 90
-			ry=(((int)py >> 6) << 6) -0.0001;//arrondi a l unite sup
+			ry=(((int)py >> 6) << 6) -0.0001;//arrondi a l unite inf
 		if (sin(ft_deg_to_rad(ra)) < 0)//de 0 a 90
-     		ry=(((int)py >> 6) << 6) + 64;      //arrondi a l unite inf
+     		ry=(((int)py >> 6) << 6) + 64;      //arrondi a l unite sup
 		rx = px + (py - ry) / Tan;
 		j = 0;
 		while (j < ray_coord)
