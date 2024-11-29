@@ -125,16 +125,20 @@ int	ft_cast_rays(t_mlx *mlx)
 	py = mlx->player->start_y * TILE;
 	flag_cos = 1;
 	flag_sin = 1;
-	if (ra != 90 && ra != 180)
-		Tan = tan(ft_deg_to_rad(ra));
-	else
-		Tan = -1;
 	//if o ou 360 deg, cos = 1, sin = 0, tan = 0, que distV
 	//if 90 deg, cos = 0, sin = 1, tan = seg, que distH - 64
 	//if 180 deg, cos = -1, sin = 0, tan = 0, que distV
 	//if 270 deg, cos = 0, sin = -1, tan = seg, que distH + 64
 	while (i < ray_counter)
 	{
+		if (ra != 90 && ra != 180)
+			Tan = tan(ft_deg_to_rad(ra));
+		else
+			Tan = -1;
+		if (cos(ft_deg_to_rad(ra)) < 0)
+			flag_cos = -1;
+		if (sin(ft_deg_to_rad(ra)) > 0)//de 0 a 90
+			flag_sin = -1;
 		// if (Tan == 0) ie si 0 ou 360 deg ou 180
 			//skip HOR et set disH = distV + 1
 		//horizontal
@@ -143,12 +147,11 @@ int	ft_cast_rays(t_mlx *mlx)
 			x_var = y_var / Tan;
 		else
 			x_var = 0;
-		if (cos(ft_deg_to_rad(ra)) < 0)
-			flag_cos = -1;
-		rx = px + (flag_cos) * x_var;
 		if (sin(ft_deg_to_rad(ra)) > 0)//de 0 a 90
-			flag_sin = -1;
-		ry = py + (flag_sin) * y_var;
+			ry=(((int)py >> 6) << 6) -0.0001;//arrondi a l unite sup
+		if (sin(ft_deg_to_rad(ra)) < 0)//de 0 a 90
+     		ry=(((int)py >> 6) << 6) + 64;      //arrondi a l unite inf
+		rx = px + (py - ry) / Tan;
 		j = 0;
 		while (j < ray_coord)
 		{
@@ -175,14 +178,11 @@ int	ft_cast_rays(t_mlx *mlx)
 		//skip VER et set disV = distH + 1
 		x_var = 64;
 		y_var = x_var * Tan;
-		flag_cos = 1;
-		flag_sin = 1;
+		if (cos(ft_deg_to_rad(ra)) > 0)//droite
+			rx = (((int)px >> 6) << 6) + 64;
 		if (cos(ft_deg_to_rad(ra)) < 0)
-			flag_cos = -1;
-		rx = px + (flag_cos) * x_var;
-		if (sin(ft_deg_to_rad(ra)) > 0)//de 0 a 90
-			flag_sin = -1;
-		ry = py + (flag_sin) * y_var;
+			rx = (((int)px >> 6) << 6) -0.0001;//gauche
+		ry = py + (px - rx) * Tan;
 		j = 0;
 		while (j < ray_coord)
 		{
