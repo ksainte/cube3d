@@ -5,7 +5,6 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>
-# include <mlx.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -103,8 +102,8 @@ int				ft_copy_to_data(t_map *map, t_data *data);
 int				ft_map_playable(t_map *map, t_data *data);
 typedef struct s_player
 {
-	int			start_x;//start x pos
-	int			start_y;//start y pos
+	int start_x; // start x pos
+	int start_y; // start y pos
 	float		current_x;
 	float		current_y;
 	char		orientation_start;
