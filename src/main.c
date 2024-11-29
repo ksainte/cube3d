@@ -131,14 +131,14 @@ int	ft_cast_rays(t_mlx *mlx)
 	//if 270 deg, cos = 0, sin = -1, tan = seg, que distH + 64
 	while (i < ray_counter)
 	{
-		if (ra != 90 && ra != 180)
-			Tan = tan(ft_deg_to_rad(ra));
-		else
-			Tan = -1;
 		if (cos(ft_deg_to_rad(ra)) < 0)
 			flag_cos = -1;
 		if (sin(ft_deg_to_rad(ra)) > 0)//de 0 a 90
 			flag_sin = -1;
+		if (ra != 90 && ra != 180)
+			Tan = tan(ft_deg_to_rad(ra));
+		else
+			Tan = -1;
 		// if (Tan == 0) ie si 0 ou 360 deg ou 180
 			//skip HOR et set disH = distV + 1
 		//horizontal
