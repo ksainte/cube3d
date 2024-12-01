@@ -129,13 +129,16 @@ int	ft_cast_rays(t_mlx *mlx)
 	//if 90 deg, cos = 0, sin = 1, tan = seg, que distH - 64
 	//if 180 deg, cos = -1, sin = 0, tan = 0, que distV
 	//if 270 deg, cos = 0, sin = -1, tan = seg, que distH + 64
+
+	//if 0, 180 ou 360, que distV car tan == 0
+	//if 90 ou 270, !tan et que distH
 	while (i < ray_counter)
 	{
 		if (cos(ft_deg_to_rad(ra)) < 0)
 			flag_cos = -1;
 		if (sin(ft_deg_to_rad(ra)) > 0)//de 0 a 90
 			flag_sin = -1;
-		if (ra != 90 && ra != 180)
+		if (ra != 90 && ra != 270)//if 90 ou 270, que distH et tan == -1
 			Tan = tan(ft_deg_to_rad(ra));
 		else
 			Tan = -1;
@@ -173,7 +176,6 @@ int	ft_cast_rays(t_mlx *mlx)
 		vy = ry;
 
 		//vertical
-		//cas de 0 a 90 et 270 a 360 ie lorsque cos est pos!
 		// if (Tan == -1) ie 90 ou 270
 		//skip VER et set disV = distH + 1
 		x_var = 64;
