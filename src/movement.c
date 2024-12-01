@@ -1,0 +1,58 @@
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   movement.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roko <roko@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/01 14:52:32 by roko              #+#    #+#             */
+/*   Updated: 2024/12/01 20:41:30 by roko             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../cube_3d.h"
+
+int	ft_rot_player(void)
+{
+}
+int	ft_move_player(void)
+{
+}
+int	ft_adjust_values_move(void)
+{
+}
+int	key_press(int keycode, void *ml)
+{
+	t_mlx	*mlx;
+
+	mlx = (t_mlx *)ml;
+	if (keycode == KEY_ESCAPE)
+		ft_exit(mlx);
+	else if (keycode == KEY_A)
+		mlx->player->moving_left_right = -1;
+	else if (keycode == KEY_D)
+		mlx->player->moving_left_right = 1;
+	else if (keycode == KEY_S)
+		mlx->player->moving_back_forth = -1;
+	else if (keycode == KEY_W)
+		mlx->player->moving_back_forth = 1;
+	else if (keycode == KEY_LEFT)
+		mlx->player->look_rot = -1;
+	else if (keycode == KEY_RIGHT)
+		mlx->player->look_rot = 1;
+	return (0);
+}
+int	key_release(int keycode, void *ml)
+{
+	t_mlx	*mlx;
+
+	mlx = (t_mlx *)ml;
+	if (keycode == KEY_A || keycode == KEY_D)
+		mlx->player->moving_left_right = 0;
+	else if (keycode == KEY_W || keycode == KEY_S)
+		mlx->player->moving_back_forth = 0;
+	else if (keycode == KEY_LEFT || keycode == KEY_RIGHT)
+		mlx->player->look_rot = 0;
+	return (0);
+}

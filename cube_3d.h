@@ -2,6 +2,7 @@
 # define CUBE_3D_H
 
 # include "./Libft/libft.h"
+# include "./mlx/mlx.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>
@@ -17,11 +18,43 @@
 # define FIELD_OF_VIEW 60
 # define ROTATION_S
 # define PLAYER_S
+// PI
 # define PI 3.14159265358979323846
 # define PI_90 1.57079632679
-// # define PI_270
+// VER_HOR
 # define VERTICAL_WALL 0
 # define HORIZONTAL_WALL 1
+// KEYS
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
+# define KEY_ESCAPE 65307
+// SPEEDS
+# define ROT_SPEED 0.05
+# define MOVE_SPEED 4
+
+typedef struct s_player
+{
+	int start_x; // start x pos
+	int start_y; // start y pos
+	float		current_x;
+	float		current_y;
+	char		orientation_start;
+	double		start_angle;
+	float		player_fov_radians;
+	int			moving_left_right;
+	int			moving_back_forth;
+	int			look_rot;
+}				t_player;
+typedef struct s_ray
+{
+	double		ray_angle;
+	double		wall_distance;
+	int			wall_touch;
+}				t_ray;
 
 typedef struct s_map
 {
@@ -57,6 +90,16 @@ typedef struct s_data
 	int			C[3];
 
 }				t_data;
+typedef struct s_mlx
+{
+	t_data		*data;
+	t_player	*player;
+	void		*mlx_ptr;
+	t_ray		*ray;
+	void		*win_ptr;
+	void		*img;
+}				t_mlx;
+// PARSING
 
 void			ft_system_error(void);
 char			*ft_custom_error(char *str);
@@ -100,30 +143,20 @@ bool			ft_has_valid_path(t_map *map, int y, int x);
 void			ft_find_start_pos(t_map *map);
 int				ft_copy_to_data(t_map *map, t_data *data);
 int				ft_map_playable(t_map *map, t_data *data);
-typedef struct s_player
-{
-	int start_x; // start x pos
-	int start_y; // start y pos
-	float		current_x;
-	float		current_y;
-	char		orientation_start;
-	double		start_angle;
-	float		player_fov_radians;
-}				t_player;
-typedef struct s_ray
-{
-	double		ray_angle;
-	double		wall_distance;
-	int			wall_touch;
-}				t_ray;
-typedef struct s_mlx
-{
-	t_data		*data;
-	t_player	*player;
-	void		*mlx_ptr;
-	t_ray		*ray;
-	void		*win_ptr;
-	void		*img;
-}				t_mlx;
+
+// RAYCASTING
+float			get_v_inter(t_mlx *mlx, float angle);
+float			get_h_inter(t_mlx *mlx, float angle);
+int				ft_cast_rays(t_mlx *mlx);
+float			ft_adjust_angle(int angle);
+// RENDERING
+int				ft_get_wall_color(t_mlx *mlx, int orientation_flag);
+int				ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,
+					int wall_bot_px);
+int				ft_put_wall(t_mlx *mlx, int ray_num);
+int				ft_put_pixel_to_screen(t_mlx *mlx, int x, int y, int color);
+// MOVEMENT
+int				key_release(int keycode, void *ml);
+int				key_press(int keycode, void *ml);
 
 #endif
