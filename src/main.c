@@ -132,6 +132,7 @@ int	ft_cast_rays(t_mlx *mlx)
 
 	//if 0, 180 ou 360, que distV car tan == 0
 	//if 90 ou 270, !tan et que distH
+	
 	while (i < ray_counter)
 	{
 		if (cos(ft_deg_to_rad(ra)) < 0)
