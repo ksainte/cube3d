@@ -127,6 +127,7 @@ int	ft_put_wall(t_mlx *mlx, int ray_num)
 		bottom_px = SCREEN_HEIGHT;
 	if (top_px < 0)
 		top_px = SCREEN_HEIGHT;
+	printf("hello\n");
 	ft_draw_px_collumn(mlx, ray_num, top_px, bottom_px);
 	return (0);
 }
@@ -243,7 +244,7 @@ int	ft_cast_rays(t_mlx *mlx)
 	// mlx->ray->ra = ft_adjust_angle(mlx->player->pa) + 30;//0 + 30
 	mlx->ray->ra = 90; // 0 + 30
 	printf("ra is %f\n", mlx->ray->ra);
-	while (i < 1)
+	while (i < 60)
 	{
 		ft_set_flag(mlx, &Tan);
 		printf("cos %d\n", mlx->ray->flag_cos);
@@ -260,6 +261,8 @@ int	ft_cast_rays(t_mlx *mlx)
 		if (disH < disV)
 			disV = disH; // final dis is disV
 		printf("Final Dis is %f\n", disV);
+		printf("Putting wall\n");
+		// ft_put_wall(mlx, i);
 		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - 1);
 		i++;
 	}
@@ -276,6 +279,7 @@ int	ft_main_loop(void *mlx_ptr)
 	sleep(1);
 	// ft_set_player(mlx);
 	ft_cast_rays(mlx);
+	printf("RAYS CASTED\n");
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img, 0, 0);
 	mlx_destroy_image(mlx->mlx_ptr, mlx->img);
 	return (0);
@@ -307,8 +311,8 @@ int	main(int argc, char **argv)
 			"cube");
 	// printf("Window created\n");
 	// ft_main_loop(mlx.mlx_ptr);
-	mlx_key_hook(mlx.mlx_ptr, &key_press, &mlx);
-	mlx_key_hook(mlx.mlx_ptr, &key_release, &mlx);
+	mlx_hook(mlx.win_ptr, 2, 1L << 0, &key_press, &mlx);
+	mlx_hook(mlx.win_ptr, 3, 1L << 1, &key_release, &mlx);
 	mlx_loop_hook(mlx.mlx_ptr, &ft_main_loop, &mlx);
 	printf("Entering mlx_loop...\n");
 	mlx_loop(mlx.mlx_ptr);

@@ -67,8 +67,6 @@ int	key_press(int keycode, void *ml)
 	t_mlx	*mlx;
 
 	mlx = (t_mlx *)ml;
-	printf("hello");
-	sleep(3);
 	if (keycode == KEY_ESCAPE)
 		exit(0);
 	else if (keycode == KEY_A)
