@@ -13,18 +13,6 @@
 
 #include "../cube_3d.h"
 
-// void	ft_init_player(t_mlx *mlx)
-// {
-// 	mlx->player->player_fov_radians = FIELD_OF_VIEW * (PI / 180);
-// 	// FORMULA : radians=degrees×(180π​)
-// 	mlx->player->player_orientation_start = 'N';
-// 	if (mlx->player->player_orientation_start == 'N')
-// 		mlx->player->player_angle = (3 * PI) / 2; /// DEPEND DE LORIENTATION (N)
-// 	mlx->player->player_y_px = mlx->data->s_y * TILE_S + TILE_S / 2;
-// 	mlx->player->player_x_px = mlx->data->s_x * TILE_S + TILE_S / 2;
-// 	printf("ok\n");
-// }
-
 void	ft_init_player(t_mlx *mlx)
 {
 	mlx->player->player_fov_radians = FIELD_OF_VIEW * (PI / 180);
@@ -35,7 +23,7 @@ void	ft_init_player(t_mlx *mlx)
 	mlx->ray->flag_cos = 1;
 	mlx->ray->flag_sin = 1;
 	mlx->player->orientation_start = mlx->data->tab[mlx->player->start_y][mlx->player->start_x];
-	printf("%c\n",mlx->player->orientation_start);
+	printf("letter is %c\n",mlx->player->orientation_start);
 	if (mlx->player->orientation_start == 'N')
 		mlx->player->pa = 90;
 	if (mlx->player->orientation_start == 'S')
@@ -92,9 +80,9 @@ float ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var)
 		mx = (int)rx / 64;
 		my = (int)ry / 64;
 		len_line = 0;
-		if (my < mlx->data->row)
+		if (my > 0 && my < mlx->data->row)
 			len_line = ft_strlen(mlx->data->tab[my]);
-		if (my < mlx->data->row && mx < len_line && mlx->data->tab[my][mx] == 1)
+		if ((my > 0 && my < mlx->data->row) && (mx > 0 && mx < len_line) && mlx->data->tab[my][mx] == '1')
 			break;
 		rx = rx + (mlx->ray->flag_cos) * x_var;
 		ry = ry + (mlx->ray->flag_sin) * y_var;
@@ -117,7 +105,7 @@ int ft_calculate_distH(float Tan, t_mlx *mlx)
 	px = mlx->player->px;
 	py = mlx->player->py;
 	y_var = 64;
-	if (Tan != -1)
+	if (Tan != -2)
 		x_var = y_var / Tan;
 	else
 		x_var = 0;
@@ -126,7 +114,9 @@ int ft_calculate_distH(float Tan, t_mlx *mlx)
 	else if (sin(ft_deg_to_rad(mlx->ray->ra)) < 0)//de 0 a 90
 		ry=(((int)py >> 6) << 6) + 64;      //arrondi a l unite sup
 	rx = px + (py - ry) / Tan;
+	printf("rx is %f\n", rx);
 	distH = ft_get_dist(rx, ry, mlx, x_var, y_var);
+	printf("disH is %f\n", distH);
 	return (distH);
 }
 
@@ -150,6 +140,7 @@ int ft_calculate_distV(float Tan, t_mlx *mlx)
 		rx = (((int)px >> 6) << 6) -0.0001;//gauche
 	ry = py + (px - rx) * Tan;
 	distV = ft_get_dist(rx, ry, mlx, x_var, y_var);
+	printf("disV is %f\n", distV);
 	return (distV);
 }
 
@@ -162,7 +153,7 @@ void ft_set_flag(t_mlx *mlx, float *Tan)
 	if (mlx->ray->ra != 90 && mlx->ray->ra != 270)//if 90 ou 270, que distH et tan == -1
 		*Tan = tan(ft_deg_to_rad(mlx->ray->ra));
 	else
-		*Tan = -1;
+		*Tan = -2;
 }
 
 int	ft_cast_rays(t_mlx *mlx)
@@ -173,20 +164,26 @@ int	ft_cast_rays(t_mlx *mlx)
 	float Tan;
 
 	i = 0;
+	printf("%f \n", mlx->player->pa);
 	mlx->ray->ra = ft_adjust_angle(mlx->player->pa) + 30;//0 + 30
+	printf("ra is %f\n", mlx->ray->ra);
 	while (i < 1)
 	{
 		ft_set_flag(mlx, &Tan);
+		printf("cos %d\n", mlx->ray->flag_cos);
+		printf("sin is %d\n", mlx->ray->flag_sin);
+		printf("Tan is %f\n", Tan);
 		if (Tan != 0)//ie si ! 0 ou 180 deg
 			disH = ft_calculate_distH(Tan, mlx);
-		if (Tan != -1)//ie si ! 90 ou 270 deg
+		if (Tan != -2)//ie si ! 90 ou 270 deg
 			disV = ft_calculate_distV(Tan, mlx);
 		else
 			disV = disH + 1;
 		if (Tan == 0)
 			disH = disV + 1;
 		if (disH < disV)
-			disV = disH;
+			disV = disH;//final dis is disV
+		printf("Final Dis is %f\n",disV);
 		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - 1);
 		i++;
 	}
@@ -198,7 +195,8 @@ int	ft_main_loop(void *mlx_ptr)
 	t_mlx	*mlx;
 
 	mlx = mlx_ptr;
-	ft_cast_rays(mlx);
+	printf("%f \n", mlx->player->pa);
+	// ft_cast_rays(mlx);
 	// mlx->img = mlx_new_image(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
 	// // printf("Setting new image\n");
 	// // ft_set_player();
@@ -219,7 +217,7 @@ int	main(int argc, char **argv)
 		return (0);
 	if ((!ft_parse_valid(&map) || !ft_map_playable(&map, &data)) && ft_free(&map))
 		return (0);
-	ft_print_data(&data);
+	// ft_print_data(&data);
 	printf("initializing structs\n");
 	mlx.data = &data;
 	ft_init_structs(&player, &mlx, &ray);
@@ -227,7 +225,8 @@ int	main(int argc, char **argv)
 	mlx.mlx_ptr = mlx_init();
 	if (!mlx.mlx_ptr)
 		return (0);
-	ft_main_loop(mlx.mlx_ptr);
+	ft_cast_rays(&mlx);
+	// ft_main_loop(mlx.mlx_ptr);
 	// mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
 	// 		"cube");
 	// mlx_loop_hook(mlx.mlx_ptr, ft_main_loop, &mlx);
