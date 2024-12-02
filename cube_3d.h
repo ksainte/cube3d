@@ -158,5 +158,6 @@ int				ft_put_pixel_to_screen(t_mlx *mlx, int x, int y, int color);
 // MOVEMENT
 int				key_release(int keycode, void *ml);
 int				key_press(int keycode, void *ml);
+int				ft_set_player(t_mlx *mlx);
 
 #endif
