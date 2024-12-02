@@ -80,9 +80,9 @@ float ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var)
 		mx = (int)rx / 64;
 		my = (int)ry / 64;
 		len_line = 0;
-		if (my > 0 && my < mlx->data->row)
+		if (my > -1 && my < mlx->data->row)
 			len_line = ft_strlen(mlx->data->tab[my]);
-		if ((my > 0 && my < mlx->data->row) && (mx > 0 && mx < len_line) && mlx->data->tab[my][mx] == '1')
+		if ((my > -1 && my < mlx->data->row) && (mx > -1 && mx < len_line) && mlx->data->tab[my][mx] == '1')
 			break;
 		rx = rx + (mlx->ray->flag_cos) * x_var;
 		ry = ry + (mlx->ray->flag_sin) * y_var;
@@ -165,7 +165,8 @@ int	ft_cast_rays(t_mlx *mlx)
 
 	i = 0;
 	printf("%f \n", mlx->player->pa);
-	mlx->ray->ra = ft_adjust_angle(mlx->player->pa) + 30;//0 + 30
+	// mlx->ray->ra = ft_adjust_angle(mlx->player->pa) + 30;//0 + 30
+	mlx->ray->ra = 90;//0 + 30
 	printf("ra is %f\n", mlx->ray->ra);
 	while (i < 1)
 	{
