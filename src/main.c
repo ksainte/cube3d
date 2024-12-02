@@ -20,6 +20,8 @@ void	ft_init_player(t_mlx *mlx)
 	mlx->player->start_y = mlx->data->s_y;
 	mlx->player->px = mlx->player->start_x * TILE;
 	mlx->player->py = mlx->player->start_y * TILE;
+	printf("px is %f\n", mlx->player->px);
+	printf("py is %f\n", mlx->player->py);
 	mlx->ray->flag_cos = 1;
 	mlx->ray->flag_sin = 1;
 	mlx->player->orientation_start = mlx->data->tab[mlx->player->start_y][mlx->player->start_x];
@@ -89,9 +91,7 @@ float ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var, floa
 		j++;
 	}
 	if (Tan == -2)
-	{
 		dis = (ry - mlx->player->py) * mlx->ray->flag_sin;
-	}
 	else
 		dis = (rx - mlx->player->px) / cos(ft_deg_to_rad(mlx->ray->ra));
 	return (dis);
@@ -122,7 +122,6 @@ int ft_calculate_distH(float Tan, t_mlx *mlx)
 		rx = px;
 	else
 		rx = px + (py - ry) / Tan;
-	printf("rx is %f\n", rx);
 	distH = ft_get_dist(rx, ry, mlx, x_var, y_var, Tan);
 	printf("disH is %f\n", distH);
 	return (distH);
@@ -174,7 +173,7 @@ int	ft_cast_rays(t_mlx *mlx)
 	i = 0;
 	printf("%f \n", mlx->player->pa);
 	// mlx->ray->ra = ft_adjust_angle(mlx->player->pa) + 30;//0 + 30
-	mlx->ray->ra = 90;//0 + 30
+	mlx->ray->ra = 180;//0 + 30
 	printf("ra is %f\n", mlx->ray->ra);
 	while (i < 1)
 	{
@@ -182,13 +181,13 @@ int	ft_cast_rays(t_mlx *mlx)
 		printf("cos %d\n", mlx->ray->flag_cos);
 		printf("sin is %d\n", mlx->ray->flag_sin);
 		printf("Tan is %f\n", Tan);
-		if (Tan != 0)//ie si ! 0 ou 180 deg
+		if (mlx->ray->ra != 0 && mlx->ray->ra != 180)//ie si ! 0 ou 180 deg
 			disH = ft_calculate_distH(Tan, mlx);
 		if (Tan != -2)//ie si ! 90 ou 270 deg
 			disV = ft_calculate_distV(Tan, mlx);
 		else
 			disV = disH + 1;
-		if (Tan == 0)
+		if (mlx->ray->ra == 0 || mlx->ray->ra == 180)
 			disH = disV + 1;
 		if (disH < disV)
 			disV = disH;//final dis is disV
