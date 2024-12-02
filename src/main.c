@@ -20,6 +20,8 @@ void	ft_init_player(t_mlx *mlx)
 	mlx->player->start_y = mlx->data->s_y;
 	mlx->player->px = mlx->player->start_x * TILE;
 	mlx->player->py = mlx->player->start_y * TILE;
+	printf("px is %f\n", mlx->player->px);
+	printf("py is %f\n", mlx->player->py);
 	mlx->ray->flag_cos = 1;
 	mlx->ray->flag_sin = 1;
 	mlx->player->orientation_start = mlx->data->tab[mlx->player->start_y][mlx->player->start_x];
@@ -78,7 +80,7 @@ int	ft_get_wall_color(t_mlx *mlx, int orientation_flag)
 }
 int	ft_put_pixel_to_screen(t_mlx *mlx, int x, int y, int color)
 {
-	mlx_pixel_put(mlx->img, mlx->win_ptr, x, y, color);
+	mlx_pixel_put(mlx->mlx_ptr, mlx->win_ptr, x, y, color);
 }
 int	ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,
 		int wall_bot_px)
@@ -88,6 +90,7 @@ int	ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,
 	int	i;
 
 	color = ft_get_wall_color(mlx, mlx->ray->wall_touch);
+	printf("Wall color : %d \n", color);
 	// retourne le 0x du wall celon son orientation
 	// WALL
 	j = wall_top_px;
@@ -97,13 +100,15 @@ int	ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,
 		ft_put_pixel_to_screen(mlx, ray_num, j, color);
 		j++;
 	}
+	printf("Wall print done\n");
 	// FLOOR
 	i = wall_bot_px;
 	while (i < SCREEN_HEIGHT)
 	{
-		ft_put_pixel_to_screen(mlx, ray_num, i, color);
+		ft_put_pixel_to_screen(mlx, ray_num, i, 0xFF0000);
 		i++;
 	}
+	printf("Floor done\n");
 	// CEILING
 	i = 0;
 	while (i < wall_top_px)
@@ -111,6 +116,7 @@ int	ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,
 		ft_put_pixel_to_screen(mlx, ray_num, i, color);
 		i++;
 	}
+	printf("Ceiling done \n");
 	return (0);
 }
 int	ft_put_wall(t_mlx *mlx, int ray_num)
@@ -119,15 +125,15 @@ int	ft_put_wall(t_mlx *mlx, int ray_num)
 	double	bottom_px;
 	double	top_px;
 
-	wall_height = ((64 / mlx->ray->wall_distance) * ((SCREEN_WIDTH / 2)
-				/ tan(mlx->player->player_fov_radians)));
+	printf("put_wall_dist = %f\n", mlx->ray->wall_distance);
+	wall_height = (64 / mlx->ray->wall_distance) * ((SCREEN_WIDTH / 2)
+			/ tan(mlx->player->player_fov_radians / 2));
 	top_px = (SCREEN_HEIGHT / 2) - (wall_height / 2);
 	bottom_px = (SCREEN_HEIGHT / 2) + (wall_height / 2);
 	if (bottom_px > SCREEN_HEIGHT)
 		bottom_px = SCREEN_HEIGHT;
 	if (top_px < 0)
-		top_px = SCREEN_HEIGHT;
-	printf("hello\n");
+		top_px = 0;
 	ft_draw_px_collumn(mlx, ray_num, top_px, bottom_px);
 	return (0);
 }
@@ -139,7 +145,8 @@ float	ft_deg_to_rad(float ray_angle)
 	return (ray_radian);
 }
 
-float	ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var)
+float	ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var,
+		float Tan)
 {
 	int		j;
 	int		mx;
@@ -163,7 +170,10 @@ float	ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var)
 		ry = ry + (mlx->ray->flag_sin) * y_var;
 		j++;
 	}
-	dis = (rx - mlx->player->px) / cos(ft_deg_to_rad(mlx->ray->ra));
+	if (Tan == -2)
+		dis = (ry - mlx->player->py) * mlx->ray->flag_sin;
+	else
+		dis = (rx - mlx->player->px) / cos(ft_deg_to_rad(mlx->ray->ra));
 	return (dis);
 }
 
@@ -188,9 +198,11 @@ int	ft_calculate_distH(float Tan, t_mlx *mlx)
 		ry = (((int)py >> 6) << 6) - 0.0001;       // arrondi a l unite inf
 	else if (sin(ft_deg_to_rad(mlx->ray->ra)) < 0) // de 0 a 90
 		ry = (((int)py >> 6) << 6) + 64;           // arrondi a l unite sup
-	rx = px + (py - ry) / Tan;
-	printf("rx is %f\n", rx);
-	distH = ft_get_dist(rx, ry, mlx, x_var, y_var);
+	if (Tan == -2)
+		rx = px;
+	else
+		rx = px + (py - ry) / Tan;
+	distH = ft_get_dist(rx, ry, mlx, x_var, y_var, Tan);
 	printf("disH is %f\n", distH);
 	return (distH);
 }
@@ -214,7 +226,7 @@ int	ft_calculate_distV(float Tan, t_mlx *mlx)
 	else if (cos(ft_deg_to_rad(mlx->ray->ra)) < 0)
 		rx = (((int)px >> 6) << 6) - 0.0001; // gauche
 	ry = py + (px - rx) * Tan;
-	distV = ft_get_dist(rx, ry, mlx, x_var, y_var);
+	distV = ft_get_dist(rx, ry, mlx, x_var, y_var, Tan);
 	printf("disV is %f\n", distV);
 	return (distV);
 }
@@ -241,28 +253,28 @@ int	ft_cast_rays(t_mlx *mlx)
 
 	i = 0;
 	printf("%f \n", mlx->player->pa);
-	// mlx->ray->ra = ft_adjust_angle(mlx->player->pa) + 30;//0 + 30
-	mlx->ray->ra = 90; // 0 + 30
+	mlx->ray->ra = ft_adjust_angle(mlx->player->pa) + 30; // 0 + 30
 	printf("ra is %f\n", mlx->ray->ra);
-	while (i < 60)
+	while (i < SCREEN_WIDTH)
 	{
 		ft_set_flag(mlx, &Tan);
 		printf("cos %d\n", mlx->ray->flag_cos);
 		printf("sin is %d\n", mlx->ray->flag_sin);
 		printf("Tan is %f\n", Tan);
-		if (Tan != 0) // ie si ! 0 ou 180 deg
+		if (mlx->ray->ra != 0 && mlx->ray->ra != 180) // ie si ! 0 ou 180 deg
 			disH = ft_calculate_distH(Tan, mlx);
 		if (Tan != -2) // ie si ! 90 ou 270 deg
 			disV = ft_calculate_distV(Tan, mlx);
 		else
 			disV = disH + 1;
-		if (Tan == 0)
+		if (mlx->ray->ra == 0 || mlx->ray->ra == 180)
 			disH = disV + 1;
 		if (disH < disV)
 			disV = disH; // final dis is disV
-		printf("Final Dis is %f\n", disV);
+		mlx->ray->wall_distance = disV;
+		printf("Final Dis is %f\n", mlx->ray->wall_distance);
 		printf("Putting wall\n");
-		// ft_put_wall(mlx, i);
+		ft_put_wall(mlx, i);
 		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - 1);
 		i++;
 	}
@@ -272,16 +284,30 @@ int	ft_cast_rays(t_mlx *mlx)
 int	ft_main_loop(void *mlx_ptr)
 {
 	t_mlx	*mlx;
+	t_image	img;
 
 	mlx = mlx_ptr;
-	mlx->img = mlx_new_image(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
+	img.img = mlx_new_image(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
+	if (!img.img)
+	{
+		printf("Error: Failed to create image\n");
+		return (1);
+	}
+	img.img_data = mlx_get_data_addr(img.img, &img.bpp, &img.line_length,
+			&img.endian);
+	if (!img.img_data)
+	{
+		printf("Error: Failed to get image data address\n");
+		mlx_destroy_image(mlx->mlx_ptr, img.img);
+		return (1);
+	}
 	printf("Setting new image\n");
-	sleep(1);
 	// ft_set_player(mlx);
 	ft_cast_rays(mlx);
 	printf("RAYS CASTED\n");
-	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img, 0, 0);
-	mlx_destroy_image(mlx->mlx_ptr, mlx->img);
+	// mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img->img, 0, 0);
+	printf("New image added\n");
+	// mlx_destroy_image(mlx->mlx_ptr, mlx->img->img);
 	return (0);
 }
 
@@ -310,10 +336,10 @@ int	main(int argc, char **argv)
 	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
 			"cube");
 	// printf("Window created\n");
-	// ft_main_loop(mlx.mlx_ptr);
-	mlx_hook(mlx.win_ptr, 2, 1L << 0, &key_press, &mlx);
-	mlx_hook(mlx.win_ptr, 3, 1L << 1, &key_release, &mlx);
-	mlx_loop_hook(mlx.mlx_ptr, &ft_main_loop, &mlx);
+	ft_main_loop(&mlx);
+	// mlx_hook(mlx.win_ptr, 2, 1L << 0, &key_press, &mlx);
+	// mlx_hook(mlx.win_ptr, 3, 1L << 1, &key_release, &mlx);
+	// mlx_loop_hook(mlx.mlx_ptr, &ft_main_loop, &mlx);
 	printf("Entering mlx_loop...\n");
 	mlx_loop(mlx.mlx_ptr);
 	ft_free_data(&data);

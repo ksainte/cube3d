@@ -36,6 +36,14 @@
 # define ROT_SPEED 0.05
 # define MOVE_SPEED 4
 
+typedef struct s_image
+{
+	void		*img;
+	char		*img_data;
+	int			bpp;
+	int			line_length;
+	int			endian;
+}				t_image;
 typedef struct s_map
 {
 	int			fd;
@@ -104,7 +112,7 @@ typedef struct s_mlx
 	void		*mlx_ptr;
 	t_ray		*ray;
 	void		*win_ptr;
-	void		*img;
+	t_image		*img;
 }				t_mlx;
 // PARSING
 
