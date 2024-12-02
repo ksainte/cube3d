@@ -65,7 +65,7 @@ float ft_deg_to_rad(float ray_angle)
 	return (ray_radian); 
 }
 
-float ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var)
+float ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var, float Tan)
 {
 	int j;
 	int mx;
@@ -88,7 +88,12 @@ float ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var)
 		ry = ry + (mlx->ray->flag_sin) * y_var;
 		j++;
 	}
-	dis = (rx - mlx->player->px) / cos(ft_deg_to_rad(mlx->ray->ra));
+	if (Tan == -2)
+	{
+		dis = (ry - mlx->player->py) * mlx->ray->flag_sin;
+	}
+	else
+		dis = (rx - mlx->player->px) / cos(ft_deg_to_rad(mlx->ray->ra));
 	return (dis);
 }
 
@@ -113,9 +118,12 @@ int ft_calculate_distH(float Tan, t_mlx *mlx)
 		ry=(((int)py >> 6) << 6) -0.0001;//arrondi a l unite inf
 	else if (sin(ft_deg_to_rad(mlx->ray->ra)) < 0)//de 0 a 90
 		ry=(((int)py >> 6) << 6) + 64;      //arrondi a l unite sup
-	rx = px + (py - ry) / Tan;
+	if (Tan == -2)
+		rx = px;
+	else
+		rx = px + (py - ry) / Tan;
 	printf("rx is %f\n", rx);
-	distH = ft_get_dist(rx, ry, mlx, x_var, y_var);
+	distH = ft_get_dist(rx, ry, mlx, x_var, y_var, Tan);
 	printf("disH is %f\n", distH);
 	return (distH);
 }
@@ -139,7 +147,7 @@ int ft_calculate_distV(float Tan, t_mlx *mlx)
 	else if (cos(ft_deg_to_rad(mlx->ray->ra)) < 0)
 		rx = (((int)px >> 6) << 6) -0.0001;//gauche
 	ry = py + (px - rx) * Tan;
-	distV = ft_get_dist(rx, ry, mlx, x_var, y_var);
+	distV = ft_get_dist(rx, ry, mlx, x_var, y_var, Tan);
 	printf("disV is %f\n", distV);
 	return (distV);
 }
