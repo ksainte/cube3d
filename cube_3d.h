@@ -36,26 +36,6 @@
 # define ROT_SPEED 0.05
 # define MOVE_SPEED 4
 
-typedef struct s_player
-{
-	int start_x; // start x pos
-	int start_y; // start y pos
-	float		current_x;
-	float		current_y;
-	char		orientation_start;
-	double		start_angle;
-	float		player_fov_radians;
-	int			moving_left_right;
-	int			moving_back_forth;
-	int			look_rot;
-}				t_player;
-typedef struct s_ray
-{
-	double		ray_angle;
-	double		wall_distance;
-	int			wall_touch;
-}				t_ray;
-
 typedef struct s_map
 {
 	int			fd;
@@ -90,6 +70,33 @@ typedef struct s_data
 	int			C[3];
 
 }				t_data;
+
+typedef struct s_player
+{
+	int start_x; // start x pos
+	int start_y; // start y pos
+	float		px;
+	float		py;
+	char		orientation_start;
+	float		pa;
+	float		player_fov_radians;
+	int			moving_left_right;
+	int			moving_back_forth;
+	int			look_rot;
+}				t_player;
+typedef struct s_ray
+{
+	double		wall_distance;
+	int			wall_touch;
+	float		ra;
+	float		rx;
+	float		ry;
+	float		wrx;
+	float		wry;
+	int			flag_cos;
+	int			flag_sin;
+	int			ray_coord;
+}				t_ray;
 typedef struct s_mlx
 {
 	t_data		*data;

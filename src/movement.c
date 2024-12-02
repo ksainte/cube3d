@@ -17,22 +17,25 @@ int	ft_rot_player(t_mlx *mlx, int direction)
 {
 	if (direction == 1)
 	{
-		mlx->player->start_angle += ROT_SPEED;
-		if (mlx->player->start_angle > 360)
-			mlx->player->start_angle -= 360;
+		mlx->player->pa += ROT_SPEED;
+		if (mlx->player->pa > 360)
+			mlx->player->pa -= 360;
 	}
 	else if (direction == 0)
 	{
-		mlx->player->start_angle -= ROT_SPEED;
-		if (mlx->player->start_angle < 0)
-			mlx->player->start_angle += 360;
+		mlx->player->pa -= ROT_SPEED;
+		if (mlx->player->pa < 0)
+			mlx->player->pa += 360;
 	}
+	return (0);
 }
 int	ft_move_player(void)
 {
+	return (0);
 }
 int	ft_adjust_values_move(void)
 {
+	return (0);
 }
 int	ft_set_player(t_mlx *mlx)
 {
@@ -57,14 +60,17 @@ int	ft_set_player(t_mlx *mlx)
 		ft_rot_player(mlx, 0);
 	if (mlx->player->look_rot == 1)
 		ft_rot_player(mlx, 0);
+	return (0);
 }
 int	key_press(int keycode, void *ml)
 {
 	t_mlx	*mlx;
 
 	mlx = (t_mlx *)ml;
+	printf("hello");
+	sleep(3);
 	if (keycode == KEY_ESCAPE)
-		ft_exit(mlx);
+		exit(0);
 	else if (keycode == KEY_A)
 		mlx->player->moving_left_right = -1;
 	else if (keycode == KEY_D)
