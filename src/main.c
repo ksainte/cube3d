@@ -122,6 +122,10 @@ int ft_calculate_distH(float Tan, t_mlx *mlx)
 		rx = px;
 	else
 		rx = px + (py - ry) / Tan;
+	if (rx )
+	printf("py is %f\n", py);
+	printf("ry is %f\n", ry);
+	printf("rx is %f\n", rx);
 	distH = ft_get_dist(rx, ry, mlx, x_var, y_var, Tan);
 	printf("disH is %f\n", distH);
 	return (distH);
@@ -160,7 +164,7 @@ void ft_set_flag(t_mlx *mlx, float *Tan)
 	if (mlx->ray->ra != 90 && mlx->ray->ra != 270)//if 90 ou 270, que distH et tan == -1
 		*Tan = tan(ft_deg_to_rad(mlx->ray->ra));
 	else
-		*Tan = -2;
+		*Tan = -2;//faux!
 }
 
 int	ft_cast_rays(t_mlx *mlx)
@@ -173,13 +177,13 @@ int	ft_cast_rays(t_mlx *mlx)
 	i = 0;
 	printf("%f \n", mlx->player->pa);
 	// mlx->ray->ra = ft_adjust_angle(mlx->player->pa) + 30;//0 + 30
-	mlx->ray->ra = 180;//0 + 30
+	mlx->ray->ra = 359;//0 + 30//25 et 45
 	printf("ra is %f\n", mlx->ray->ra);
 	while (i < 1)
 	{
+		printf("====================\n");
+		printf("current ra is %f\n", mlx->ray->ra);
 		ft_set_flag(mlx, &Tan);
-		printf("cos %d\n", mlx->ray->flag_cos);
-		printf("sin is %d\n", mlx->ray->flag_sin);
 		printf("Tan is %f\n", Tan);
 		if (mlx->ray->ra != 0 && mlx->ray->ra != 180)//ie si ! 0 ou 180 deg
 			disH = ft_calculate_distH(Tan, mlx);
