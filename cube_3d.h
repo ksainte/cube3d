@@ -124,6 +124,7 @@ typedef struct s_ray
 	int 		flag_cos;
 	int			flag_sin;
 	int			ray_coord;
+	int			Tan_slope;
 }				t_ray;
 typedef struct s_mlx
 {
