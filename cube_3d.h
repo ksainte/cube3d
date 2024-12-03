@@ -81,8 +81,8 @@ typedef struct s_data
 
 typedef struct s_player
 {
-	int start_x; // start x pos
-	int start_y; // start y pos
+	int			start_x;
+	int			start_y;
 	float		px;
 	float		py;
 	char		orientation_start;
@@ -174,5 +174,6 @@ int				ft_put_pixel_to_screen(t_mlx *mlx, int x, int y, int color);
 int				key_release(int keycode, void *ml);
 int				key_press(int keycode, void *ml);
 int				ft_set_player(t_mlx *mlx);
+int				ft_cast_rays(t_mlx *mlx);
 
 #endif
