@@ -150,7 +150,7 @@ int				ft_map_playable(t_map *map, t_data *data);
 float			get_v_inter(t_mlx *mlx, float angle);
 float			get_h_inter(t_mlx *mlx, float angle);
 int				ft_cast_rays(t_mlx *mlx);
-float			ft_adjust_angle(int angle);
+float			ft_adjust_angle(float angle);
 // RENDERING
 int				ft_get_wall_color(t_mlx *mlx, int orientation_flag);
 int				ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,

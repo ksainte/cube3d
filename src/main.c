@@ -149,7 +149,7 @@ void	ft_init_structs(t_player *player, t_mlx *mlx, t_ray *ray)
 	ft_init_player(mlx);
 }
 
-float	ft_adjust_angle(int angle)
+float	ft_adjust_angle(float angle)
 {
 	if (angle < 0)
 		angle = angle + 360;
@@ -347,7 +347,6 @@ int	ft_cast_rays(t_mlx *mlx)
 	printf("ra is %f\n", mlx->ray->ra);
 	while (i < 600)
 	{
-		sleep(1);
 		printf("====================\n");
 		printf("current ra is %f\n", mlx->ray->ra);
 		ft_set_flag(mlx, &Tan);
@@ -370,10 +369,10 @@ int	ft_cast_rays(t_mlx *mlx)
 		printf("disH is %f\n", disH);
 		printf("Final Dis is %f\n", disV);
 		mlx->ray->wall_distance = disV;
-		// ft_put_wall(mlx, i);
+		ft_put_wall(mlx, i);
 		// printf("test is %f\n", (60 / SCREEN_WIDTH));
 		// mlx->ray->ra += (60 / SCREEN_WIDTH);
-		mlx->ray->ra += 0.1;
+		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra + 0.1);
 		printf("next ra is %f\n", mlx->ray->ra);
 		i++;
 	}
@@ -436,11 +435,11 @@ int	main(int argc, char **argv)
 	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
 			"cube");
 	printf("Window created\n");
-	ft_cast_rays(&mlx);
+	// ft_cast_rays(&mlx);
 	// ft_main_loop(&mlx);
 	// mlx_hook(mlx.win_ptr, 2, 1L << 0, &key_press, &mlx);
 	// mlx_hook(mlx.win_ptr, 3, 1L << 1, &key_release, &mlx);
-	// mlx_loop_hook(mlx.mlx_ptr, &ft_main_loop, &mlx);
+	mlx_loop_hook(mlx.mlx_ptr, &ft_main_loop, &mlx);
 	printf("Entering mlx_loop...\n");
 	mlx_loop(mlx.mlx_ptr);
 	ft_free_data(&data);
