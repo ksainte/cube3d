@@ -59,6 +59,50 @@ typedef struct s_data
 
 }				t_data;
 
+typedef struct s_image
+{
+	void		*img;
+	char		*img_data;
+	int			bpp;
+	int			line_length;
+	int			endian;
+}				t_image;
+typedef struct s_player
+{
+	int start_x; // start x pos
+	int start_y; // start y pos
+	float		px;
+	float		py;
+	float		pdx;
+	float		pdy;
+	char		orientation_start;
+	float		pa;
+	float		player_fov_radians;
+}				t_player;
+typedef struct s_ray
+{
+	double		wall_distance;
+	int			wall_touch;
+	float		ra;
+	float		rx;
+	float		ry;
+	float		wrx;
+	float		wry;
+	int			flag_cos;
+	int			flag_sin;
+	int			ray_coord;
+	int			Tan_slope;
+}				t_ray;
+typedef struct s_mlx
+{
+	t_data		*data;
+	t_player	*player;
+	void		*mlx_ptr;
+	t_ray		*ray;
+	void		*win_ptr;
+	t_image		*img;
+}				t_mlx;
+
 void			ft_system_error(void);
 char			*ft_custom_error(char *str);
 int				ft_free(t_map *map);
@@ -101,41 +145,22 @@ bool			ft_has_valid_path(t_map *map, int y, int x);
 void			ft_find_start_pos(t_map *map);
 int				ft_copy_to_data(t_map *map, t_data *data);
 int				ft_map_playable(t_map *map, t_data *data);
-typedef struct s_player
-{
-	int			start_x;//start x pos
-	int			start_y;//start y pos
-	float		px;
-	float		py;
-	float		pdx;
-	float		pdy;
-	char		orientation_start;
-	float		pa;
-	float		player_fov_radians;
-}				t_player;
-typedef struct s_ray
-{
 
-	double		wall_distance;
-	int			wall_touch;
-	float		ra;
-	float		rx;
-	float		ry;
-	float		wrx;
-	float		wry;
-	int 		flag_cos;
-	int			flag_sin;
-	int			ray_coord;
-	int			Tan_slope;
-}				t_ray;
-typedef struct s_mlx
-{
-	t_data		*data;
-	t_player	*player;
-	void		*mlx_ptr;
-	t_ray		*ray;
-	void		*win_ptr;
-	void		*img;
-}				t_mlx;
+// RAYCASTING
+float			get_v_inter(t_mlx *mlx, float angle);
+float			get_h_inter(t_mlx *mlx, float angle);
+int				ft_cast_rays(t_mlx *mlx);
+float			ft_adjust_angle(int angle);
+// RENDERING
+int				ft_get_wall_color(t_mlx *mlx, int orientation_flag);
+int				ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,
+					int wall_bot_px);
+int				ft_put_wall(t_mlx *mlx, int ray_num);
+int				ft_put_pixel_to_screen(t_mlx *mlx, int x, int y, int color);
+// MOVEMENT
+int				key_release(int keycode, void *ml);
+int				key_press(int keycode, void *ml);
+int				ft_set_player(t_mlx *mlx);
+int				ft_cast_rays(t_mlx *mlx);
 
 #endif
