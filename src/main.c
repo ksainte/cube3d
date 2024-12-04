@@ -65,6 +65,54 @@ float ft_deg_to_rad(float ray_angle)
 	return (ray_radian); 
 }
 
+// void Buttons(unsigned char key,int x,int y)
+// {
+// 	if(key=='a')
+// 	{ 
+// 		mlx->player->pa = ft_adjust_angle(mlx->player->pa + 5);
+// 		printf("pa is %f\n", mlx->player->pa);
+// 		mlx->player->pdx = cos(ft_deg_to_rad(mlx->player->pa));
+// 		printf("pdx is %f\n", mlx->player->pdx); 
+// 		printf("px is %f\n", mlx->player->px);
+// 		mlx->player->pdy = -sin(ft_deg_to_rad(mlx->player->pa)); 
+// 		printf("pdy is %f\n", mlx->player->pdy); 
+// 		printf("py is %f\n", mlx->player->py);
+// 		printf("==============\n");
+// 	} 	
+// 	if(key=='d')
+// 	{ 
+// 		mlx->player->pa = ft_adjust_angle(mlx->player->pa - 5);
+// 		printf("pa is %f\n", mlx->player->pa);  
+// 		mlx->player->pdx = cos(ft_deg_to_rad(mlx->player->pa)); 
+// 		printf("pdx is %f\n", mlx->player->pdx); 
+// 		printf("px is %f\n", mlx->player->px); 
+// 		mlx->player->pdy = -sin(ft_deg_to_rad(mlx->player->pa)); 
+// 		printf("pdy is %f\n", mlx->player->pdy); 
+// 		printf("py is %f\n", mlx->player->py);
+// 		printf("==============\n"); 
+// 	} 
+// 	if(key=='w')
+// 	{ 
+// 		printf("pdx is %f\n", mlx->player->pdx);
+// 		mlx->player->px = mlx->player->px + (mlx->player->pdx * 5);  
+// 		printf("px is %f\n", mlx->player->px);
+// 		printf("pdy is %f\n", mlx->player->pdy); 
+// 		mlx->player->py = mlx->player->py + (mlx->player->pdy * 5); 
+// 		printf("py is %f\n", mlx->player->py);
+// 		printf("==============\n");
+// 	}
+// 	if(key=='s')
+// 	{ 
+// 		printf("pdx is %f\n", mlx->player->pdx);
+// 		mlx->player->px = mlx->player->px - (mlx->player->pdx * 5);  
+// 		printf("px is %f\n", mlx->player->px);
+// 		printf("pdy is %f\n", mlx->player->pdy); 
+// 		mlx->player->py = mlx->player->py - (mlx->player->pdy * 5); 
+// 		printf("py is %f\n", mlx->player->py);
+// 		printf("==============\n");
+// 	}
+// }
+
 float ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var, float Tan)
 {
 	int j;
@@ -120,9 +168,9 @@ int ft_calculate_distH(float Tan, t_mlx *mlx)
 		x_var = y_var / Tan;
 	else
 		x_var = 0;
-	if (sin(ft_deg_to_rad(mlx->ray->ra)) > 0.001)//de 0 a 90
+	if (sin(ft_deg_to_rad(mlx->ray->ra)) > 0.001)//de 0 a 180
 		ry=(((int)py >> 6) << 6) -0.0001;//arrondi a l unite inf
-	else if (sin(ft_deg_to_rad(mlx->ray->ra)) < -0.001)//de 0 a 90
+	else if (sin(ft_deg_to_rad(mlx->ray->ra)) < -0.001)//de 180 a 360
 		ry=(((int)py >> 6) << 6) + 64;      //arrondi a l unite sup
 	if (mlx->ray->ra == 90 || mlx->ray->ra == 270)
 		rx = px;
@@ -165,14 +213,11 @@ int ft_calculate_distV(float Tan, t_mlx *mlx)
 
 void ft_set_flag(t_mlx *mlx, float *Tan)
 {
-	// if (mlx->ray->ra > 179 && mlx->ray->ra < 360)
-	// 	mlx->ray->flag_cos = -1;
 	mlx->ray->Tan_slope = 1;
 	mlx->ray->flag_cos = 1;
 	mlx->ray->flag_sin = 1;
 	if (cos(ft_deg_to_rad(mlx->ray->ra)) > 0.001)//de 0 a 90
 		mlx->ray->flag_sin = -1;
-	// printf("%f\n", sin(ft_deg_to_rad(mlx->ray->ra)));
 	if (sin(ft_deg_to_rad(mlx->ray->ra)) < -0.001)//de 0 a 90
 		mlx->ray->flag_cos = -1;
 	if (mlx->ray->ra != 90 && mlx->ray->ra != 270)//if 90 ou 270, que distH et tan == -1
@@ -183,11 +228,7 @@ void ft_set_flag(t_mlx *mlx, float *Tan)
 	}
 	if (mlx->ray->ra == 90 || mlx->ray->ra == 180)
 		mlx->ray->Tan_slope = -1;
-
 }
-
-//cas HOR
-//de 1 a 89 deg
 
 int	ft_cast_rays(t_mlx *mlx)
 {
@@ -220,12 +261,9 @@ int	ft_cast_rays(t_mlx *mlx)
 			disV = disH;//final dis is disV
 		printf("disH is %f\n",disH);
 		printf("Final Dis is %f\n",disV);
-		if (disV < 0)
-			break;
 		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - 1);
 		i++;
 	}
-	printf("%d\n", i);
 	return (0);
 }
 

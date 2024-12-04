@@ -107,6 +107,8 @@ typedef struct s_player
 	int			start_y;//start y pos
 	float		px;
 	float		py;
+	float		pdx;
+	float		pdy;
 	char		orientation_start;
 	float		pa;
 	float		player_fov_radians;
