@@ -198,10 +198,10 @@ int	ft_cast_rays(t_mlx *mlx)
 
 	i = 0;
 	printf("%f \n", mlx->player->pa);
-	// mlx->ray->ra = ft_adjust_angle(mlx->player->pa) + 30;//0 + 30
-	mlx->ray->ra = 10;//0 + 30//25 et 45
+	mlx->ray->ra = ft_adjust_angle(mlx->player->pa) + 30;//0 + 30
+	// mlx->ray->ra = 90;//0 + 30//25 et 45
 	printf("ra is %f\n", mlx->ray->ra);
-	while (i < 20)
+	while (i < 60)
 	{
 		printf("====================\n");
 		printf("current ra is %f\n", mlx->ray->ra);
@@ -220,9 +220,12 @@ int	ft_cast_rays(t_mlx *mlx)
 			disV = disH;//final dis is disV
 		printf("disH is %f\n",disH);
 		printf("Final Dis is %f\n",disV);
+		if (disV < 0)
+			break;
 		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - 1);
 		i++;
 	}
+	printf("%d\n", i);
 	return (0);
 }
 
