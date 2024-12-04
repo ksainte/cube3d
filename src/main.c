@@ -122,7 +122,7 @@ float ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var, floa
 	float dis;
 
 	j = 0;
-	mlx->ray->ray_coord = 5;
+	mlx->ray->ray_coord = 10;
 	while (j < mlx->ray->ray_coord)
 	{
 		mx = (int)rx / 64;
