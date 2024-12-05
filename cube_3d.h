@@ -23,6 +23,17 @@
 // # define PI_270
 # define VERTICAL_WALL 0
 # define HORIZONTAL_WALL 1
+// KEYS
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
+# define KEY_ESCAPE 65307
+// SPEEDS
+# define ROT_SPEED 0.05
+# define MOVE_SPEED 4
 
 typedef struct s_map
 {
@@ -78,6 +89,9 @@ typedef struct s_player
 	char		orientation_start;
 	float		pa;
 	float		player_fov_radians;
+	int			moving_left_right;
+	int			moving_back_forth;
+	int			look_rot;
 }				t_player;
 typedef struct s_ray
 {
@@ -151,6 +165,7 @@ float			get_v_inter(t_mlx *mlx, float angle);
 float			get_h_inter(t_mlx *mlx, float angle);
 int				ft_cast_rays(t_mlx *mlx);
 float			ft_adjust_angle(float angle);
+int				ft_cast_rays(t_mlx *mlx);
 // RENDERING
 int				ft_get_wall_color(t_mlx *mlx, int orientation_flag);
 int				ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,
@@ -161,6 +176,5 @@ int				ft_put_pixel_to_screen(t_mlx *mlx, int x, int y, int color);
 int				key_release(int keycode, void *ml);
 int				key_press(int keycode, void *ml);
 int				ft_set_player(t_mlx *mlx);
-int				ft_cast_rays(t_mlx *mlx);
 
 #endif

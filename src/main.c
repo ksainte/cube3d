@@ -440,8 +440,8 @@ int	main(int argc, char **argv)
 	printf("Window created\n");
 	// ft_cast_rays(&mlx);
 	// ft_main_loop(&mlx);
-	// mlx_hook(mlx.win_ptr, 2, 1L << 0, &key_press, &mlx);
-	// mlx_hook(mlx.win_ptr, 3, 1L << 1, &key_release, &mlx);
+	mlx_hook(mlx.win_ptr, 2, 1L << 0, &key_press, &mlx);
+	mlx_hook(mlx.win_ptr, 3, 1L << 1, &key_release, &mlx);
 	mlx_loop_hook(mlx.mlx_ptr, &ft_main_loop, &mlx);
 	printf("Entering mlx_loop...\n");
 	mlx_loop(mlx.mlx_ptr);
