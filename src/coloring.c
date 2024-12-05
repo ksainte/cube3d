@@ -61,7 +61,7 @@ int	ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,
 	int	i;
 
 	color = ft_get_wall_color(mlx, mlx->ray->wall_touch);
-	printf("Wall color : %d \n", color);
+	// printf("Wall color : %d \n", color);
 	// retourne le 0x du wall celon son orientation
 	// WALL
 	j = wall_top_px;
@@ -71,7 +71,7 @@ int	ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,
 		ft_put_pixel_to_screen(mlx, ray_num, j, color);
 		j++;
 	}
-	printf("Wall print done\n");
+	// printf("Wall print done\n");
 	// FLOOR
 	i = wall_bot_px;
 	while (i < SCREEN_HEIGHT)
@@ -79,7 +79,7 @@ int	ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,
 		ft_put_pixel_to_screen(mlx, ray_num, i, 0xFF6347FF);
 		i++;
 	}
-	printf("Floor done\n");
+	// printf("Floor done\n");
 	// CEILING
 	i = 0;
 	while (i < wall_top_px)
@@ -87,7 +87,7 @@ int	ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,
 		ft_put_pixel_to_screen(mlx, ray_num, i, 0x0000FF00);
 		i++;
 	}
-	printf("Ceiling done \n");
+	// printf("Ceiling done \n");
 	return (0);
 }
 int	ft_fill_colors(t_mlx *mlx, int ray_num)
@@ -96,7 +96,7 @@ int	ft_fill_colors(t_mlx *mlx, int ray_num)
 	double bottom_px;
 	double top_px;
 
-	printf("put_wall_dist = %f\n", mlx->ray->wall_distance);
+	// printf("put_wall_dist = %f\n", mlx->ray->wall_distance);
 	wall_height = (64 / mlx->ray->wall_distance) * ((SCREEN_WIDTH / 2)
 			/ tan(mlx->player->player_fov_radians / 2));
 	top_px = (SCREEN_HEIGHT / 2) - (wall_height / 2);
