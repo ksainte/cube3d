@@ -337,7 +337,7 @@ int	ft_cast_rays(t_mlx *mlx)
 	float	disV;
 	float	disH;
 	float	Tan;
-	float 	ca;
+	float	ca;
 
 	i = 0;
 	printf("%f \n", mlx->player->pa);
@@ -345,7 +345,7 @@ int	ft_cast_rays(t_mlx *mlx)
 	mlx->ray->ra = ft_adjust_angle(mlx->player->pa + 30); // 0 + 30
 	// mlx->ray->ra = 90;//0 + 30//25 et 45
 	printf("ra is %f\n", mlx->ray->ra);
-	while (i < 600)
+	while (i < SCREEN_WIDTH)
 	{
 		printf("====================\n");
 		printf("current ra is %f\n", mlx->ray->ra);
@@ -360,21 +360,22 @@ int	ft_cast_rays(t_mlx *mlx)
 			disV = disH + 1;
 		if (mlx->ray->ra == 0 || mlx->ray->ra == 180)
 			disH = disV + 1;
-		mlx->ray->wall_touch = HORIZONTAL_WALL;
+		mlx->ray->wall_touch = VERTICAL_WALL;
 		if (disH < disV)
 		{
 			disV = disH;
-			mlx->ray->wall_touch = VERTICAL_WALL; // final dis is disV
+			mlx->ray->wall_touch = HORIZONTAL_WALL; // final dis is disV
 		}
 		printf("disH is %f\n", disH);
 		printf("Final Dis is %f\n", disV);
-		ca= ft_adjust_angle(mlx->player->pa - mlx->ray->ra); 
-  		disV = disV * cos(ft_deg_to_rad(ca));
+		ca = ft_adjust_angle(mlx->player->pa - mlx->ray->ra);
+		disV = disV * cos(ft_deg_to_rad(ca));
 		mlx->ray->wall_distance = disV;
 		ft_put_wall(mlx, i);
-		printf("test is %f\n", (float)(60 / SCREEN_WIDTH));
+		printf("test is %f\n", (float)(60 / 600));
 		// mlx->ray->ra += (60 / SCREEN_WIDTH);
-		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - 0.1);
+		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)60
+					/ SCREEN_WIDTH));
 		printf("next ra is %f\n", mlx->ray->ra);
 		i++;
 	}

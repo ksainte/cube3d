@@ -12,8 +12,8 @@
 # include <string.h>
 # include <unistd.h>
 
-# define SCREEN_WIDTH 600
-# define SCREEN_HEIGHT 600
+# define SCREEN_WIDTH 1200
+# define SCREEN_HEIGHT 1200
 # define TILE 64
 # define FIELD_OF_VIEW 60
 # define ROTATION_S
