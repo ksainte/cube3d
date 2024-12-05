@@ -89,6 +89,7 @@ typedef struct s_player
 	char		orientation_start;
 	float		pa;
 	float		player_fov_radians;
+	int			moving_oblique;
 	int			moving_left_right;
 	int			moving_back_forth;
 	int			look_rot;

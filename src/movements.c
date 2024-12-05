@@ -13,37 +13,34 @@
 
 #include "../cube_3d.h"
 
-int	ft_rot_player(t_mlx *mlx, int direction)
+
+int ft_oblique_left(t_mlx *mlx)
 {
-	if (direction == 1)
-	{
-		mlx->player->pa += ROT_SPEED;
-		if (mlx->player->pa > 360)
-			mlx->player->pa -= 360;
-	}
-	else if (direction == 0)
-	{
-		mlx->player->pa -= ROT_SPEED;
-		if (mlx->player->pa < 0)
-			mlx->player->pa += 360;
-	}
+	float	move_x;
+	float	move_y;
+
+	move_x = cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90)));
+	move_y = -sin(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90)));
+	mlx->player->px = mlx->player->px + (move_x * 5);
+	mlx->player->py = mlx->player->py + (move_y * 5);
 	return (0);
 }
-int	ft_move_player(void)
+
+int ft_oblique_right(t_mlx *mlx)
 {
+	float	move_x;
+	float	move_y;
+
+	move_x = cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90)));
+	move_y = -sin(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90)));
+	mlx->player->px = mlx->player->px + (move_x * 5);
+	mlx->player->py = mlx->player->py + (move_y * 5);
 	return (0);
 }
-int	ft_adjust_values_move(void)
-{
-	return (0);
-}
+
 int	ft_set_player(t_mlx *mlx)
 {
-	double	move_x;
-	double	move_y;
 
-	move_x = 0;
-	move_y = 0;
 	if (mlx->player->moving_back_forth == 1)
 	{
 		mlx->player->px = mlx->player->px + (mlx->player->pdx * 5);
@@ -54,22 +51,22 @@ int	ft_set_player(t_mlx *mlx)
 		mlx->player->px = mlx->player->px - (mlx->player->pdx * 5);
 		mlx->player->py = mlx->player->py - (mlx->player->pdy * 5);
 	}
-	if (mlx->player->moving_left_right == 1)
-	{
-		mlx->player->pa = ft_adjust_angle(mlx->player->pa - 5);
-		mlx->player->pdx = cos(ft_deg_to_rad(mlx->player->pa));
-		mlx->player->pdy = -sin(ft_deg_to_rad(mlx->player->pa));
-	}
 	if (mlx->player->moving_left_right == -1)
+		ft_oblique_left(mlx);
+	if (mlx->player->moving_left_right == 1)
+		ft_oblique_right(mlx);
+	if (mlx->player->look_rot == -1)
 	{
 		mlx->player->pa = ft_adjust_angle(mlx->player->pa + 5);
 		mlx->player->pdx = cos(ft_deg_to_rad(mlx->player->pa));
 		mlx->player->pdy = -sin(ft_deg_to_rad(mlx->player->pa));
 	}
-	if (mlx->player->look_rot == -1)
-		ft_rot_player(mlx, 0);
 	if (mlx->player->look_rot == 1)
-		ft_rot_player(mlx, 0);
+	{
+		mlx->player->pa = ft_adjust_angle(mlx->player->pa - 5);
+		mlx->player->pdx = cos(ft_deg_to_rad(mlx->player->pa));
+		mlx->player->pdy = -sin(ft_deg_to_rad(mlx->player->pa));
+	}
 	return (0);
 }
 int	key_press(int keycode, void *ml)
