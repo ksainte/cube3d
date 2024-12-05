@@ -18,9 +18,15 @@ int ft_oblique_left(t_mlx *mlx)
 {
 	float	move_x;
 	float	move_y;
-
+	float 	pos_x;
+	float 	pos_y;
+	
 	move_x = cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90)));
 	move_y = -sin(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90)));
+	pos_x = mlx->player->px + (move_x * 25);
+	pos_y = mlx->player->py + (move_y * 25);
+	if (mlx->data->tab[(int)pos_y / 64][(int)pos_x / 64] == '1')
+		return (0);
 	mlx->player->px = mlx->player->px + (move_x * 5);
 	mlx->player->py = mlx->player->py + (move_y * 5);
 	return (0);
@@ -30,9 +36,15 @@ int ft_oblique_right(t_mlx *mlx)
 {
 	float	move_x;
 	float	move_y;
+	float 	pos_x;
+	float 	pos_y;
 
 	move_x = cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90)));
 	move_y = -sin(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90)));
+	pos_x = mlx->player->px + (move_x * 25);
+	pos_y = mlx->player->py + (move_y * 25);
+	if (mlx->data->tab[(int)pos_y / 64][(int)pos_x / 64] == '1')
+		return (0);
 	mlx->player->px = mlx->player->px + (move_x * 5);
 	mlx->player->py = mlx->player->py + (move_y * 5);
 	return (0);
@@ -40,14 +52,25 @@ int ft_oblique_right(t_mlx *mlx)
 
 int	ft_set_player(t_mlx *mlx)
 {
+	float pos_x;
+	float pos_y;
 
 	if (mlx->player->moving_back_forth == 1)
 	{
+		pos_x = mlx->player->px + (mlx->player->pdx * 60);
+		pos_y = mlx->player->py + (mlx->player->pdy * 60);
+		if (mlx->data->tab[(int)pos_y / 64][(int)pos_x / 64] == '1')
+			return (0);
 		mlx->player->px = mlx->player->px + (mlx->player->pdx * 5);
 		mlx->player->py = mlx->player->py + (mlx->player->pdy * 5);
+
 	}
 	if (mlx->player->moving_back_forth == -1)
 	{
+		pos_x = mlx->player->px - (mlx->player->pdx * 5);
+		pos_y = mlx->player->py - (mlx->player->pdy * 5);
+		if (mlx->data->tab[(int)pos_y / 64][(int)pos_x / 64] == '1')
+			return (0);
 		mlx->player->px = mlx->player->px - (mlx->player->pdx * 5);
 		mlx->player->py = mlx->player->py - (mlx->player->pdy * 5);
 	}
@@ -88,7 +111,6 @@ int	key_press(int keycode, void *ml)
 		mlx->player->look_rot = -1;
 	else if (keycode == KEY_RIGHT)
 		mlx->player->look_rot = 1;
-	// ft_move_player(mlx, keycode);
 	return (0);
 }
 int	key_release(int keycode, void *ml)
