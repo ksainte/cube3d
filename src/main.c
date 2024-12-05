@@ -223,7 +223,7 @@ int	ft_cast_rays(t_mlx *mlx)
 		// printf("disH is %f\n", disH);
 		// printf("Final Dis is %f\n", disV);
 		ca = ft_adjust_angle(mlx->player->pa - mlx->ray->ra);
-		disV = disV * cos(ft_deg_to_rad(ca));
+		disV = disV * cos(ft_deg_to_rad(ca));//on veut l angle adjacent
 		mlx->ray->wall_distance = disV;
 		ft_fill_colors(mlx, i);
 		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)60 / SCREEN_WIDTH));

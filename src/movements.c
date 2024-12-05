@@ -46,23 +46,23 @@ int	ft_set_player(t_mlx *mlx)
 	move_y = 0;
 	if (mlx->player->moving_back_forth == 1)
 	{
-		mlx->player->px = mlx->player->px + (mlx->player->pdx * 15);
-		mlx->player->py = mlx->player->py + (mlx->player->pdy * 15);
+		mlx->player->px = mlx->player->px + (mlx->player->pdx * 5);
+		mlx->player->py = mlx->player->py + (mlx->player->pdy * 5);
 	}
 	if (mlx->player->moving_back_forth == -1)
 	{
-		mlx->player->px = mlx->player->px - (mlx->player->pdx * 15);
-		mlx->player->py = mlx->player->py - (mlx->player->pdy * 15);
+		mlx->player->px = mlx->player->px - (mlx->player->pdx * 5);
+		mlx->player->py = mlx->player->py - (mlx->player->pdy * 5);
 	}
 	if (mlx->player->moving_left_right == 1)
 	{
-		mlx->player->pa = ft_adjust_angle(mlx->player->pa - 15);
+		mlx->player->pa = ft_adjust_angle(mlx->player->pa - 5);
 		mlx->player->pdx = cos(ft_deg_to_rad(mlx->player->pa));
 		mlx->player->pdy = -sin(ft_deg_to_rad(mlx->player->pa));
 	}
 	if (mlx->player->moving_left_right == -1)
 	{
-		mlx->player->pa = ft_adjust_angle(mlx->player->pa + 15);
+		mlx->player->pa = ft_adjust_angle(mlx->player->pa + 5);
 		mlx->player->pdx = cos(ft_deg_to_rad(mlx->player->pa));
 		mlx->player->pdy = -sin(ft_deg_to_rad(mlx->player->pa));
 	}
