@@ -118,20 +118,20 @@ void	ft_init_player(t_mlx *mlx)
 	mlx->player->player_fov_radians = FIELD_OF_VIEW * (PI / 180);
 	mlx->player->start_x = mlx->data->s_x;
 	mlx->player->start_y = mlx->data->s_y;
-	mlx->player->px = mlx->player->start_x * TILE;
-	mlx->player->py = mlx->player->start_y * TILE;
+	mlx->player->px = mlx->player->start_x * TILE + 32;
+	mlx->player->py = mlx->player->start_y * TILE + 32;
 	printf("px is %f\n", mlx->player->px);
 	printf("py is %f\n", mlx->player->py);
 	mlx->player->orientation_start = mlx->data->tab[mlx->player->start_y][mlx->player->start_x];
 	printf("letter is %c\n", mlx->player->orientation_start);
-	if (mlx->player->orientation_start == 'S')
-		mlx->player->pa = 90;
 	if (mlx->player->orientation_start == 'N')
+		mlx->player->pa = 90;
+	if (mlx->player->orientation_start == 'S')
 		mlx->player->pa = 270;
-	if (mlx->player->orientation_start == 'E')
-		mlx->player->pa = 0;
 	if (mlx->player->orientation_start == 'W')
 		mlx->player->pa = 180;
+	if (mlx->player->orientation_start == 'E')
+		mlx->player->pa = 0;
 	printf("player well init\n");
 }
 void	ft_init_data(t_mlx *mlx)
@@ -341,7 +341,7 @@ int	ft_cast_rays(t_mlx *mlx)
 	i = 0;
 	printf("%f \n", mlx->player->pa);
 	// mlx->ray->ra = ft_adjust_angle(mlx->player->pa + 30); // 0 + 30
-	mlx->ray->ra = ft_adjust_angle(mlx->player->pa - 30); // 0 + 30
+	mlx->ray->ra = ft_adjust_angle(mlx->player->pa + 30); // 0 + 30
 	// mlx->ray->ra = 90;//0 + 30//25 et 45
 	printf("ra is %f\n", mlx->ray->ra);
 	while (i < 600)
@@ -373,7 +373,7 @@ int	ft_cast_rays(t_mlx *mlx)
 		ft_put_wall(mlx, i);
 		// printf("test is %f\n", (60 / SCREEN_WIDTH));
 		// mlx->ray->ra += (60 / SCREEN_WIDTH);
-		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra + 0.1);
+		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - 0.1);
 		printf("next ra is %f\n", mlx->ray->ra);
 		i++;
 	}
