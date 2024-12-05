@@ -161,8 +161,7 @@ int				ft_copy_to_data(t_map *map, t_data *data);
 int				ft_map_playable(t_map *map, t_data *data);
 
 // RAYCASTING
-float			get_v_inter(t_mlx *mlx, float angle);
-float			get_h_inter(t_mlx *mlx, float angle);
+float			ft_deg_to_rad(float ray_angle);
 int				ft_cast_rays(t_mlx *mlx);
 float			ft_adjust_angle(float angle);
 int				ft_cast_rays(t_mlx *mlx);
@@ -170,7 +169,7 @@ int				ft_cast_rays(t_mlx *mlx);
 int				ft_get_wall_color(t_mlx *mlx, int orientation_flag);
 int				ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,
 					int wall_bot_px);
-int				ft_put_wall(t_mlx *mlx, int ray_num);
+int				ft_fill_colors(t_mlx *mlx, int ray_num);
 int				ft_put_pixel_to_screen(t_mlx *mlx, int x, int y, int color);
 // MOVEMENT
 int				key_release(int keycode, void *ml);
