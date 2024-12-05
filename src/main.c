@@ -124,9 +124,9 @@ void	ft_init_player(t_mlx *mlx)
 	printf("py is %f\n", mlx->player->py);
 	mlx->player->orientation_start = mlx->data->tab[mlx->player->start_y][mlx->player->start_x];
 	printf("letter is %c\n", mlx->player->orientation_start);
-	if (mlx->player->orientation_start == 'N')
-		mlx->player->pa = 90;
 	if (mlx->player->orientation_start == 'S')
+		mlx->player->pa = 90;
+	if (mlx->player->orientation_start == 'N')
 		mlx->player->pa = 270;
 	if (mlx->player->orientation_start == 'E')
 		mlx->player->pa = 0;
@@ -213,8 +213,7 @@ float	ft_deg_to_rad(float ray_angle)
 // 	}
 // }
 
-float	ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var,
-		float Tan)
+float	ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var)
 {
 	int		j;
 	int		mx;
@@ -278,7 +277,7 @@ int	ft_calculate_distH(float Tan, t_mlx *mlx)
 		rx = px;
 	else
 		rx = px + (py - ry) / Tan;
-	distH = ft_get_dist(rx, ry, mlx, x_var, y_var, Tan);
+	distH = ft_get_dist(rx, ry, mlx, x_var, y_var);
 	printf("disH is %f\n", distH);
 	return (distH);
 }
@@ -308,7 +307,7 @@ int	ft_calculate_distV(float Tan, t_mlx *mlx)
 	else if (cos(ft_deg_to_rad(mlx->ray->ra)) < -0.001)
 		rx = (((int)px >> 6) << 6) - 0.0001; // gauche
 	ry = py + (px - rx) * Tan;
-	distV = ft_get_dist(rx, ry, mlx, x_var, y_var, Tan);
+	distV = ft_get_dist(rx, ry, mlx, x_var, y_var);
 	printf("disV is %f\n", distV);
 	return (distV);
 }
@@ -368,6 +367,8 @@ int	ft_cast_rays(t_mlx *mlx)
 		}
 		printf("disH is %f\n", disH);
 		printf("Final Dis is %f\n", disV);
+		float ca= ft_adjust_angle(mlx->player->pa - mlx->ray->ra); 
+  		disV = disV * cos(ft_deg_to_rad(ca));
 		mlx->ray->wall_distance = disV;
 		ft_put_wall(mlx, i);
 		// printf("test is %f\n", (60 / SCREEN_WIDTH));
