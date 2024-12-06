@@ -53,13 +53,11 @@ void	ft_init_structs(t_player *player, t_mlx *mlx, t_ray *ray)
 
 float	ft_adjust_angle(float angle)
 {
-	// if (angle < 0)
-	// 	angle = angle *-1;
 	if (angle < 0)
 		angle = angle + 360;
-	if (angle == 360)
-		angle = 0;
-	else if (angle > 359)
+	// if (angle > 359.998)
+	// 	angle = 359.9248;
+	else if (angle > 360)
 		angle = angle - 360;
 	return (angle);
 }
@@ -101,6 +99,8 @@ float	ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var)
 		dis = (ry - mlx->player->py) * mlx->ray->flag_sin;
 	else
 		dis = (rx - mlx->player->px) / cos(ft_deg_to_rad(mlx->ray->ra));
+	if (dis > 2147483647)
+			dis = 100000;
 	return (dis);
 }
 
@@ -127,16 +127,16 @@ int	ft_calculate_distH(float Tan, t_mlx *mlx)
 		x_var = y_var / Tan;
 	else
 		x_var = 0;
-	if (sin(ft_deg_to_rad(mlx->ray->ra)) > 0.001)       // de 0 a 180
+	if (sin(ft_deg_to_rad(mlx->ray->ra)) > 0.0000001)       // de 0 a 180
 		ry = (((int)py >> 6) << 6) - 0.0001;            // arrondi a l unite inf
-	else if (sin(ft_deg_to_rad(mlx->ray->ra)) < -0.001) // de 180 a 360
+	else if (sin(ft_deg_to_rad(mlx->ray->ra)) < -0.0000001) // de 180 a 360
 		ry = (((int)py >> 6) << 6) + 64;                // arrondi a l unite sup
 	if (mlx->ray->ra == 90 || mlx->ray->ra == 270)
 		rx = px;
 	else
 		rx = px + (py - ry) / Tan;
 	distH = ft_get_dist(rx, ry, mlx, x_var, y_var);
-	printf("disH is %f\n", distH);
+	// printf("disH is %f\n", distH);
 	return (distH);
 }
 
@@ -160,15 +160,15 @@ int	ft_calculate_distV(float Tan, t_mlx *mlx)
 	// printf("final flag_cos is %d\n", mlx->ray->flag_cos);
 	// printf("final flag_sin is %d\n", mlx->ray->flag_sin);
 	y_var = x_var * Tan;
-	if (cos(ft_deg_to_rad(mlx->ray->ra)) > 0.001) // droite
+	if (cos(ft_deg_to_rad(mlx->ray->ra)) > 0.0000001) // droite
 		rx = (((int)px >> 6) << 6) + 64;
-	else if (cos(ft_deg_to_rad(mlx->ray->ra)) < -0.001)
+	else if (cos(ft_deg_to_rad(mlx->ray->ra)) < -0.0000001)
 		rx = (((int)px >> 6) << 6) - 0.0001; // gauche
 	if (cos(ft_deg_to_rad(mlx->ray->ra)) == 0) // droite
 		printf("%f\n", rx);
 	ry = py + (px - rx) * Tan;
 	distV = ft_get_dist(rx, ry, mlx, x_var, y_var);
-	printf("disV is %f\n", distV);
+	// printf("disV is %f\n", distV);
 	return (distV);
 }
 
@@ -177,14 +177,17 @@ void	ft_set_flag(t_mlx *mlx, float *Tan)
 	mlx->ray->Tan_slope = 1;
 	mlx->ray->flag_cos = 1;
 	mlx->ray->flag_sin = 1;
-	if (cos(ft_deg_to_rad(mlx->ray->ra)) > 0.001) // de 0 a 90
+	// printf("%f\n", sin(ft_deg_to_rad(mlx->ray->ra)));
+	// printf("%f\n", cos(ft_deg_to_rad(mlx->ray->ra)));
+	// printf("%f\n", tan(ft_deg_to_rad(mlx->ray->ra)));
+	if (cos(ft_deg_to_rad(mlx->ray->ra)) > 0.0000001) // de 0 a 90
 		mlx->ray->flag_sin = -1;
-	if (sin(ft_deg_to_rad(mlx->ray->ra)) < -0.001) // de 0 a 90
+	if (sin(ft_deg_to_rad(mlx->ray->ra)) < -0.0000001) // de 0 a 90
 		mlx->ray->flag_cos = -1;
 	if (mlx->ray->ra != 90 && mlx->ray->ra != 270)
 	{
 		*Tan = tan(ft_deg_to_rad(mlx->ray->ra));
-		if (*Tan < 0)
+		if (*Tan < -0.0000001)
 			mlx->ray->Tan_slope = -1;
 	}
 	if (mlx->ray->ra == 90 || mlx->ray->ra == 180)
@@ -201,9 +204,9 @@ int	ft_cast_rays(t_mlx *mlx)
 
 	i = 0;
 	// printf("%f \n", mlx->player->pa);
-	// mlx->ray->ra = ft_adjust_angle(mlx->player->pa + 30); // 0 + 30
 	mlx->ray->ra = ft_adjust_angle(mlx->player->pa + 30); // 0 + 30
-	// mlx->ray->ra = 90;//0 + 30//25 et 45
+	// mlx->ray->ra = ft_adjust_angle(mlx->player->pa + 0.5); // 0 + 30
+	// mlx->ray->ra = 0.000026;//0 + 30//25 et 45
 	// printf("ra is %f\n", mlx->ray->ra);
 	while (i < SCREEN_WIDTH)
 	{
@@ -228,20 +231,24 @@ int	ft_cast_rays(t_mlx *mlx)
 			mlx->ray->wall_touch = HORIZONTAL_WALL; // final dis is disV
 		}
 		// printf("disH is %f\n", disH);
-		printf("Final Dis is %f\n", disV);
-		if (disV > 0)
-		{
+		// printf("Dis is %f\n", disV);
 		ca = ft_adjust_angle(mlx->player->pa - mlx->ray->ra);
+		// printf("ca is %f\n", ca);
 		disV = disV * cos(ft_deg_to_rad(ca));//on veut l angle adjacent
+		// printf("Final Dis is %f\n", disV);
+		if (disV < 0)
+		{
+			printf("exit ra is %f\n", mlx->ray->ra);
+			exit(1);
+		}
 		mlx->ray->wall_distance = disV;
 		ft_fill_colors(mlx, i);
-		}
 		// printf("old ra is %f\n", mlx->ray->ra);
 		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)60 / SCREEN_WIDTH));
-		printf("next ra is %f\n", mlx->ray->ra);
+		// printf("next ra is %f\n", mlx->ray->ra);
 		i++;
 	}
-	printf("------------------------------\n");
+	// printf("------------------------------\n");
 	return (0);
 }
 
