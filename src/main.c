@@ -45,9 +45,7 @@ void	ft_init_data(t_mlx *mlx)
 void	ft_init_structs(t_player *player, t_mlx *mlx, t_ray *ray)
 {
 	mlx->player = player;
-	// printf("init mlx->player ptr [ok]\n");
 	mlx->ray = ray;
-	// printf("init mlx->ray ptr [ok]\n");
 	ft_init_player(mlx);
 }
 
@@ -223,10 +221,12 @@ int	ft_cast_rays(t_mlx *mlx)
 		// printf("disH is %f\n", disH);
 		// printf("Final Dis is %f\n", disV);
 		ca = ft_adjust_angle(mlx->player->pa - mlx->ray->ra);
-		disV = disV * cos(ft_deg_to_rad(ca));//on veut l angle adjacent
+		disV = disV * cos(ft_deg_to_rad(ca)); // on veut l angle adjacent
 		mlx->ray->wall_distance = disV;
+		mlx->ray->index = i;
 		ft_fill_colors(mlx, i);
-		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)60 / SCREEN_WIDTH));
+		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)60
+					/ SCREEN_WIDTH));
 		// printf("next ra is %f\n", mlx->ray->ra);
 		i++;
 	}
@@ -243,14 +243,14 @@ int	ft_main_loop(void *mlx_ptr)
 	img.img = mlx_new_image(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (!img.img)
 	{
-		printf("Error: Failed to create image\n");
+		// printf("Error: Failed to create image\n");
 		return (1);
 	}
 	img.img_data = mlx_get_data_addr(img.img, &img.bpp, &img.line_length,
 			&img.endian);
 	if (!img.img_data)
 	{
-		printf("Error: Failed to get image data address\n");
+		// printf("Error: Failed to get image data address\n");
 		mlx_destroy_image(mlx->mlx_ptr, img.img);
 		return (1);
 	}
@@ -277,19 +277,16 @@ int	main(int argc, char **argv)
 	if ((!ft_parse_valid(&map) || !ft_map_playable(&map, &data))
 		&& ft_free(&map))
 		return (0);
-	// ft_print_data(&data);
-	printf("initializing structs\n");
 	mlx.data = &data;
 	ft_init_structs(&player, &mlx, &ray);
-	printf("init struct done\n");
+	printf("structs well initiated!\n");
 	mlx.mlx_ptr = mlx_init();
+	txtr_checkload(&mlx);
+	ft_init_txtr_images(&mlx);
 	if (!mlx.mlx_ptr)
 		return (0);
-	printf("mlx initiated \n");
 	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
 			"cube");
-	printf("Window created\n");
-	// ft_cast_rays(&mlx);
 	// ft_main_loop(&mlx);
 	mlx_hook(mlx.win_ptr, 2, 1L << 0, &key_press, &mlx);
 	mlx_hook(mlx.win_ptr, 3, 1L << 1, &key_release, &mlx);

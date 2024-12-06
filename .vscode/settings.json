@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "cube_3d.h": "c"
+        "cube_3d.h": "c",
+        "type_traits": "c"
     }
 }

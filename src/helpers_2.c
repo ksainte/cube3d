@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:52:00 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/22 13:14:05 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/06 14:15:11 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ int	ft_copy_table(t_map *map)
 int	ft_free_data(t_data *data)
 {
 	ft_free_table(data->tab);
-	free(data->NO);
-	free(data->SO);
-	free(data->EA);
-	free(data->WE);
 	return (1);
 }
 
@@ -49,10 +45,6 @@ void	ft_print_data(t_data *data)
 	i = -1;
 	while (++i < 3)
 		printf("C %d\n", data->C[i]);
-	printf("NO %s\n", data->NO);
-	printf("SO %s\n", data->SO);
-	printf("EA %s\n", data->EA);
-	printf("WE %s\n", data->WE);
 	printf("row is %d\n", data->row);
 	printf("s->y is %d\n", data->s_y);
 	printf("s->x is %d\n", data->s_x);
