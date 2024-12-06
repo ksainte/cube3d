@@ -211,7 +211,7 @@ int	ft_cast_rays(t_mlx *mlx)
 	while (i < SCREEN_WIDTH)
 	{
 		// printf("====================\n");
-		// sleep(1);
+		usleep(10000);
 		// printf("current ra is %f\n", mlx->ray->ra);
 		ft_set_flag(mlx, &Tan);
 		// printf("Tan is %f\n", Tan);
@@ -235,8 +235,8 @@ int	ft_cast_rays(t_mlx *mlx)
 		ca = ft_adjust_angle(mlx->player->pa - mlx->ray->ra);
 		// printf("ca is %f\n", ca);
 		disV = disV * cos(ft_deg_to_rad(ca));//on veut l angle adjacent
-		// printf("Final Dis is %f\n", disV);
-		if (disV < 0)
+		printf("Final Dis is %f\n", disV);
+		if (disV == 0)
 		{
 			printf("exit ra is %f\n", mlx->ray->ra);
 			exit(1);
@@ -245,7 +245,7 @@ int	ft_cast_rays(t_mlx *mlx)
 		ft_fill_colors(mlx, i);
 		// printf("old ra is %f\n", mlx->ray->ra);
 		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)60 / SCREEN_WIDTH));
-		// printf("next ra is %f\n", mlx->ray->ra);
+		printf("next ra is %f\n", mlx->ray->ra);
 		i++;
 	}
 	// printf("------------------------------\n");
