@@ -201,8 +201,10 @@ int	ft_cast_rays(t_mlx *mlx)
 	float	disH;
 	float	Tan;
 	float	ca;
+	int 	flag;
 
 	i = 0;
+	flag = 1;
 	// printf("%f \n", mlx->player->pa);
 	mlx->ray->ra = ft_adjust_angle(mlx->player->pa + 30); // 0 + 30
 	// mlx->ray->ra = ft_adjust_angle(mlx->player->pa + 0.5); // 0 + 30
@@ -211,8 +213,8 @@ int	ft_cast_rays(t_mlx *mlx)
 	while (i < SCREEN_WIDTH)
 	{
 		// printf("====================\n");
-		usleep(10000);
 		// printf("current ra is %f\n", mlx->ray->ra);
+		// usleep(10000);
 		ft_set_flag(mlx, &Tan);
 		// printf("Tan is %f\n", Tan);
 		if (mlx->ray->ra != 0 && mlx->ray->ra != 180) // ie si ! 0 ou 180 deg
@@ -224,31 +226,51 @@ int	ft_cast_rays(t_mlx *mlx)
 			disV = disH + 1;
 		if (mlx->ray->ra == 0 || mlx->ray->ra == 180)
 			disH = disV + 1;
-		mlx->ray->wall_touch = VERTICAL_WALL;
+		// mlx->ray->wall_touch = VERTICAL_WALL;
+		if (mlx->ray->wall_touch == VERTICAL_WALL)
+			flag = 1;
+		else
+			flag = -1;
+		if (disV == disH && flag == 1)
+		{
+			printf("DIS V = DIS H %f\n", mlx->ray->ra);
+			mlx->ray->wall_touch = HORIZONTAL_WALL;
+			// exit(1);		// printf("next ra is %f\n", mlx->ray->ra);
+		// printf("next ra is %f\n", mlx->ray->ra);
+		// printf("next ra is %f\n", mlx->ray->ra);
+		}
 		if (disH < disV)
 		{
+			printf("DIS V > DIS H %f\n", mlx->ray->ra);
 			disV = disH;
 			mlx->ray->wall_touch = HORIZONTAL_WALL; // final dis is disV
 		}
+		else 
+			mlx->ray->wall_touch = VERTICAL_WALL;
+		// if (disV == disH && (mlx->ray->ra <= 120 && mlx->ray->ra >= 60))
+		// {
+		// 	printf("DIS V = DIS H %f\n", mlx->ray->ra);
+		// 		mlx->ray->wall_touch = VERTICAL_WALL;
+		// 	// exit(1);		// printf("next ra is %f\n", mlx->ray->ra);
+		// // printf("next ra is %f\n", mlx->ray->ra);
+		// // printf("next ra is %f\n", mlx->ray->ra);
+
+		// }
 		// printf("disH is %f\n", disH);
 		// printf("Dis is %f\n", disV);
 		ca = ft_adjust_angle(mlx->player->pa - mlx->ray->ra);
 		// printf("ca is %f\n", ca);
 		disV = disV * cos(ft_deg_to_rad(ca));//on veut l angle adjacent
-		printf("Final Dis is %f\n", disV);
-		if (disV == 0)
-		{
-			printf("exit ra is %f\n", mlx->ray->ra);
-			exit(1);
-		}
+		// printf("Final Dis is %f\n", disV);
 		mlx->ray->wall_distance = disV;
 		ft_fill_colors(mlx, i);
 		// printf("old ra is %f\n", mlx->ray->ra);
 		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)60 / SCREEN_WIDTH));
-		printf("next ra is %f\n", mlx->ray->ra);
+		// printf("next ra is %f\n", mlx->ray->ra);
 		i++;
 	}
 	// printf("------------------------------\n");
+	// ft_fill_colors(mlx, i);
 	return (0);
 }
 
