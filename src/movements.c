@@ -60,7 +60,40 @@ int	ft_set_player(t_mlx *mlx)
 		pos_x = mlx->player->px + (mlx->player->pdx * 60);
 		pos_y = mlx->player->py + (mlx->player->pdy * 60);
 		if (mlx->data->tab[(int)pos_y / 64][(int)pos_x / 64] == '1')
+		{
+			if (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) > 0.0000001 && mlx->data->tab[((int)mlx->player->py - 5) / 64][((int)mlx->player->px) / 64] != '1') // droite
+			{
+				// printf("cos pos et cos - 90 pos\n");
+				mlx->player->py = mlx->player->py - 5;
+			}
+			else if (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) > 0.0000001 && mlx->data->tab[((int)mlx->player->py + 5) / 64][((int)mlx->player->px) / 64] != '1') // droite
+			{
+				// printf("cos pos et cos + 90 pos\n");
+				mlx->player->py = mlx->player->py + 5;
+			}
+			else if (cos(ft_deg_to_rad(mlx->player->pa)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) < -0.0000001 && mlx->data->tab[((int)mlx->player->py - 5) / 64][(int)mlx->player->px / 64] != '1') // droite
+			{
+				// printf("cos neg et cos + 90 neg\n");
+				mlx->player->py = mlx->player->py - 5;
+			}
+			else if (cos(ft_deg_to_rad(mlx->player->pa)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) < -0.0000001 && mlx->data->tab[((int)mlx->player->py + 5) / 64][(int)mlx->player->px / 64] != '1') // droite
+				mlx->player->py = mlx->player->py + 5;
+			else if (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) < -0.0000001  && mlx->data->tab[(int)mlx->player->py / 64][((int)mlx->player->px + 5) / 64] != '1') // droite
+				mlx->player->px = mlx->player->px + 5;
+			else if (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) < -0.0000001  && mlx->data->tab[(int)mlx->player->py / 64][((int)mlx->player->px + 5) / 64] != '1') // droite
+				mlx->player->px = mlx->player->px + 5;
+			else if (cos(ft_deg_to_rad(mlx->ray->ra)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) > 0.0000001  && mlx->data->tab[(int)mlx->player->py / 64][((int)mlx->player->px - 5) / 64] != '1')
+			{
+				// printf("cos neg et cos + 90 pos\n");
+				mlx->player->px = mlx->player->px - 5;
+			}
+			else if (cos(ft_deg_to_rad(mlx->ray->ra)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) > 0.0000001  && mlx->data->tab[(int)mlx->player->py / 64][((int)mlx->player->px - 5) / 64] != '1')
+			{
+				// printf("cos neg et cos pa - 90 pos\n");
+				mlx->player->px = mlx->player->px - 5;
+			}
 			return (0);
+		}
 		mlx->player->px = mlx->player->px + (mlx->player->pdx * 5);
 		mlx->player->py = mlx->player->py + (mlx->player->pdy * 5);
 

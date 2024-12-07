@@ -164,8 +164,6 @@ int	ft_calculate_distV(float Tan, t_mlx *mlx)
 		rx = (((int)px >> 6) << 6) + 64;
 	else if (cos(ft_deg_to_rad(mlx->ray->ra)) < -0.0000001)
 		rx = (((int)px >> 6) << 6) - 0.0001; // gauche
-	if (cos(ft_deg_to_rad(mlx->ray->ra)) == 0) // droite
-		printf("%f\n", rx);
 	ry = py + (px - rx) * Tan;
 	distV = ft_get_dist(rx, ry, mlx, x_var, y_var);
 	// printf("disV is %f\n", distV);
