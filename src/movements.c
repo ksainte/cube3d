@@ -57,6 +57,7 @@ int	ft_set_player(t_mlx *mlx)
 
 	if (mlx->player->moving_back_forth == 1)
 	{
+		//probleme ici car a 90 et 270 deg le cos est a 0 donc il respecte pas la dist de 60!
 		pos_x = mlx->player->px + (mlx->player->pdx * 60);
 		pos_y = mlx->player->py + (mlx->player->pdy * 60);
 		if (mlx->data->tab[(int)pos_y / 64][(int)pos_x / 64] == '1')
