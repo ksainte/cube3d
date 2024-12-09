@@ -88,7 +88,25 @@ int	ft_set_player(t_mlx *mlx)
 		pos_x = mlx->player->px - (mlx->player->pdx * 5);
 		pos_y = mlx->player->py - (mlx->player->pdy * 5);
 		if (mlx->data->tab[(int)pos_y / 64][(int)pos_x / 64] == '1')
+		{
+			if (MV_VERT_RIGHT_UP && mlx->data->tab[((int)mlx->player->py) / 64][((int)mlx->player->px - 5) / 64] != '1') // droite
+				mlx->player->px = mlx->player->px - 5;//ok
+			else if (MV_VERT_RIGHT_DOWN && mlx->data->tab[((int)mlx->player->py) / 64][((int)mlx->player->px - 5) / 64] != '1') // droite
+				mlx->player->px = mlx->player->px - 5;//ok
+			else if (MV_VERT_LEFT_UP && mlx->data->tab[((int)mlx->player->py) / 64][((int)mlx->player->px + 5) / 64] != '1') // droite
+				mlx->player->px = mlx->player->px + 5;//ok
+			else if (MV_VERT_LEFT_DOWN && mlx->data->tab[((int)mlx->player->py) / 64][((int)mlx->player->px + 5 ) / 64] != '1') // droite
+				mlx->player->px = mlx->player->px + 5;//ok
+			else if (MV_HOR_UP_RIGHT  && mlx->data->tab[((int)mlx->player->py + 5) / 64][((int)mlx->player->px) / 64] != '1') // droite
+				mlx->player->py = mlx->player->py + 5;//ok
+			else if (MV_HOR_DOWN_RIGHT  && mlx->data->tab[((int)mlx->player->py - 5) / 64][((int)mlx->player->px) / 64] != '1') // droite
+				mlx->player->py = mlx->player->py - 5;//ok
+			else if (MV_HOR_UP_LEFT  && mlx->data->tab[((int)mlx->player->py + 5) / 64][((int)mlx->player->px) / 64] != '1')
+				mlx->player->py = mlx->player->py + 5;
+			else if (MV_HOR_DOWN_LEFT  && mlx->data->tab[((int)mlx->player->py - 5) / 64][((int)mlx->player->px) / 64] != '1')
+				mlx->player->py = mlx->player->py - 5;
 			return (0);
+		}
 		mlx->player->px = mlx->player->px - (mlx->player->pdx * 5);
 		mlx->player->py = mlx->player->py - (mlx->player->pdy * 5);
 	}
