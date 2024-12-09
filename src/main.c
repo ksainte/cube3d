@@ -192,42 +192,46 @@ int	ft_cast_rays(t_mlx *mlx)
 	float	ca;
 
 	i = 0;
-	// printf("%f \n", mlx->player->pa);
-	// mlx->ray->ra = ft_adjust_angle(mlx->player->pa + 30); // 0 + 30
-	mlx->ray->ra = ft_adjust_angle(mlx->player->pa + 30); // 0 + 30
-	// mlx->ray->ra = 90;//0 + 30//25 et 45
-	// printf("ra is %f\n", mlx->ray->ra);
+	mlx->ray->ra = ft_adjust_angle(mlx->player->pa + 30);
 	while (i < SCREEN_WIDTH)
 	{
-		// printf("====================\n");
-		// printf("current ra is %f\n", mlx->ray->ra);
 		ft_set_flag(mlx, &Tan);
-		// printf("Tan is %f\n", Tan);
-		if (mlx->ray->ra != 0 && mlx->ray->ra != 180) // ie si ! 0 ou 180 deg
+		// Calculate horizontal distance if not 0 or 180 degrees
+		if (mlx->ray->ra != 0 && mlx->ray->ra != 180)
 			disH = ft_calculate_distH(Tan, mlx);
+		// Calculate vertical distance if not 90 or 270 degrees
 		ft_set_flag(mlx, &Tan);
-		if (mlx->ray->ra != 90 && mlx->ray->ra != 270) // ie si ! 90 ou 270 deg
+		if (mlx->ray->ra != 90 && mlx->ray->ra != 270)
 			disV = ft_calculate_distV(Tan, mlx);
 		else
 			disV = disH + 1;
+		// Special case for horizontal distance when ray is exactly 0 or 180 degrees
 		if (mlx->ray->ra == 0 || mlx->ray->ra == 180)
 			disH = disV + 1;
-		mlx->ray->wall_touch = VERTICAL_WALL;
+		// Determine which distance (horizontal or vertical) is closer
 		if (disH < disV)
 		{
-			disV = disH;
-			mlx->ray->wall_touch = HORIZONTAL_WALL; // final dis is disV
+			// Set rx to the final horizontal distance
+			mlx->ray->rx = disH;
+			mlx->ray->wall_distance = disH;
+			mlx->ray->wall_touch = HORIZONTAL_WALL;
 		}
-		// printf("disH is %f\n", disH);
-		// printf("Final Dis is %f\n", disV);
+		else
+		{
+			// Set ry to the final vertical distance
+			mlx->ray->ry = disV;
+			mlx->ray->wall_distance = disV;
+			mlx->ray->wall_touch = VERTICAL_WALL;
+		}
+		// Apply the cosine adjustment based on the angle difference
 		ca = ft_adjust_angle(mlx->player->pa - mlx->ray->ra);
-		disV = disV * cos(ft_deg_to_rad(ca)); // on veut l angle adjacent
-		mlx->ray->wall_distance = disV;
+		mlx->ray->wall_distance = mlx->ray->wall_distance
+			* cos(ft_deg_to_rad(ca));
 		mlx->ray->index = i;
 		ft_fill_colors(mlx, i);
+		// Update the ray angle for the next iteration
 		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)60
 					/ SCREEN_WIDTH));
-		// printf("next ra is %f\n", mlx->ray->ra);
 		i++;
 	}
 	return (0);
