@@ -45,6 +45,23 @@
 #define MV_VERTICAL (MV_VERT_RIGHT_UP | MV_VERT_RIGHT_DOWN | MV_VERT_LEFT_UP | MV_VERT_LEFT_DOWN)
 #define MV_HORIZONTAL (MV_HOR_UP_LEFT | MV_HOR_DOWN_LEFT | MV_HOR_UP_RIGHT | MV_HOR_DOWN_RIGHT)
 
+typedef struct s_img
+{
+	void		*img;
+	char *img_data; // Raw image data (pointer returned by mlx_get_data_addr)
+	int pixel_bits; // Bits per pixel (bpp)
+	int size_line;  // Bytes per line (line_length)
+	int endian;     // Endian format
+}				t_img;
+
+typedef struct s_txtr
+{
+	char *key;      // Texture key (e.g., "NO", "SO", etc.)
+	char *value;    // Texture value (e.g., file path or ID)
+	char *path;     // Path to the texture file
+	t_img img_data; // Image data (this contains the actual texture data)
+}				t_txtr;
+
 typedef struct s_map
 {
 	int			fd;
@@ -71,12 +88,9 @@ typedef struct s_data
 	int			s_x;
 	int			s_y;
 	int			row;
-	char		*NO;
-	char		*SO;
-	char		*WE;
-	char		*EA;
 	int			F[3];
 	int			C[3];
+	t_txtr		txtr_tab[4];
 
 }				t_data;
 
@@ -117,6 +131,7 @@ typedef struct s_ray
 	int			flag_sin;
 	int			ray_coord;
 	int			Tan_slope;
+	int			index;
 }				t_ray;
 typedef struct s_mlx
 {
@@ -125,6 +140,7 @@ typedef struct s_mlx
 	void		*mlx_ptr;
 	t_ray		*ray;
 	void		*win_ptr;
+	t_txtr		*mlx_textr_tab;
 	t_image		*img;
 }				t_mlx;
 
@@ -186,5 +202,10 @@ int				ft_put_pixel_to_screen(t_mlx *mlx, int x, int y, int color);
 int				key_release(int keycode, void *ml);
 int				key_press(int keycode, void *ml);
 int				ft_set_player(t_mlx *mlx);
+// Textures
+int				txtr_checkload(t_mlx *mlx);
+void			ft_init_txtr_images(t_mlx *mlx);
+void			ft_draw_wall(t_mlx *mlx, int bottom_px, int top_px,
+					int wall_height);
 
 #endif

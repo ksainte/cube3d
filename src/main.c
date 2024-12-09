@@ -45,9 +45,7 @@ void	ft_init_data(t_mlx *mlx)
 void	ft_init_structs(t_player *player, t_mlx *mlx, t_ray *ray)
 {
 	mlx->player = player;
-	// printf("init mlx->player ptr [ok]\n");
 	mlx->ray = ray;
-	// printf("init mlx->ray ptr [ok]\n");
 	ft_init_player(mlx);
 }
 
@@ -212,21 +210,24 @@ int	ft_cast_rays(t_mlx *mlx)
 		// printf("current ra is %f\n", mlx->ray->ra);
 		// usleep(10000);
 		ft_set_flag(mlx, &Tan);
-		// printf("Tan is %f\n", Tan);
-		if (mlx->ray->ra != 0 && mlx->ray->ra != 180) // ie si ! 0 ou 180 deg
+		// Calculate horizontal distance if not 0 or 180 degrees
+		if (mlx->ray->ra != 0 && mlx->ray->ra != 180)
 			disH = ft_calculate_distH(Tan, mlx);
+		// Calculate vertical distance if not 90 or 270 degrees
 		ft_set_flag(mlx, &Tan);
-		if (mlx->ray->ra != 90 && mlx->ray->ra != 270) // ie si ! 90 ou 270 deg
+		if (mlx->ray->ra != 90 && mlx->ray->ra != 270)
 			disV = ft_calculate_distV(Tan, mlx);
 		else
 			disV = disH + 1;
+		// Special case for horizontal distance when ray is exactly 0 or 180 degrees
 		if (mlx->ray->ra == 0 || mlx->ray->ra == 180)
 			disH = disV + 1;
 		//le probleme c est que sur l autre mur, il y a une egalite mais il print un HOR a la place d un VER!
 		if (disH < disV)
 		{
-			disV = disH;
-			mlx->ray->wall_touch = HORIZONTAL_WALL; // final dis is disV
+			// Set rx to the final horizontal distance
+			mlx->ray->wall_distance = disH;
+			mlx->ray->wall_touch = HORIZONTAL_WALL;
 		}
 		else if (disH > disV)
 		{
@@ -240,6 +241,8 @@ int	ft_cast_rays(t_mlx *mlx)
 			else if (mlx->ray->wall_touch == VERTICAL_WALL)
 				mlx->ray->wall_touch = VERTICAL_WALL;
 		}
+			mlx->ray->ry = disV;
+			mlx->ray->rx = disH;
 		// printf("disH is %f\n", disH);
 		// printf("Dis is %f\n", disV);
 		ca = ft_adjust_angle(mlx->player->pa - mlx->ray->ra);
@@ -268,14 +271,14 @@ int	ft_main_loop(void *mlx_ptr)
 	img.img = mlx_new_image(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (!img.img)
 	{
-		printf("Error: Failed to create image\n");
+		// printf("Error: Failed to create image\n");
 		return (1);
 	}
 	img.img_data = mlx_get_data_addr(img.img, &img.bpp, &img.line_length,
 			&img.endian);
 	if (!img.img_data)
 	{
-		printf("Error: Failed to get image data address\n");
+		// printf("Error: Failed to get image data address\n");
 		mlx_destroy_image(mlx->mlx_ptr, img.img);
 		return (1);
 	}
@@ -302,19 +305,16 @@ int	main(int argc, char **argv)
 	if ((!ft_parse_valid(&map) || !ft_map_playable(&map, &data))
 		&& ft_free(&map))
 		return (0);
-	// ft_print_data(&data);
-	printf("initializing structs\n");
 	mlx.data = &data;
 	ft_init_structs(&player, &mlx, &ray);
-	printf("init struct done\n");
+	printf("structs well initiated!\n");
 	mlx.mlx_ptr = mlx_init();
+	txtr_checkload(&mlx);
+	ft_init_txtr_images(&mlx);
 	if (!mlx.mlx_ptr)
 		return (0);
-	printf("mlx initiated \n");
 	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
 			"cube");
-	printf("Window created\n");
-	// ft_cast_rays(&mlx);
 	// ft_main_loop(&mlx);
 	mlx_hook(mlx.win_ptr, 2, 1L << 0, &key_press, &mlx);
 	mlx_hook(mlx.win_ptr, 3, 1L << 1, &key_release, &mlx);
