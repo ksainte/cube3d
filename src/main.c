@@ -210,30 +210,28 @@ int	ft_cast_rays(t_mlx *mlx)
 		// printf("current ra is %f\n", mlx->ray->ra);
 		// usleep(10000);
 		ft_set_flag(mlx, &Tan);
-		// Calculate horizontal distance if not 0 or 180 degrees
-		if (mlx->ray->ra != 0 && mlx->ray->ra != 180)
+		// printf("Tan is %f\n", Tan);
+		if (mlx->ray->ra != 0 && mlx->ray->ra != 180) // ie si ! 0 ou 180 deg
 			disH = ft_calculate_distH(Tan, mlx);
-		// Calculate vertical distance if not 90 or 270 degrees
 		ft_set_flag(mlx, &Tan);
-		if (mlx->ray->ra != 90 && mlx->ray->ra != 270)
+		if (mlx->ray->ra != 90 && mlx->ray->ra != 270) // ie si ! 90 ou 270 deg
 			disV = ft_calculate_distV(Tan, mlx);
 		else
 			disV = disH + 1;
-		// Special case for horizontal distance when ray is exactly 0 or 180 degrees
 		if (mlx->ray->ra == 0 || mlx->ray->ra == 180)
 			disH = disV + 1;
 		//le probleme c est que sur l autre mur, il y a une egalite mais il print un HOR a la place d un VER!
 		if (disH < disV)
 		{
-			// Set rx to the final horizontal distance
-			mlx->ray->wall_distance = disH;
-			mlx->ray->wall_touch = HORIZONTAL_WALL;
+			disV = disH;
+			mlx->ray->wall_touch = HORIZONTAL_WALL; // final dis is disV
 		}
 		else if (disH > disV)
 		{
 			// printf("DIS V < DIS H %f\n", mlx->ray->ra);
 			mlx->ray->wall_touch = VERTICAL_WALL;
 		}
+	
 		else if (disH == disV)
 		{
 			if (mlx->ray->wall_touch == HORIZONTAL_WALL)
@@ -241,8 +239,8 @@ int	ft_cast_rays(t_mlx *mlx)
 			else if (mlx->ray->wall_touch == VERTICAL_WALL)
 				mlx->ray->wall_touch = VERTICAL_WALL;
 		}
-			mlx->ray->ry = disV;
-			mlx->ray->rx = disH;
+		mlx->ray->rx = disH;
+		mlx->ray->ry = disV;
 		// printf("disH is %f\n", disH);
 		// printf("Dis is %f\n", disV);
 		ca = ft_adjust_angle(mlx->player->pa - mlx->ray->ra);
@@ -250,6 +248,7 @@ int	ft_cast_rays(t_mlx *mlx)
 		disV = disV * cos(ft_deg_to_rad(ca));//on veut l angle adjacent
 		// printf("Final Dis is %f\n", disV);
 		mlx->ray->wall_distance = disV;
+		mlx->ray->index = i;
 		ft_fill_colors(mlx, i);
 		// printf("old ra is %f\n", mlx->ray->ra);
 		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)60 / SCREEN_WIDTH));
