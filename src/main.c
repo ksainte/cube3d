@@ -67,7 +67,7 @@ float	ft_deg_to_rad(float ray_angle)
 	return (ray_radian);
 }
 
-float	ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var)
+float	ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var, int flag)
 {
 	int		j;
 	int		mx;
@@ -99,6 +99,16 @@ float	ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var)
 		dis = (rx - mlx->player->px) / cos(ft_deg_to_rad(mlx->ray->ra));
 	if (dis > 2147483647)
 			dis = 100000;
+	if (flag == 1)
+	{
+		mlx->ray->rx_distV = rx;
+		mlx->ray->ry_distV = ry;
+	}
+	if (flag == 2)
+	{
+		mlx->ray->rx_distH = rx;
+		mlx->ray->ry_distH = ry;
+	}
 	return (dis);
 }
 
@@ -133,7 +143,7 @@ int	ft_calculate_distH(float Tan, t_mlx *mlx)
 		rx = px;
 	else
 		rx = px + (py - ry) / Tan;
-	distH = ft_get_dist(rx, ry, mlx, x_var, y_var);
+	distH = ft_get_dist(rx, ry, mlx, x_var, y_var, 2);
 	// printf("disH is %f\n", distH);
 	return (distH);
 }
@@ -163,7 +173,7 @@ int	ft_calculate_distV(float Tan, t_mlx *mlx)
 	else if (cos(ft_deg_to_rad(mlx->ray->ra)) < -0.0000001)
 		rx = (((int)px >> 6) << 6) - 0.0001; // gauche
 	ry = py + (px - rx) * Tan;
-	distV = ft_get_dist(rx, ry, mlx, x_var, y_var);
+	distV = ft_get_dist(rx, ry, mlx, x_var, y_var, 1);
 	// printf("disV is %f\n", distV);
 	return (distV);
 }
@@ -225,17 +235,23 @@ int	ft_cast_rays(t_mlx *mlx)
 		//le probleme c est que sur l autre mur, il y a une egalite mais il print un HOR a la place d un VER!
 		if (disH < disV)
 		{
+			mlx->ray->rx = mlx->ray->rx_distH;
+			mlx->ray->ry = mlx->ray->ry_distH;	
 			disV = disH;
 			mlx->ray->wall_touch = HORIZONTAL_WALL; // final dis is disV
 		}
 		else if (disH > disV)
 		{
+			mlx->ray->rx = mlx->ray->rx_distV;
+			mlx->ray->ry = mlx->ray->ry_distV;
 			// printf("DIS V < DIS H %f\n", mlx->ray->ra);
 			mlx->ray->wall_touch = VERTICAL_WALL;
 		}
 	
 		else if (disH == disV)
 		{
+			mlx->ray->rx = mlx->ray->rx_distV;
+			mlx->ray->ry = mlx->ray->ry_distV;
 			if (mlx->ray->wall_touch == HORIZONTAL_WALL)
 				mlx->ray->wall_touch = HORIZONTAL_WALL;
 			else if (mlx->ray->wall_touch == VERTICAL_WALL)
@@ -246,8 +262,8 @@ int	ft_cast_rays(t_mlx *mlx)
 		ca = ft_adjust_angle(mlx->player->pa - mlx->ray->ra);
 		// printf("ca is %f\n", ca);
 		disV = disV * cos(ft_deg_to_rad(ca));//on veut l angle adjacent
-		mlx->ray->rx = disH;
-		mlx->ray->ry = disV;
+		// mlx->ray->rx = disH;
+		// mlx->ray->ry = disV;
 		// printf("Final Dis is %f\n", disV);
 		mlx->ray->wall_distance = disV;
 		mlx->ray->index = i;

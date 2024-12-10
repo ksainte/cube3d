@@ -131,9 +131,10 @@ int	ft_fill_colors(t_mlx *mlx, int ray_num)
 	double bottom_px;
 	double top_px;
 
-	// printf("put_wall_dist = %f\n", mlx->ray->wall_distance);
+	// printf("put_wall_dist = %f\n", 64 / mlx->ray->wall_distance);
 	wall_height = (64 / mlx->ray->wall_distance) * ((SCREEN_WIDTH / 2)
 			/ tan(mlx->player->player_fov_radians / 2));
+	// printf("put_wall_dist = %f\n", wall_height);
 	top_px = (SCREEN_HEIGHT / 2) - (wall_height / 2);
 	bottom_px = (SCREEN_HEIGHT / 2) + (wall_height / 2);
 	if (bottom_px > SCREEN_HEIGHT)

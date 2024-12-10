@@ -132,6 +132,11 @@ typedef struct s_ray
 	int			ray_coord;
 	int			Tan_slope;
 	int			index;
+	float 		rx_distH;
+	float 		ry_distH;
+	float 		rx_distV;
+	float 		ry_distV;
+	
 }				t_ray;
 typedef struct s_mlx
 {
@@ -205,7 +210,7 @@ int				ft_set_player(t_mlx *mlx);
 // Textures
 int				txtr_checkload(t_mlx *mlx);
 void			ft_init_txtr_images(t_mlx *mlx);
-void			ft_draw_wall(t_mlx *mlx, int bottom_px, int top_px,
-					int wall_height);
+void	ft_draw_wall(t_mlx *mlx, int bottom_px, int top_px, double wall_height);
+
 
 #endif

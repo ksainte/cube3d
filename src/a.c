@@ -4,11 +4,11 @@ int main()
 {
     float rx;
     float rx2;
-    int mx;
-    float px = 260;
+    float mx;
+    float px = 7.3;
     rx = (((int)px >> 6) << 6) + 64;
     printf("%f\n", rx);
-    mx = (int)px / 64;
+    mx = (float)(64 / px);
     printf("%d\n", mx);
     rx2 = (((int)px >> 6) << 6) -0.0001;
     printf("%f\n", rx2);

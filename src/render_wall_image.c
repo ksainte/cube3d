@@ -105,7 +105,7 @@ int	ft_get_textr_color(t_mlx *mlx, int x_tex, int y_tex)
 	return (color);
 }
 
-void	ft_draw_wall(t_mlx *mlx, int bottom_px, int top_px, int wall_height)
+void	ft_draw_wall(t_mlx *mlx, int bottom_px, int top_px, double wall_height)
 {
 	double	texture_step;
 	double	texture_pos;
@@ -114,7 +114,10 @@ void	ft_draw_wall(t_mlx *mlx, int bottom_px, int top_px, int wall_height)
 	int		tex_y;
 	int		color;
 
-	texture_step = (double)64 / (double)wall_height;
+	texture_step = (64 / wall_height);
+	// printf("put_wall_dist = %f\n", texture_step);
+	// if (texture_step < 0)
+	// 	exit(1);
 	texture_pos = 0.0;
 	tex_x = ft_get_x_pos(mlx);
 	y = top_px;
