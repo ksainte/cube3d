@@ -114,7 +114,7 @@ void	ft_draw_wall(t_mlx *mlx, int bottom_px, int top_px, int wall_height)
 	int		tex_y;
 	int		color;
 
-	texture_step = 64.0;
+	texture_step = (double)64 / (double)wall_height;
 	texture_pos = 0.0;
 	tex_x = ft_get_x_pos(mlx);
 	y = top_px;
@@ -123,7 +123,7 @@ void	ft_draw_wall(t_mlx *mlx, int bottom_px, int top_px, int wall_height)
 		tex_y = (int)texture_pos;
 		color = ft_get_textr_color(mlx, tex_x, tex_y);
 		ft_put_pixel_to_screen(mlx, mlx->ray->index, y, color);
-		texture_pos += texture_step - 1;
+		texture_pos += texture_step;
 		y++;
 	}
 }

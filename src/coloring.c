@@ -21,6 +21,7 @@ int	ft_get_wall_color(t_mlx *mlx, int orientation_flag)
 		if (mlx->ray->ra > 90 && mlx->ray->ra < 270)
 			return (0x006400FF);
 		else
+		
 			return (0x1E90FFFF);
 	}
 	else
@@ -139,8 +140,8 @@ int	ft_fill_colors(t_mlx *mlx, int ray_num)
 		bottom_px = SCREEN_HEIGHT;
 	if (top_px < 0)
 		top_px = 0;
+	ft_draw_wall(mlx, bottom_px, top_px, wall_height);
 	ft_draw_ceiling_floor(mlx, ray_num, top_px, bottom_px);
 
-	ft_draw_wall(mlx, bottom_px, top_px, wall_height);
 	return (0);
 }

@@ -239,13 +239,13 @@ int	ft_cast_rays(t_mlx *mlx)
 			else if (mlx->ray->wall_touch == VERTICAL_WALL)
 				mlx->ray->wall_touch = VERTICAL_WALL;
 		}
-		mlx->ray->rx = disH;
-		mlx->ray->ry = disV;
 		// printf("disH is %f\n", disH);
 		// printf("Dis is %f\n", disV);
 		ca = ft_adjust_angle(mlx->player->pa - mlx->ray->ra);
 		// printf("ca is %f\n", ca);
 		disV = disV * cos(ft_deg_to_rad(ca));//on veut l angle adjacent
+		mlx->ray->rx = disH;
+		mlx->ray->ry = disV;
 		// printf("Final Dis is %f\n", disV);
 		mlx->ray->wall_distance = disV;
 		mlx->ray->index = i;
