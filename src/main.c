@@ -197,6 +197,7 @@ int	ft_cast_rays(t_mlx *mlx)
 	float	disH;
 	float	Tan;
 	float	ca;
+	
 
 	i = 0;
 	// printf("%f \n", mlx->player->pa);
@@ -206,6 +207,7 @@ int	ft_cast_rays(t_mlx *mlx)
 	// printf("ra is %f\n", mlx->ray->ra);
 	while (i < SCREEN_WIDTH)
 	{
+			mlx->ray->wall_touch = VERTICAL_WALL;
 		// printf("====================\n");
 		// printf("current ra is %f\n", mlx->ray->ra);
 		// usleep(10000);
