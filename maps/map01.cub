@@ -1,9 +1,9 @@
-EA ./textures/wall_1.xpm
-SO ./textures/wall_2.xpm
+EA ./textures/barrel.xpm
+SO ./textures/wall_3.xpm
 C 255, 10 , 2
 
-NO ./textures/wall_3.xpm
-WE ./textures/wall_3.xpm
+NO ./textures/wall_2.xpm
+WE ./textures/wall_4.xpm
 
 F 225, 30, 255
 

@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:52:00 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/06 14:15:11 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:17:35 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	ft_print_data(t_data *data)
 	while (++i < 3)
 		printf("C %d\n", data->C[i]);
 	printf("row is %d\n", data->row);
+	printf("s->y is %d\n", data->s_y);
+	printf("s->x is %d\n", data->s_x);
 	printf("s->y is %d\n", data->s_y);
 	printf("s->x is %d\n", data->s_x);
 	printf("-----------------\n");

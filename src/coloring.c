@@ -63,24 +63,7 @@ double	ft_get_x_val(t_mlx *mlx)
 		x_o = (int)fmodf((mlx->ray->ry * (64 / 64)), 64);
 	return (x_o);
 }
-// char	*ft_get_texture(t_mlx *mlx, int flag)
-// {
-// 	mlx->ray->ra = ft_adjust_angle(mlx->ray->ra);
-// 	if (mlx->ray->wall_touch == VERTICAL_WALL)
-// 	{
-// 		if (mlx->ray->ra > 90 && mlx->ray->ra < 270)
-// 			return (mlx->data->EA);
-// 		else
-// 			return (mlx->data->WE);
-// 	}
-// 	else
-// 	{
-// 		if (mlx->ray->ra > 0 && mlx->ray->ra < 180)
-// 			return (mlx->data->SO);
-// 		else
-// 			return (mlx->data->NO);
-// 	}
-// }
+
 int	reverse_bytes(int c)
 {
 	unsigned int	b;

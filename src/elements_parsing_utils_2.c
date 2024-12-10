@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   elements_parsing_utils_2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:11:58 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/20 13:12:35 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/10 15:57:17 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,6 @@ int ft_fill_texture(char *str, int index, t_map *map)
         map->WE = dup;
     else if (index == 3)
         map->EA = dup;
+
     return (1);
 }

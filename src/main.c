@@ -322,12 +322,20 @@ int	main(int argc, char **argv)
 	if ((!ft_parse_valid(&map) || !ft_map_playable(&map, &data))
 		&& ft_free(&map))
 		return (0);
+	// ft_print_data(&data);
+	printf("%s\n", data.txtr_tab[0].path);
+	printf("%s\n", data.txtr_tab[1].path);
+	printf("%s\n", data.txtr_tab[2].path);
+	printf("%s\n", data.txtr_tab[3].path);
+
 	mlx.data = &data;
 	ft_init_structs(&player, &mlx, &ray);
 	printf("structs well initiated!\n");
 	mlx.mlx_ptr = mlx_init();
+	
 	txtr_checkload(&mlx);
 	ft_init_txtr_images(&mlx);
+
 	if (!mlx.mlx_ptr)
 		return (0);
 	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
