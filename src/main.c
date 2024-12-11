@@ -183,9 +183,6 @@ void	ft_set_flag(t_mlx *mlx, float *Tan)
 	mlx->ray->Tan_slope = 1;
 	mlx->ray->flag_cos = 1;
 	mlx->ray->flag_sin = 1;
-	// printf("%f\n", sin(ft_deg_to_rad(mlx->ray->ra)));
-	// printf("%f\n", cos(ft_deg_to_rad(mlx->ray->ra)));
-	// printf("%f\n", tan(ft_deg_to_rad(mlx->ray->ra)));
 	if (cos(ft_deg_to_rad(mlx->ray->ra)) > 0.0000001) // de 0 a 90
 		mlx->ray->flag_sin = -1;
 	if (sin(ft_deg_to_rad(mlx->ray->ra)) < -0.0000001) // de 0 a 90

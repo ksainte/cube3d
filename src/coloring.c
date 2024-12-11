@@ -84,15 +84,8 @@ int	ft_draw_ceiling_floor(t_mlx *mlx, int ray_num, int wall_top_px,
 	int	i;
 
 	color = ft_get_wall_color(mlx, mlx->ray->wall_touch);
-	// WALL
-	// j = wall_top_px;
-	// while (j < wall_bot_px)
-	// {
-	// 	// apllique la couleur au bon pixel en question
-	// 	ft_put_pixel_to_screen(mlx, ray_num, j, color);
-	// 	j++;
-	// }
-	// FLOOR
+
+	//FLOOR
 	i = wall_bot_px;
 	while (i < SCREEN_HEIGHT)
 	{
@@ -113,18 +106,25 @@ int	ft_fill_colors(t_mlx *mlx, int ray_num)
 	double wall_height;
 	double bottom_px;
 	double top_px;
+	int diff;
+	diff = 0;
 
 	// printf("put_wall_dist = %f\n", 64 / mlx->ray->wall_distance);
 	wall_height = (64 / mlx->ray->wall_distance) * ((SCREEN_WIDTH / 2)
 			/ tan(mlx->player->player_fov_radians / 2));
+
 	// printf("put_wall_dist = %f\n", wall_height);
 	top_px = (SCREEN_HEIGHT / 2) - (wall_height / 2);
 	bottom_px = (SCREEN_HEIGHT / 2) + (wall_height / 2);
 	if (bottom_px > SCREEN_HEIGHT)
 		bottom_px = SCREEN_HEIGHT;
 	if (top_px < 0)
+	{
+		diff = top_px;
 		top_px = 0;
-	ft_draw_wall(mlx, bottom_px, top_px, wall_height);
+	}
+	ft_draw_wall(mlx, bottom_px, top_px, wall_height,diff);
+
 	ft_draw_ceiling_floor(mlx, ray_num, top_px, bottom_px);
 
 	return (0);

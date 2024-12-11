@@ -12,12 +12,12 @@
 # include <string.h>
 # include <unistd.h>
 
-# define SCREEN_WIDTH 800
-# define SCREEN_HEIGHT 800
+# define SCREEN_WIDTH 1500
+# define SCREEN_HEIGHT 1500
 # define TILE 64
 # define FIELD_OF_VIEW 60
-# define ROTATION_S
-# define PLAYER_S
+# define ROTATION_S 500
+# define PLAYER_S 10
 # define PI 3.14159265358979323846
 # define PI_90 1.57079632679
 // # define PI_270
@@ -210,7 +210,8 @@ int				ft_set_player(t_mlx *mlx);
 // Textures
 int				txtr_checkload(t_mlx *mlx);
 void			ft_init_txtr_images(t_mlx *mlx);
-void	ft_draw_wall(t_mlx *mlx, int bottom_px, int top_px, double wall_height);
+void			ft_draw_wall(t_mlx *mlx, int bottom_px, int top_px, double wall_height,int diff);
+void			ft_draw_floor(t_mlx *mlx, int bottom_px);
 
 
 #endif
