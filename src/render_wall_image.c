@@ -1,15 +1,15 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   movement.c                                         :+:      :+:    :+:   */
+/*   render_wall_image.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roko <roko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 14:52:32 by roko              #+#    #+#             */
-/*   Updated: 2024/12/01 20:41:30 by roko             ###   ########.fr       */
+/*   Updated: 2024/12/12 18:26:47 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../cube_3d.h"
 
 int	txtr_checkload(t_mlx *mlx)
@@ -32,8 +32,6 @@ int	txtr_checkload(t_mlx *mlx)
 					mlx->data->txtr_tab[i].path, &h, &w);
 			if (texture == NULL)
 				return (0);
-			printf("Texture loaded successfully: %s\n",
-				mlx->data->txtr_tab[i].key);
 			mlx_destroy_image(mlx->mlx_ptr, texture);
 			texture = NULL;
 		}
@@ -78,25 +76,23 @@ double	ft_get_x_pos(t_mlx *mlx)
 		x_o = (int)fmodf(mlx->ray->ry, 64);
 	return (x_o);
 }
+
 int	ft_get_textr_color(t_mlx *mlx, int x_tex, int y_tex, int texture_i)
 {
 	int	color;
 	int	pixel_index;
-	int	tex_width;
-	int	tex_height;
 	int	tex_x;
 	int	tex_y;
 
-	tex_width = 64;
-	tex_height = 64;
-	tex_x = x_tex % tex_width;
-	tex_y = y_tex % tex_height;
+	tex_x = x_tex % 64;
+	tex_y = y_tex % 64;
 	pixel_index = tex_y * mlx->data->txtr_tab[texture_i].img_data.size_line
 		+ tex_x * (mlx->data->txtr_tab[texture_i].img_data.pixel_bits / 8);
 	color = *(unsigned int *)(mlx->data->txtr_tab[texture_i].img_data.img_data
 			+ pixel_index);
 	return (color);
 }
+
 int	ft_get_texture(t_mlx *mlx)
 {
 	int	i;
@@ -118,6 +114,7 @@ int	ft_get_texture(t_mlx *mlx)
 	}
 	return (i);
 }
+
 void	ft_draw_wall(t_mlx *mlx, int bottom_px, int top_px, double wall_height,
 		int diff)
 {
