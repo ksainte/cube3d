@@ -105,14 +105,14 @@ int	ft_get_texture(t_mlx *mlx)
 	if (mlx->ray->wall_touch == VERTICAL_WALL)
 	{
 		if (mlx->ray->ra > 90 && mlx->ray->ra < 270)
-			i = 0;
+			i = 2;
 		else
 			i = 1;
 	}
 	else
 	{
 		if (mlx->ray->ra > 0 && mlx->ray->ra < 180)
-			i = 2;
+			i = 0;
 		else
 			i = 3;
 	}
