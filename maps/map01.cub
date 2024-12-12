@@ -3,7 +3,7 @@ SO ./textures/wall_3.xpm
 C 255, 10 , 2
 
 EA ./textures/wall_2.xpm
-WE ./textures/barrel.xpm
+WE ./textures/wall_2.xpm
 
 F 225, 30, 255
 

@@ -60,23 +60,23 @@ int	ft_set_player(t_mlx *mlx)
 	{
 		printf("px is %f\n", mlx->player->px);
 		printf("py is %f\n", mlx->player->py);
-		pos_x = mlx->player->px + (mlx->player->pdx * 45);
-		pos_y = mlx->player->py + (mlx->player->pdy * 45);
+		pos_x = mlx->player->px + (mlx->player->pdx * 50);
+		pos_y = mlx->player->py + (mlx->player->pdy * 50);
 		if (mlx->data->tab[(int)pos_y / 64][(int)pos_x / 64] == '1')
 		{
-			if (MV_VERT_RIGHT_UP && mlx->data->tab[((int)mlx->player->py - 10)
+			if (MV_VERT_RIGHT_UP && mlx->data->tab[((int)mlx->player->py - 30)//1 cadrant
 				/ 64][((int)mlx->player->px) / 64] != '1') // droite
 				mlx->player->py = mlx->player->py - 10;
-			else if (MV_VERT_RIGHT_DOWN && mlx->data->tab[((int)mlx->player->py
-					+ 10) / 64][((int)mlx->player->px) / 64] != '1') // droite
+			else if (MV_VERT_RIGHT_DOWN && mlx->data->tab[((int)mlx->player->py//4 cad
+					+ 30) / 64][((int)mlx->player->px) / 64] != '1') // droite
 				mlx->player->py = mlx->player->py + 10;
 			else if (MV_VERT_LEFT_UP && mlx->data->tab[((int)mlx->player->py
-					- 10) / 64][(int)mlx->player->px / 64] != '1') // droite
+					- 30) / 64][(int)mlx->player->px / 64] != '1') // droite
 				mlx->player->py = mlx->player->py - 10;
 			else if (MV_VERT_LEFT_DOWN && mlx->data->tab[((int)mlx->player->py
-					+ 10) / 64][(int)mlx->player->px / 64] != '1') // droite
+					+ 30) / 64][(int)mlx->player->px / 64] != '1') // droite
 				mlx->player->py = mlx->player->py + 10;
-			else if (MV_VERT_RIGHT_UP && mlx->data->tab[(int)mlx->player->py
+			else if (MV_VERT_RIGHT_UP && mlx->data->tab[(int)mlx->player->py//1 cadrant
 				/ 64][((int)mlx->player->px + 10) / 64] != '1') // droite
 				mlx->player->px = mlx->player->px + 10;
 			else if (MV_VERT_RIGHT_DOWN && mlx->data->tab[(int)mlx->player->py
