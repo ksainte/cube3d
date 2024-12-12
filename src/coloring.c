@@ -13,27 +13,6 @@
 
 #include "../cube_3d.h"
 
-int	ft_get_wall_color(t_mlx *mlx, int orientation_flag)
-{
-	mlx->ray->ra = ft_adjust_angle(mlx->ray->ra);
-	if (orientation_flag == VERTICAL_WALL)
-	{
-		if (mlx->ray->ra > 90 && mlx->ray->ra < 270)
-			return (0x006400FF);
-		else
-		
-			return (0x1E90FFFF);
-	}
-	else
-	{
-		if (mlx->ray->ra > 0 && mlx->ray->ra < 180)
-			return (0xFFD700FF);
-		else
-			return (0x8B0000FF);
-	}
-	return (0);
-}
-
 void	set_pixel(char *data, int width, int x, int y, int color)
 {
 	int	index;
@@ -79,20 +58,14 @@ int	reverse_bytes(int c)
 int	ft_draw_ceiling_floor(t_mlx *mlx, int ray_num, int wall_top_px,
 		int wall_bot_px)
 {
-	int	color;
-	int	j;
 	int	i;
 
-	color = ft_get_wall_color(mlx, mlx->ray->wall_touch);
-
-	//FLOOR
 	i = wall_bot_px;
 	while (i < SCREEN_HEIGHT)
 	{
 		ft_put_pixel_to_screen(mlx, ray_num, i, 0xFF6347FF);
 		i++;
 	}
-	// CEILING
 	i = 0;
 	while (i < wall_top_px)
 	{
@@ -103,17 +76,14 @@ int	ft_draw_ceiling_floor(t_mlx *mlx, int ray_num, int wall_top_px,
 }
 int	ft_fill_colors(t_mlx *mlx, int ray_num)
 {
-	double wall_height;
-	double bottom_px;
-	double top_px;
-	int diff;
-	diff = 0;
+	double	wall_height;
+	double	bottom_px;
+	double	top_px;
+	int		diff;
 
-	// printf("put_wall_dist = %f\n", 64 / mlx->ray->wall_distance);
+	diff = 0;
 	wall_height = (64 / mlx->ray->wall_distance) * ((SCREEN_WIDTH / 2)
 			/ tan(mlx->player->player_fov_radians / 2));
-
-	// printf("put_wall_dist = %f\n", wall_height);
 	top_px = (SCREEN_HEIGHT / 2) - (wall_height / 2);
 	bottom_px = (SCREEN_HEIGHT / 2) + (wall_height / 2);
 	if (bottom_px > SCREEN_HEIGHT)
@@ -123,9 +93,7 @@ int	ft_fill_colors(t_mlx *mlx, int ray_num)
 		diff = top_px;
 		top_px = 0;
 	}
-	ft_draw_wall(mlx, bottom_px, top_px, wall_height,diff);
-
+	ft_draw_wall(mlx, bottom_px, top_px, wall_height, diff);
 	ft_draw_ceiling_floor(mlx, ray_num, top_px, bottom_px);
-
 	return (0);
 }

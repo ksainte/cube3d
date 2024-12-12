@@ -20,10 +20,7 @@ void	ft_init_player(t_mlx *mlx)
 	mlx->player->start_y = mlx->data->s_y;
 	mlx->player->px = mlx->player->start_x * TILE + 32;
 	mlx->player->py = mlx->player->start_y * TILE + 32;
-	// printf("px is %f\n", mlx->player->px);
-	// printf("py is %f\n", mlx->player->py);
 	mlx->player->orientation_start = mlx->data->tab[mlx->player->start_y][mlx->player->start_x];
-	// printf("letter is %c\n", mlx->player->orientation_start);
 	if (mlx->player->orientation_start == 'N')
 		mlx->player->pa = 90;
 	if (mlx->player->orientation_start == 'S')
@@ -34,7 +31,6 @@ void	ft_init_player(t_mlx *mlx)
 		mlx->player->pa = 0;
 	mlx->player->pdx = cos(ft_deg_to_rad(mlx->player->pa));
 	mlx->player->pdy = -sin(ft_deg_to_rad(mlx->player->pa));
-	// printf("player well init\n");
 }
 void	ft_init_data(t_mlx *mlx)
 {
@@ -67,7 +63,8 @@ float	ft_deg_to_rad(float ray_angle)
 	return (ray_radian);
 }
 
-float	ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var, int flag)
+float	ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var,
+		int flag)
 {
 	int		j;
 	int		mx;
@@ -98,7 +95,7 @@ float	ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var, int 
 	else
 		dis = (rx - mlx->player->px) / cos(ft_deg_to_rad(mlx->ray->ra));
 	if (dis > 2147483647)
-			dis = 100000;
+		dis = 100000;
 	if (flag == 1)
 	{
 		mlx->ray->rx_distV = rx;
@@ -135,10 +132,12 @@ int	ft_calculate_distH(float Tan, t_mlx *mlx)
 		x_var = y_var / Tan;
 	else
 		x_var = 0;
-	if (sin(ft_deg_to_rad(mlx->ray->ra)) > 0.0000001)       // de 0 a 180
-		ry = (((int)py >> 6) << 6) - 0.0001;            // arrondi a l unite inf
+	if (sin(ft_deg_to_rad(mlx->ray->ra)) > 0.0000001) // de 0 a 180
+		ry = (((int)py >> 6) << 6) - 0.0001;
+	// arrondi a l unite inf
 	else if (sin(ft_deg_to_rad(mlx->ray->ra)) < -0.0000001) // de 180 a 360
-		ry = (((int)py >> 6) << 6) + 64;                // arrondi a l unite sup
+		ry = (((int)py >> 6) << 6) + 64;
+	// arrondi a l unite sup
 	if (mlx->ray->ra == 90 || mlx->ray->ra == 270)
 		rx = px;
 	else
@@ -204,7 +203,6 @@ int	ft_cast_rays(t_mlx *mlx)
 	float	disH;
 	float	Tan;
 	float	ca;
-	
 
 	i = 0;
 	// printf("%f \n", mlx->player->pa);
@@ -214,7 +212,7 @@ int	ft_cast_rays(t_mlx *mlx)
 	// printf("ra is %f\n", mlx->ray->ra);
 	while (i < SCREEN_WIDTH)
 	{
-			mlx->ray->wall_touch = VERTICAL_WALL;
+		// mlx->ray->wall_touch = VERTICAL_WALL;
 		// printf("====================\n");
 		// printf("current ra is %f\n", mlx->ray->ra);
 		// usleep(10000);
@@ -229,12 +227,12 @@ int	ft_cast_rays(t_mlx *mlx)
 			disV = disH + 1;
 		if (mlx->ray->ra == 0 || mlx->ray->ra == 180)
 			disH = disV + 1;
-		//le probleme c est que sur l autre mur, il y a une egalite mais il print un HOR a la place d un VER!
 		if (disH < disV)
 		{
 			mlx->ray->rx = mlx->ray->rx_distH;
-			mlx->ray->ry = mlx->ray->ry_distH;	
+			mlx->ray->ry = mlx->ray->ry_distH;
 			disV = disH;
+			// printf("DIS H < DIS V %f\n", mlx->ray->ra);
 			mlx->ray->wall_touch = HORIZONTAL_WALL; // final dis is disV
 		}
 		else if (disH > disV)
@@ -244,21 +242,21 @@ int	ft_cast_rays(t_mlx *mlx)
 			// printf("DIS V < DIS H %f\n", mlx->ray->ra);
 			mlx->ray->wall_touch = VERTICAL_WALL;
 		}
-	
 		else if (disH == disV)
 		{
+			// printf("DIS V == DIS H %f\n", mlx->ray->ra);
 			mlx->ray->rx = mlx->ray->rx_distV;
 			mlx->ray->ry = mlx->ray->ry_distV;
-			if (mlx->ray->wall_touch == HORIZONTAL_WALL)
-				mlx->ray->wall_touch = HORIZONTAL_WALL;
-			else if (mlx->ray->wall_touch == VERTICAL_WALL)
-				mlx->ray->wall_touch = VERTICAL_WALL;
+			// if (mlx->ray->wall_touch == HORIZONTAL_WALL)
+			// 	mlx->ray->wall_touch = HORIZONTAL_WALL;
+			// else if (mlx->ray->wall_touch == VERTICAL_WALL)
+			// 	mlx->ray->wall_touch = VERTICAL_WALL;
 		}
 		// printf("disH is %f\n", disH);
 		// printf("Dis is %f\n", disV);
 		ca = ft_adjust_angle(mlx->player->pa - mlx->ray->ra);
 		// printf("ca is %f\n", ca);
-		disV = disV * cos(ft_deg_to_rad(ca));//on veut l angle adjacent
+		disV = disV * cos(ft_deg_to_rad(ca)); // on veut l angle adjacent
 		// mlx->ray->rx = disH;
 		// mlx->ray->ry = disV;
 		// printf("Final Dis is %f\n", disV);
@@ -266,7 +264,8 @@ int	ft_cast_rays(t_mlx *mlx)
 		mlx->ray->index = i;
 		ft_fill_colors(mlx, i);
 		// printf("old ra is %f\n", mlx->ray->ra);
-		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)60 / SCREEN_WIDTH));
+		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)60
+					/ SCREEN_WIDTH));
 		// printf("next ra is %f\n", mlx->ray->ra);
 		i++;
 	}
@@ -284,24 +283,17 @@ int	ft_main_loop(void *mlx_ptr)
 	mlx->img = &img;
 	img.img = mlx_new_image(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (!img.img)
-	{
-		// printf("Error: Failed to create image\n");
 		return (1);
-	}
 	img.img_data = mlx_get_data_addr(img.img, &img.bpp, &img.line_length,
 			&img.endian);
 	if (!img.img_data)
 	{
-		// printf("Error: Failed to get image data address\n");
 		mlx_destroy_image(mlx->mlx_ptr, img.img);
 		return (1);
 	}
-	// printf("Setting new image\n");
 	ft_set_player(mlx);
 	ft_cast_rays(mlx);
-	// printf("RAYS CASTED\n");
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img->img, 0, 0);
-	// printf("New image added\n");
 	mlx_destroy_image(mlx->mlx_ptr, mlx->img->img);
 	return (0);
 }
@@ -319,25 +311,20 @@ int	main(int argc, char **argv)
 	if ((!ft_parse_valid(&map) || !ft_map_playable(&map, &data))
 		&& ft_free(&map))
 		return (0);
-	// ft_print_data(&data);
 	printf("%s\n", data.txtr_tab[0].path);
 	printf("%s\n", data.txtr_tab[1].path);
 	printf("%s\n", data.txtr_tab[2].path);
 	printf("%s\n", data.txtr_tab[3].path);
-
 	mlx.data = &data;
 	ft_init_structs(&player, &mlx, &ray);
 	printf("structs well initiated!\n");
 	mlx.mlx_ptr = mlx_init();
-	
 	txtr_checkload(&mlx);
 	ft_init_txtr_images(&mlx);
-
 	if (!mlx.mlx_ptr)
 		return (0);
 	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
 			"cube");
-	// ft_main_loop(&mlx);
 	mlx_hook(mlx.win_ptr, 2, 1L << 0, &key_press, &mlx);
 	mlx_hook(mlx.win_ptr, 3, 1L << 1, &key_release, &mlx);
 	mlx_loop_hook(mlx.mlx_ptr, &ft_main_loop, &mlx);

@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:52:00 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/10 16:17:35 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/11 16:57:27 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	ft_calloc_tab(t_map *map)
 
 int	ft_fill_tab(t_map *map)
 {
-	int elements;
+	int	elements;
 
 	elements = 0;
 	if (!ft_reopen_fd(map))

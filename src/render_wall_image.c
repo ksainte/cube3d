@@ -10,7 +10,6 @@
 /*   Updated: 2024/12/01 20:41:30 by roko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../cube_3d.h"
 
 int	txtr_checkload(t_mlx *mlx)
@@ -18,33 +17,28 @@ int	txtr_checkload(t_mlx *mlx)
 	void	*texture;
 	int		h;
 	int		w;
+	int		i;
 
+	i = 0;
 	w = 64;
 	h = 64;
 	if (mlx->mlx_ptr == NULL)
-	{
-		printf("Error: mlx_ptr is NULL.\n");
 		return (0);
-	}
-	for (int i = 0; i < 4; i++)
+	while (i < 4)
 	{
 		if (mlx->data->txtr_tab[i].key != NULL)
 		{
 			texture = mlx_xpm_file_to_image(mlx->mlx_ptr,
 					mlx->data->txtr_tab[i].path, &h, &w);
 			if (texture == NULL)
-			{
-				printf("Error: Could not load texture %s\n",
-					mlx->data->txtr_tab[i].key);
 				return (0);
-			}
 			printf("Texture loaded successfully: %s\n",
 				mlx->data->txtr_tab[i].key);
 			mlx_destroy_image(mlx->mlx_ptr, texture);
 			texture = NULL;
 		}
+		i++;
 	}
-	printf("All textures successfully loaded!\n");
 	return (1);
 }
 
@@ -65,7 +59,6 @@ void	ft_init_txtr_images(t_mlx *mlx)
 		{
 			printf("Error loading texture %d\n", i);
 		}
-		// Retrieve image data
 		mlx->data->txtr_tab[i].img_data.img_data = mlx_get_data_addr(mlx->data->txtr_tab[i].img_data.img,
 				&mlx->data->txtr_tab[i].img_data.pixel_bits,
 				&mlx->data->txtr_tab[i].img_data.size_line,
@@ -73,8 +66,6 @@ void	ft_init_txtr_images(t_mlx *mlx)
 		i++;
 	}
 	printf("Textures initialized!\n");
-
-   
 }
 
 double	ft_get_x_pos(t_mlx *mlx)
@@ -100,24 +91,22 @@ int	ft_get_textr_color(t_mlx *mlx, int x_tex, int y_tex, int texture_i)
 	tex_height = 64;
 	tex_x = x_tex % tex_width;
 	tex_y = y_tex % tex_height;
-	pixel_index = tex_y * mlx->data->txtr_tab[texture_i].img_data.size_line + tex_x
-		* (mlx->data->txtr_tab[texture_i].img_data.pixel_bits / 8);
+	pixel_index = tex_y * mlx->data->txtr_tab[texture_i].img_data.size_line
+		+ tex_x * (mlx->data->txtr_tab[texture_i].img_data.pixel_bits / 8);
 	color = *(unsigned int *)(mlx->data->txtr_tab[texture_i].img_data.img_data
 			+ pixel_index);
 	return (color);
 }
-int ft_get_texture(t_mlx *mlx)
+int	ft_get_texture(t_mlx *mlx)
 {
+	int	i;
 
-	int i;
 	i = 0;
-	
 	if (mlx->ray->wall_touch == VERTICAL_WALL)
 	{
 		if (mlx->ray->ra > 90 && mlx->ray->ra < 270)
 			i = 0;
 		else
-		
 			i = 1;
 	}
 	else
@@ -127,10 +116,10 @@ int ft_get_texture(t_mlx *mlx)
 		else
 			i = 3;
 	}
-	// printf("TEXTURE ID : %d\n",i);
 	return (i);
 }
-void	ft_draw_wall(t_mlx *mlx, int bottom_px, int top_px, double wall_height, int diff)
+void	ft_draw_wall(t_mlx *mlx, int bottom_px, int top_px, double wall_height,
+		int diff)
 {
 	double	texture_step;
 	double	texture_pos;
