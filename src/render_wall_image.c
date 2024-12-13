@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 14:52:32 by roko              #+#    #+#             */
-/*   Updated: 2024/12/12 18:26:47 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:29:05 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	txtr_checkload(t_mlx *mlx)
 	i = 0;
 	w = 64;
 	h = 64;
+	if (mlx->mlx_ptr == NULL)
+		return (0);
 	while (i < 4)
 	{
 		if (mlx->data->txtr_tab[i].key != NULL)
@@ -40,41 +42,31 @@ int	txtr_checkload(t_mlx *mlx)
 
 int	ft_init_txtr_images(t_mlx *mlx)
 {
-	int	i;
-	int	h;
-	int	w;
+	int		i;
+	int		h;
+	int		w;
+	t_txtr	*txtr;
 
 	i = 0;
 	w = 64;
 	h = 64;
 	while (i < 4)
 	{
-		mlx->data->txtr_tab[i].img_data.img = mlx_xpm_file_to_image(mlx->mlx_ptr,
-				mlx->data->txtr_tab[i].path, &w, &h);
-		if (mlx->data->txtr_tab[i].img_data.img == NULL)
+		txtr = &mlx->data->txtr_tab[i];
+		txtr->img_data.img = mlx_xpm_file_to_image(mlx->mlx_ptr, txtr->path, &w,
+				&h);
+		if (txtr->img_data.img == NULL)
 		{
 			printf("Error loading texture %d\n", i);
-			return (0);
+			return(0);
 		}
-		mlx->data->txtr_tab[i].img_data.img_data = mlx_get_data_addr(mlx->data->txtr_tab[i].img_data.img,
-				&mlx->data->txtr_tab[i].img_data.pixel_bits,
-				&mlx->data->txtr_tab[i].img_data.size_line,
-				&mlx->data->txtr_tab[i].img_data.endian);
+		txtr->img_data.img_data = mlx_get_data_addr(txtr->img_data.img,
+				&txtr->img_data.pixel_bits, &txtr->img_data.size_line,
+				&txtr->img_data.endian);
 		i++;
 	}
 	printf("Textures initialized!\n");
-	return (1);
-}
-
-double	ft_get_x_pos(t_mlx *mlx)
-{
-	double	x_o;
-
-	if (mlx->ray->wall_touch == HORIZONTAL_WALL)
-		x_o = (int)fmodf(mlx->ray->rx, 64);
-	else
-		x_o = (int)fmodf(mlx->ray->ry, 64);
-	return (x_o);
+	return(1);
 }
 
 int	ft_get_textr_color(t_mlx *mlx, int x_tex, int y_tex, int texture_i)
@@ -115,26 +107,28 @@ int	ft_get_texture(t_mlx *mlx)
 	return (i);
 }
 
-void	ft_draw_wall(t_mlx *mlx, int bottom_px, int top_px, double wall_height,
-		int diff)
+void	ft_draw_wall(t_mlx *mlx, int wall_px[2], double wall_height, int diff)
 {
 	double	texture_step;
 	double	texture_pos;
 	double	tex_x;
-	int		y;
-	int		tex_y;
-	int		color;
+	int		variables[3];
 
 	texture_step = (64 / wall_height);
 	texture_pos = 0.0 + (diff * -1) * texture_step;
-	tex_x = ft_get_x_pos(mlx);
-	y = top_px;
-	while (y < bottom_px)
+	if (mlx->ray->wall_touch == HORIZONTAL_WALL)
+		tex_x = (int)fmodf(mlx->ray->rx, 64);
+	else
+		tex_x = (int)fmodf(mlx->ray->ry, 64);
+	variables[0] = wall_px[0];
+	while (variables[0] < wall_px[1])
 	{
-		tex_y = (int)texture_pos;
-		color = ft_get_textr_color(mlx, tex_x, tex_y, ft_get_texture(mlx));
-		ft_put_pixel_to_screen(mlx, mlx->ray->index, y, color);
+		variables[1] = (int)texture_pos;
+		variables[2] = ft_get_textr_color(mlx, tex_x, variables[1],
+				ft_get_texture(mlx));
+		ft_put_pixel_to_screen(mlx, mlx->ray->index, variables[0],
+			variables[2]);
 		texture_pos += texture_step;
-		y++;
+		variables[0]++;
 	}
 }

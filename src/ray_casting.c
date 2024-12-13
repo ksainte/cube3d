@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:31:47 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/13 15:37:29 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/13 17:27:15 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void	ft_cast_rays(t_mlx *mlx)
 		if (mlx->ray->ra == 0 || mlx->ray->ra == 180)
 			disH = disV + 1;
 		ft_compare_dis(disV, disH, mlx);
+		mlx->ray->index = i;
 		ft_fill_colors(mlx, i);
 		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)60 / SCREEN_WIDTH));
 		i++;
