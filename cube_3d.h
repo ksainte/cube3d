@@ -196,9 +196,8 @@ int				ft_map_playable(t_map *map, t_data *data);
 
 // RAYCASTING
 float			ft_deg_to_rad(float ray_angle);
-int				ft_cast_rays(t_mlx *mlx);
+void				ft_cast_rays(t_mlx *mlx);
 float			ft_adjust_angle(float angle);
-int				ft_cast_rays(t_mlx *mlx);
 // RENDERING
 int				ft_get_wall_color(t_mlx *mlx, int orientation_flag);
 int				ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,
@@ -208,7 +207,7 @@ int				ft_put_pixel_to_screen(t_mlx *mlx, int x, int y, int color);
 // MOVEMENT
 int				key_release(int keycode, void *ml);
 int				key_press(int keycode, void *ml);
-int				ft_set_player(t_mlx *mlx);
+void				ft_set_player(t_mlx *mlx);
 // Textures
 int				txtr_checkload(t_mlx *mlx);
 int				ft_init_txtr_images(t_mlx *mlx);

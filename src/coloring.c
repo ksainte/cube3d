@@ -80,7 +80,8 @@ int	ft_fill_colors(t_mlx *mlx, int ray_num)
 	double	bottom_px;
 	double	top_px;
 	int		diff;
-
+	
+	mlx->ray->index = ray_num;
 	diff = 0;
 	wall_height = (64 / mlx->ray->wall_distance) * ((SCREEN_WIDTH / 2)
 			/ tan(mlx->player->player_fov_radians / 2));

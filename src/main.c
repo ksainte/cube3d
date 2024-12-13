@@ -184,7 +184,7 @@ void	ft_set_flag(t_mlx *mlx, float *Tan)
 		mlx->ray->Tan_slope = -1;
 }
 
-int ft_compare_dis(float disV, float disH, t_mlx *mlx, int i)
+void ft_compare_dis(float disV, float disH, t_mlx *mlx)
 {
 	float	ca;
 
@@ -209,11 +209,9 @@ int ft_compare_dis(float disV, float disH, t_mlx *mlx, int i)
 	ca = ft_adjust_angle(mlx->player->pa - mlx->ray->ra);
 	disV = disV * cos(ft_deg_to_rad(ca));
 	mlx->ray->wall_distance = disV;
-	mlx->ray->index = i;
-	return (disV);
 }
 
-int	ft_cast_rays(t_mlx *mlx)
+void	ft_cast_rays(t_mlx *mlx)
 {
 	int		i;
 	float	disV;
@@ -234,12 +232,11 @@ int	ft_cast_rays(t_mlx *mlx)
 			disV = disH + 1;
 		if (mlx->ray->ra == 0 || mlx->ray->ra == 180)
 			disH = disV + 1;
-		disV = ft_compare_dis(disV, disH, mlx, i);
+		ft_compare_dis(disV, disH, mlx);
 		ft_fill_colors(mlx, i);
 		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)60 / SCREEN_WIDTH));
 		i++;
 	}
-	return (0);
 }
 
 int	ft_main_loop(void *mlx_ptr)
