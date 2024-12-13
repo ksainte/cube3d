@@ -209,7 +209,7 @@ int				key_press(int keycode, void *ml);
 int				ft_set_player(t_mlx *mlx);
 // Textures
 int				txtr_checkload(t_mlx *mlx);
-void			ft_init_txtr_images(t_mlx *mlx);
+int				ft_init_txtr_images(t_mlx *mlx);
 void			ft_draw_wall(t_mlx *mlx, int bottom_px, int top_px, double wall_height,int diff);
 void			ft_draw_floor(t_mlx *mlx, int bottom_px);
 

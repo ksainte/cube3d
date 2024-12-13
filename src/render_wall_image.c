@@ -22,8 +22,6 @@ int	txtr_checkload(t_mlx *mlx)
 	i = 0;
 	w = 64;
 	h = 64;
-	if (mlx->mlx_ptr == NULL)
-		return (0);
 	while (i < 4)
 	{
 		if (mlx->data->txtr_tab[i].key != NULL)
@@ -42,7 +40,7 @@ int	txtr_checkload(t_mlx *mlx)
 	return (1);
 }
 
-void	ft_init_txtr_images(t_mlx *mlx)
+int	ft_init_txtr_images(t_mlx *mlx)
 {
 	int	i;
 	int	h;
@@ -58,6 +56,7 @@ void	ft_init_txtr_images(t_mlx *mlx)
 		if (mlx->data->txtr_tab[i].img_data.img == NULL)
 		{
 			printf("Error loading texture %d\n", i);
+			return (0);
 		}
 		mlx->data->txtr_tab[i].img_data.img_data = mlx_get_data_addr(mlx->data->txtr_tab[i].img_data.img,
 				&mlx->data->txtr_tab[i].img_data.pixel_bits,
@@ -66,6 +65,7 @@ void	ft_init_txtr_images(t_mlx *mlx)
 		i++;
 	}
 	printf("Textures initialized!\n");
+	return (1);
 }
 
 double	ft_get_x_pos(t_mlx *mlx)
