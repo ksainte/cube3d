@@ -58,8 +58,6 @@ int	ft_set_player(t_mlx *mlx)
 	flag = 1;
 	if (mlx->player->moving_back_forth == 1)
 	{
-		printf("px is %f\n", mlx->player->px);
-		printf("py is %f\n", mlx->player->py);
 		pos_x = mlx->player->px + (mlx->player->pdx * 50);
 		pos_y = mlx->player->py + (mlx->player->pdy * 50);
 		if (mlx->data->tab[(int)pos_y / 64][(int)pos_x / 64] == '1')

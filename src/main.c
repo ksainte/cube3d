@@ -64,31 +64,10 @@ float	ft_deg_to_rad(float ray_angle)
 	ray_radian = ((ray_angle / 180) * PI);
 	return (ray_radian);
 }
-
-float	ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var, int flag)
+float	ft_final_dist(t_mlx *mlx, float rx, float ry, int flag)
 {
-	int		j;
-	int		mx;
-	int		my;
-	int		len_line;
-	float	dis;
+	float dis;
 
-	j = 0;
-	mlx->ray->ray_coord = 30;
-	while (j < mlx->ray->ray_coord)
-	{
-		mx = (int)rx / 64;
-		my = (int)ry / 64;
-		len_line = 0;
-		if (my > -1 && my < mlx->data->row)
-			len_line = ft_strlen(mlx->data->tab[my]);
-		if ((my > -1 && my < mlx->data->row) && (mx > -1 && mx < len_line)
-			&& mlx->data->tab[my][mx] == '1')
-			break ;
-		rx = rx + (mlx->ray->flag_cos) * x_var;
-		ry = ry + (mlx->ray->flag_sin) * y_var;
-		j++;
-	}
 	if (mlx->ray->ra == 90 || mlx->ray->ra == 270)
 		dis = (ry - mlx->player->py) * mlx->ray->flag_sin;
 	else
@@ -100,7 +79,7 @@ float	ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var, int 
 		mlx->ray->rx_distV = rx;
 		mlx->ray->ry_distV = ry;
 	}
-	if (flag == 2)
+	else if (flag == 2)
 	{
 		mlx->ray->rx_distH = rx;
 		mlx->ray->ry_distH = ry;
@@ -108,10 +87,36 @@ float	ft_get_dist(float rx, float ry, t_mlx *mlx, float x_var, float y_var, int 
 	return (dis);
 }
 
+float	ft_get_dist(float rx, float ry, t_mlx *mlx, int flag)
+{
+	int		j;
+	int		mx;
+	int		my;
+	int		len_line;
+	float	dis;
+
+	j = 0;
+	mlx->ray->ray_coord = 30;
+	len_line = 0;
+	while (j < mlx->ray->ray_coord)
+	{
+		mx = (int)rx / 64;
+		my = (int)ry / 64;
+		len_line = 0;
+		if (my > -1 && my < mlx->data->row)
+			len_line = ft_strlen(mlx->data->tab[my]);
+		if (len_line && (mx > -1 && mx < len_line) && mlx->data->tab[my][mx] == '1')
+			break ;
+		rx = rx + (mlx->ray->flag_cos) * mlx->player->x_var;
+		ry = ry + (mlx->ray->flag_sin) * mlx->player->y_var;
+		j++;
+	}
+	dis = ft_final_dist(mlx, rx, ry, flag);
+	return (dis);
+}
+
 int	ft_calculate_distH(float Tan, t_mlx *mlx)
 {
-	float	x_var;
-	float	y_var;
 	float	ry;
 	float	rx;
 	float	px;
@@ -120,12 +125,12 @@ int	ft_calculate_distH(float Tan, t_mlx *mlx)
 
 	px = mlx->player->px;
 	py = mlx->player->py;
-	y_var = 64;
+	mlx->player->y_var = 64;
 	mlx->ray->flag_sin = mlx->ray->flag_sin * mlx->ray->Tan_slope;
 	if (mlx->ray->ra != 90 && mlx->ray->ra != 270)
-		x_var = y_var / Tan;
+		mlx->player->x_var = mlx->player->y_var / Tan;
 	else
-		x_var = 0;
+		mlx->player->x_var = 0;
 	if (sin(ft_deg_to_rad(mlx->ray->ra)) > 0.0000001)
 		ry = (((int)py >> 6) << 6) - 0.0001;
 	else if (sin(ft_deg_to_rad(mlx->ray->ra)) < -0.0000001)
@@ -134,14 +139,12 @@ int	ft_calculate_distH(float Tan, t_mlx *mlx)
 		rx = px;
 	else
 		rx = px + (py - ry) / Tan;
-	distH = ft_get_dist(rx, ry, mlx, x_var, y_var, 2);
+	distH = ft_get_dist(rx, ry, mlx, 2);
 	return (distH);
 }
 
 int	ft_calculate_distV(float Tan, t_mlx *mlx)
 {
-	float	x_var;
-	float	y_var;
 	float	px;
 	float	py;
 	float	ry;
@@ -150,15 +153,15 @@ int	ft_calculate_distV(float Tan, t_mlx *mlx)
 
 	px = mlx->player->px;
 	py = mlx->player->py;
-	x_var = 64;
+	mlx->player->x_var = 64;
 	mlx->ray->flag_cos = mlx->ray->flag_cos * mlx->ray->Tan_slope;
-	y_var = x_var * Tan;
+	mlx->player->y_var = mlx->player->x_var * Tan;
 	if (cos(ft_deg_to_rad(mlx->ray->ra)) > 0.0000001)
 		rx = (((int)px >> 6) << 6) + 64;
 	else if (cos(ft_deg_to_rad(mlx->ray->ra)) < -0.0000001)
 		rx = (((int)px >> 6) << 6) - 0.0001;
 	ry = py + (px - rx) * Tan;
-	distV = ft_get_dist(rx, ry, mlx, x_var, y_var, 1);
+	distV = ft_get_dist(rx, ry, mlx, 1);
 	return (distV);
 }
 

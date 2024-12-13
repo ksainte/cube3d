@@ -104,8 +104,8 @@ typedef struct s_image
 }				t_image;
 typedef struct s_player
 {
-	int start_x; // start x pos
-	int start_y; // start y pos
+	int 		start_x; // start x pos
+	int 		start_y; // start y pos
 	float		px;
 	float		py;
 	float		pdx;
@@ -117,6 +117,8 @@ typedef struct s_player
 	int			moving_left_right;
 	int			moving_back_forth;
 	int			look_rot;
+	float		x_var;
+	float		y_var;
 }				t_player;
 typedef struct s_ray
 {
