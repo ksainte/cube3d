@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 14:52:32 by roko              #+#    #+#             */
-/*   Updated: 2024/12/13 17:27:58 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:46:43 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	ft_fill_colors(t_mlx *mlx, int ray_num)
 	int		wall_px[2];
 
 	diff = 0;
+	mlx->ray->index = ray_num;
 	wall_height = (64 / mlx->ray->wall_distance) * ((SCREEN_WIDTH / 2)
 			/ tan(mlx->player->player_fov_radians / 2));
 	wall_px[0] = (SCREEN_HEIGHT / 2) - (wall_height / 2);
