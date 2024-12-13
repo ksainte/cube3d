@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asideris <asideris@student.42.fr>          +#+  +:+       +#+         #
+#    By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 13:51:16 by ks19              #+#    #+#              #
-#    Updated: 2024/12/11 16:56:19 by asideris         ###   ########.fr        #
+#    Updated: 2024/12/13 13:05:14 by ks19             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc -g3
-CFLAGS = -Wall -Wextra 
+CC = gcc
+CFLAGS = -Wall -Wextra
 SRCS =  src/main.c src/error_free_utils.c src/valid_colors_utils.c src/map_parsing_utils.c src/elements_parsing_utils.c \
 		src/valid_path_utils.c src/elements_parsing_utils_2.c src/helpers.c src/helpers_2.c src/map_playable.c src/coloring.c \
 		src/movements.c render_wall_image.c
