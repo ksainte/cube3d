@@ -38,12 +38,6 @@
 #define MV_VERT_RIGHT_DOWN (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) > 0.0000001)
 #define MV_VERT_LEFT_UP (cos(ft_deg_to_rad(mlx->player->pa)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) < -0.0000001)
 #define MV_VERT_LEFT_DOWN (cos(ft_deg_to_rad(mlx->player->pa)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) < -0.0000001)
-#define MV_HOR_UP_LEFT (cos(ft_deg_to_rad(mlx->ray->ra)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) > 0.0000001)
-#define MV_HOR_UP_RIGHT (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) < -0.0000001)
-#define MV_HOR_DOWN_LEFT (cos(ft_deg_to_rad(mlx->ray->ra)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) > 0.0000001)
-#define MV_HOR_DOWN_RIGHT (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) < -0.0000001)
-#define MV_VERTICAL (MV_VERT_RIGHT_UP | MV_VERT_RIGHT_DOWN | MV_VERT_LEFT_UP | MV_VERT_LEFT_DOWN)
-#define MV_HORIZONTAL (MV_HOR_UP_LEFT | MV_HOR_DOWN_LEFT | MV_HOR_UP_RIGHT | MV_HOR_DOWN_RIGHT)
 
 typedef struct s_img
 {
@@ -219,11 +213,11 @@ int				key_press(int keycode, void *ml);
 void			ft_set_player(t_mlx *mlx);
 int				ft_main_loop(void *mlx_ptr);
 void 			ft_move_backward(t_mlx *mlx);
-void ft_move_forward(t_mlx *mlx);
-void ft_backward_along_wall(t_mlx *mlx);
-void ft_forward_along_wall(t_mlx *mlx);
-int	ft_oblique_right(t_mlx *mlx);
-int	ft_oblique_left(t_mlx *mlx);
+void 			ft_move_forward(t_mlx *mlx);
+void 			ft_backward_along_wall(t_mlx *mlx);
+void 			ft_forward_along_wall(t_mlx *mlx);
+int				ft_oblique_right(t_mlx *mlx);
+int				ft_oblique_left(t_mlx *mlx);
 
 
 // Textures

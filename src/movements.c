@@ -91,16 +91,16 @@ void ft_backward_along_wall(t_mlx *mlx)
 		/ 64][((int)mlx->player->px + 10) / 64] != '1') // droite
 		mlx->player->px = mlx->player->px + 10;
 	else if (MV_VERT_RIGHT_UP && mlx->data->tab[((int)mlx->player->py
-			+ 10) / 64][((int)mlx->player->px) / 64] != '1') // droite
+			+ 30) / 64][((int)mlx->player->px) / 64] != '1') // droite
 		mlx->player->py = mlx->player->py + 10;
 	else if (MV_VERT_RIGHT_DOWN && mlx->data->tab[((int)mlx->player->py
-			- 10) / 64][((int)mlx->player->px) / 64] != '1') // droite
+			- 30) / 64][((int)mlx->player->px) / 64] != '1') // droite
 		mlx->player->py = mlx->player->py - 10;
 	else if (MV_VERT_LEFT_UP && mlx->data->tab[((int)mlx->player->py
-			+ 10) / 64][((int)mlx->player->px) / 64] != '1')
+			+ 30) / 64][((int)mlx->player->px) / 64] != '1')
 		mlx->player->py = mlx->player->py + 5;
 	else if (MV_VERT_LEFT_DOWN && mlx->data->tab[((int)mlx->player->py
-			- 10) / 64][((int)mlx->player->px) / 64] != '1')
+			- 30) / 64][((int)mlx->player->px) / 64] != '1')
 		mlx->player->py = mlx->player->py - 10;	
 }
 
