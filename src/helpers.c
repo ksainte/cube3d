@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:20 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/13 19:52:48 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/13 20:30:55 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_init_textures_to_null(t_map *map)
 	map->tab = NULL;
 	map->tmp = NULL;
 }
+
 void	ft_print_elements(t_map *map)
 {
 	int	i;
@@ -70,6 +71,7 @@ void	ft_print_table(char **tab)
 		i++;
 	}
 }
+
 int	ft_reopen_fd(t_map *map)
 {
 	if (close(map->fd) == -1)

@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 14:52:32 by roko              #+#    #+#             */
-/*   Updated: 2024/12/13 19:59:45 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/13 20:28:18 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,28 +106,22 @@ int	ft_get_texture(t_mlx *mlx)
 	}
 	return (i);
 }
-double	ft_get_x_pos(t_mlx *mlx)
-{
-	double	x_o;
 
-	if (mlx->ray->wall_touch == HORIZONTAL_WALL)
-		x_o = (int)fmodf(mlx->ray->rx, 64);
-	else
-		x_o = (int)fmodf(mlx->ray->ry, 64);
-	return (x_o);
-}
 void	ft_draw_wall(t_mlx *mlx, double wall_height, int diff)
 {
-	double texture_step;
-	double texture_pos;
-	double tex_x;
-	int y;
-	int tex_y;
-	int color;
+	double	texture_step;
+	double	texture_pos;
+	double	tex_x;
+	int		y;
+	int		tex_y;
+	int		color;
 
 	texture_step = (64 / wall_height);
 	texture_pos = 0.0 + (diff * -1) * texture_step;
-	tex_x = ft_get_x_pos(mlx);
+	if (mlx->ray->wall_touch == HORIZONTAL_WALL)
+		tex_x = (int)fmodf(mlx->ray->rx, 64);
+	else
+		tex_x = (int)fmodf(mlx->ray->ry, 64);
 	y = mlx->ray->wall_top;
 	while (y < mlx->ray->wall_bottom)
 	{

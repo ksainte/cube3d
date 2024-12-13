@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,7 +6,7 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/11/15 13:30:58 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/13 20:37:06 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +14,24 @@
 
 void	ft_init_player(t_mlx *mlx)
 {
+	int	y;
+	int	x;
+
 	mlx->player->player_fov_radians = FIELD_OF_VIEW * (PI / 180);
 	mlx->player->start_x = mlx->data->s_x;
 	mlx->player->start_y = mlx->data->s_y;
 	mlx->player->px = mlx->player->start_x * TILE + 32;
 	mlx->player->py = mlx->player->start_y * TILE + 32;
-	mlx->player->orientation_start = mlx->data->tab[mlx->player->start_y][mlx->player->start_x];
-	if (mlx->player->orientation_start == 'N')
+	y = mlx->player->start_y;
+	x = mlx->player->start_x;
+	mlx->player->o_start = mlx->data->tab[y][x];
+	if (mlx->player->o_start == 'N')
 		mlx->player->pa = 90;
-	if (mlx->player->orientation_start == 'S')
+	if (mlx->player->o_start == 'S')
 		mlx->player->pa = 270;
-	if (mlx->player->orientation_start == 'W')
+	if (mlx->player->o_start == 'W')
 		mlx->player->pa = 180;
-	if (mlx->player->orientation_start == 'E')
+	if (mlx->player->o_start == 'E')
 		mlx->player->pa = 0;
 	mlx->player->pdx = cos(ft_deg_to_rad(mlx->player->pa));
 	mlx->player->pdy = -sin(ft_deg_to_rad(mlx->player->pa));
@@ -57,7 +61,8 @@ int	main(int argc, char **argv)
 	t_map		map;
 	t_ray		ray;
 
-	if (!(map.path = ft_check_args(argc, argv[1])))
+	map.path = ft_check_args(argc, argv[1]);
+	if (!map.path)
 		return (0);
 	if ((!ft_parse_valid(&map) || !ft_map_playable(&map, &data))
 		&& ft_free(&map))

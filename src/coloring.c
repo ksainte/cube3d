@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 14:52:32 by roko              #+#    #+#             */
-/*   Updated: 2024/12/13 19:52:36 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/13 20:29:33 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int	ft_draw_ceiling_floor(t_mlx *mlx, int ray_num)
 
 int	ft_fill_colors(t_mlx *mlx, int ray_num)
 {
-	double wall_height;
-	int diff;
+	double	wall_height;
+	int		diff;
 
 	diff = 0;
 	mlx->ray->index = ray_num;

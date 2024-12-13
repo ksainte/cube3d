@@ -104,7 +104,7 @@ typedef struct s_player
 	float		py;
 	float		pdx;
 	float		pdy;
-	char		orientation_start;
+	char		o_start;
 	float		pa;
 	float		player_fov_radians;
 	int			moving_oblique;
