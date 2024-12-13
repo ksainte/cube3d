@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:35:00 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/13 15:38:46 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/13 19:53:13 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ float	ft_deg_to_rad(float ray_angle)
 
 float	ft_final_dist(t_mlx *mlx, float rx, float ry, int flag)
 {
-	float dis;
+	float	dis;
 
 	if (mlx->ray->ra == 90 || mlx->ray->ra == 270)
 		dis = (ry - mlx->player->py) * mlx->ray->flag_sin;
@@ -69,7 +69,8 @@ float	ft_get_dist(float rx, float ry, t_mlx *mlx, int flag)
 		len_line = 0;
 		if (my > -1 && my < mlx->data->row)
 			len_line = ft_strlen(mlx->data->tab[my]);
-		if (len_line && (mx > -1 && mx < len_line) && mlx->data->tab[my][mx] == '1')
+		if (len_line && (mx > -1 && mx < len_line)
+			&& mlx->data->tab[my][mx] == '1')
 			break ;
 		rx = rx + (mlx->ray->flag_cos) * mlx->player->x_var;
 		ry = ry + (mlx->ray->flag_sin) * mlx->player->y_var;

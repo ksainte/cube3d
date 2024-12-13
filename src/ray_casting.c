@@ -6,12 +6,11 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:31:47 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/13 17:46:27 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:53:15 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube_3d.h"
-
 
 int	ft_calculate_distH(float Tan, t_mlx *mlx)
 {
@@ -63,7 +62,7 @@ int	ft_calculate_distV(float Tan, t_mlx *mlx)
 	return (distV);
 }
 
-void ft_compare_dis(float disV, float disH, t_mlx *mlx)
+void	ft_compare_dis(float disV, float disH, t_mlx *mlx)
 {
 	float	ca;
 
@@ -110,10 +109,10 @@ void	ft_set_flag(t_mlx *mlx, float *Tan)
 
 void	ft_cast_rays(t_mlx *mlx)
 {
-	int		i;
-	float	disV;
-	float	disH;
-	float	Tan;
+	int i;
+	float disV;
+	float disH;
+	float Tan;
 
 	i = 0;
 	mlx->ray->ra = ft_adjust_angle(mlx->player->pa + 30);
@@ -131,7 +130,8 @@ void	ft_cast_rays(t_mlx *mlx)
 			disH = disV + 1;
 		ft_compare_dis(disV, disH, mlx);
 		ft_fill_colors(mlx, i);
-		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)60 / SCREEN_WIDTH));
+		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)60
+					/ SCREEN_WIDTH));
 		i++;
 	}
 }

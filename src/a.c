@@ -1,19 +1,21 @@
 #include <stdio.h>
 
-int main()
+int	main(void)
 {
-    float rx;
-    float rx2;
-    float mx;
-    float px = 7.3;
-    rx = (((int)px >> 6) << 6) + 64;
-    printf("%f\n", rx);
-    mx = (float)(64 / px);
-    printf("%d\n", mx);
-    rx2 = (((int)px >> 6) << 6) -0.0001;
-    printf("%f\n", rx2);
-    mx = (int)rx2 / 64;
-    printf("%d\n", mx);
+	float	rx;
+	float	rx2;
+	float	mx;
+	float	px;
+
+	px = 7.3;
+	rx = (((int)px >> 6) << 6) + 64;
+	printf("%f\n", rx);
+	mx = (float)(64 / px);
+	printf("%d\n", mx);
+	rx2 = (((int)px >> 6) << 6) - 0.0001;
+	printf("%f\n", rx2);
+	mx = (int)rx2 / 64;
+	printf("%d\n", mx);
 }
 
 // void Buttons(unsigned char key,int x,int y)

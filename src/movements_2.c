@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_hooks.c                                        :+:      :+:    :+:   */
+/*   movements_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:48:25 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/13 15:56:16 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/13 19:53:08 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube_3d.h"
 
-void ft_move_backward(t_mlx *mlx)
+void	ft_move_backward(t_mlx *mlx)
 {
 	float	pos_x;
 	float	pos_y;
 	int		flag;
-	
+
 	flag = 1;
 	pos_x = mlx->player->px - (mlx->player->pdx * 25);
 	pos_y = mlx->player->py - (mlx->player->pdy * 25);
@@ -94,8 +94,8 @@ int	key_release(int keycode, void *ml)
 
 int	ft_main_loop(void *mlx_ptr)
 {
-	t_mlx	*mlx;
-	t_image	img;
+	t_mlx *mlx;
+	t_image img;
 
 	mlx = mlx_ptr;
 	mlx->img = &img;

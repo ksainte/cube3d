@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 14:52:32 by roko              #+#    #+#             */
-/*   Updated: 2024/12/13 19:35:28 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:59:45 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	ft_init_txtr_images(t_mlx *mlx)
 		if (txtr->img_data.img == NULL)
 		{
 			printf("Error loading texture %d\n", i);
-			return(0);
+			return (0);
 		}
 		txtr->img_data.img_data = mlx_get_data_addr(txtr->img_data.img,
 				&txtr->img_data.pixel_bits, &txtr->img_data.size_line,
@@ -66,7 +66,7 @@ int	ft_init_txtr_images(t_mlx *mlx)
 		i++;
 	}
 	printf("Textures initialized!\n");
-	return(1);
+	return (1);
 }
 
 int	ft_get_textr_color(t_mlx *mlx, int x_tex, int y_tex, int texture_i)
@@ -116,15 +116,14 @@ double	ft_get_x_pos(t_mlx *mlx)
 		x_o = (int)fmodf(mlx->ray->ry, 64);
 	return (x_o);
 }
-void	ft_draw_wall(t_mlx *mlx,double wall_height,
-		int diff)
+void	ft_draw_wall(t_mlx *mlx, double wall_height, int diff)
 {
-	double	texture_step;
-	double	texture_pos;
-	double	tex_x;
-	int		y;
-	int		tex_y;
-	int		color;
+	double texture_step;
+	double texture_pos;
+	double tex_x;
+	int y;
+	int tex_y;
+	int color;
 
 	texture_step = (64 / wall_height);
 	texture_pos = 0.0 + (diff * -1) * texture_step;
