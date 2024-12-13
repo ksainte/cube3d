@@ -132,6 +132,8 @@ typedef struct s_ray
 	float 		ry_distH;
 	float 		rx_distV;
 	float 		ry_distV;
+	int 		wall_top;
+	int 		wall_bottom;
 	
 }				t_ray;
 typedef struct s_mlx
@@ -223,6 +225,6 @@ int				ft_oblique_left(t_mlx *mlx);
 // Textures
 int				txtr_checkload(t_mlx *mlx);
 int				ft_init_txtr_images(t_mlx *mlx);
-void			ft_draw_wall(t_mlx *mlx, int wall_px[2], double wall_height, int diff);
+void			ft_draw_wall(t_mlx *mlx,double wall_height, int diff);
 
 #endif

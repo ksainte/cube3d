@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 14:52:32 by roko              #+#    #+#             */
-/*   Updated: 2024/12/13 17:46:43 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:32:28 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,18 @@ int	reverse_bytes(int c)
 	return (b);
 }
 
-int	ft_draw_ceiling_floor(t_mlx *mlx, int ray_num, int wall_top_px,
-		int wall_bot_px)
+ft_draw_ceiling_floor(t_mlx *mlx, int ray_num)
 {
 	int	i;
 
-	i = wall_bot_px;
+	i = mlx->ray->wall_bottom ;
 	while (i < SCREEN_HEIGHT)
 	{
 		ft_put_pixel_to_screen(mlx, ray_num, i, 0xFF6347FF);
 		i++;
 	}
 	i = 0;
-	while (i < wall_top_px)
+	while (i < mlx->ray->wall_top)
 	{
 		ft_put_pixel_to_screen(mlx, ray_num, i, 0x0000FF00);
 		i++;
@@ -73,22 +72,22 @@ int	ft_fill_colors(t_mlx *mlx, int ray_num)
 {
 	double	wall_height;
 	int		diff;
-	int		wall_px[2];
+
 
 	diff = 0;
 	mlx->ray->index = ray_num;
 	wall_height = (64 / mlx->ray->wall_distance) * ((SCREEN_WIDTH / 2)
 			/ tan(mlx->player->player_fov_radians / 2));
-	wall_px[0] = (SCREEN_HEIGHT / 2) - (wall_height / 2);
-	wall_px[1] = (SCREEN_HEIGHT / 2) + (wall_height / 2);
-	if (wall_px[1] > SCREEN_HEIGHT)
-		wall_px[1] = SCREEN_HEIGHT;
-	if (wall_px[0] < 0)
+	mlx->ray->wall_top = (SCREEN_HEIGHT / 2) - (wall_height / 2);
+	mlx->ray->wall_bottom = (SCREEN_HEIGHT / 2) + (wall_height / 2);
+	if (mlx->ray->wall_bottom > SCREEN_HEIGHT)
+		mlx->ray->wall_bottom = SCREEN_HEIGHT;
+	if (mlx->ray->wall_top < 0)
 	{
-		diff = wall_px[0];
-		wall_px[0] = 0;
+		diff = mlx->ray->wall_top < 0;
+		mlx->ray->wall_top  = 0;
 	}
-	ft_draw_wall(mlx, wall_px, wall_height, diff);
-	ft_draw_ceiling_floor(mlx, ray_num, wall_px[0], wall_px[1]);
+	ft_draw_wall(mlx,wall_height, diff);
+	ft_draw_ceiling_floor(mlx, ray_num);
 	return (0);
 }

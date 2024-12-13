@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 14:52:32 by roko              #+#    #+#             */
-/*   Updated: 2024/12/13 17:29:05 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:35:28 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,29 +106,36 @@ int	ft_get_texture(t_mlx *mlx)
 	}
 	return (i);
 }
+double	ft_get_x_pos(t_mlx *mlx)
+{
+	double	x_o;
 
-void	ft_draw_wall(t_mlx *mlx, int wall_px[2], double wall_height, int diff)
+	if (mlx->ray->wall_touch == HORIZONTAL_WALL)
+		x_o = (int)fmodf(mlx->ray->rx, 64);
+	else
+		x_o = (int)fmodf(mlx->ray->ry, 64);
+	return (x_o);
+}
+void	ft_draw_wall(t_mlx *mlx,double wall_height,
+		int diff)
 {
 	double	texture_step;
 	double	texture_pos;
 	double	tex_x;
-	int		variables[3];
+	int		y;
+	int		tex_y;
+	int		color;
 
 	texture_step = (64 / wall_height);
 	texture_pos = 0.0 + (diff * -1) * texture_step;
-	if (mlx->ray->wall_touch == HORIZONTAL_WALL)
-		tex_x = (int)fmodf(mlx->ray->rx, 64);
-	else
-		tex_x = (int)fmodf(mlx->ray->ry, 64);
-	variables[0] = wall_px[0];
-	while (variables[0] < wall_px[1])
+	tex_x = ft_get_x_pos(mlx);
+	y = mlx->ray->wall_top;
+	while (y < mlx->ray->wall_bottom)
 	{
-		variables[1] = (int)texture_pos;
-		variables[2] = ft_get_textr_color(mlx, tex_x, variables[1],
-				ft_get_texture(mlx));
-		ft_put_pixel_to_screen(mlx, mlx->ray->index, variables[0],
-			variables[2]);
+		tex_y = (int)texture_pos;
+		color = ft_get_textr_color(mlx, tex_x, tex_y, ft_get_texture(mlx));
+		ft_put_pixel_to_screen(mlx, mlx->ray->index, y, color);
 		texture_pos += texture_step;
-		variables[0]++;
+		y++;
 	}
 }
