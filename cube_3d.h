@@ -151,6 +151,7 @@ typedef struct s_mlx
 	t_image		*img;
 }				t_mlx;
 
+//PARSING
 void			ft_system_error(void);
 char			*ft_custom_error(char *str);
 int				ft_free(t_map *map);
@@ -196,8 +197,16 @@ int				ft_map_playable(t_map *map, t_data *data);
 
 // RAYCASTING
 float			ft_deg_to_rad(float ray_angle);
-void				ft_cast_rays(t_mlx *mlx);
+void			ft_cast_rays(t_mlx *mlx);
 float			ft_adjust_angle(float angle);
+float			ft_final_dist(t_mlx *mlx, float rx, float ry, int flag);
+float			ft_get_dist(float rx, float ry, t_mlx *mlx, int flag);
+int				ft_calculate_distH(float Tan, t_mlx *mlx);
+int				ft_calculate_distV(float Tan, t_mlx *mlx);
+void 			ft_compare_dis(float disV, float disH, t_mlx *mlx);
+void			ft_set_flag(t_mlx *mlx, float *Tan);
+void			ft_cast_rays(t_mlx *mlx);	
+
 // RENDERING
 int				ft_get_wall_color(t_mlx *mlx, int orientation_flag);
 int				ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,
@@ -207,7 +216,16 @@ int				ft_put_pixel_to_screen(t_mlx *mlx, int x, int y, int color);
 // MOVEMENT
 int				key_release(int keycode, void *ml);
 int				key_press(int keycode, void *ml);
-void				ft_set_player(t_mlx *mlx);
+void			ft_set_player(t_mlx *mlx);
+int				ft_main_loop(void *mlx_ptr);
+void 			ft_move_backward(t_mlx *mlx);
+void ft_move_forward(t_mlx *mlx);
+void ft_backward_along_wall(t_mlx *mlx);
+void ft_forward_along_wall(t_mlx *mlx);
+int	ft_oblique_right(t_mlx *mlx);
+int	ft_oblique_left(t_mlx *mlx);
+
+
 // Textures
 int				txtr_checkload(t_mlx *mlx);
 int				ft_init_txtr_images(t_mlx *mlx);
