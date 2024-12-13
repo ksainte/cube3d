@@ -132,8 +132,8 @@ typedef struct s_ray
 	float 		ry_distH;
 	float 		rx_distV;
 	float 		ry_distV;
-	int 		wall_top;
-	int 		wall_bottom;
+	double		wall_top;
+	double		wall_bottom;
 	
 }				t_ray;
 typedef struct s_mlx

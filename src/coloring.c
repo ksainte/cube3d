@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 14:52:32 by roko              #+#    #+#             */
-/*   Updated: 2024/12/13 19:32:28 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:45:00 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	reverse_bytes(int c)
 	return (b);
 }
 
-ft_draw_ceiling_floor(t_mlx *mlx, int ray_num)
+int ft_draw_ceiling_floor(t_mlx *mlx, int ray_num)
 {
 	int	i;
 
@@ -84,7 +84,7 @@ int	ft_fill_colors(t_mlx *mlx, int ray_num)
 		mlx->ray->wall_bottom = SCREEN_HEIGHT;
 	if (mlx->ray->wall_top < 0)
 	{
-		diff = mlx->ray->wall_top < 0;
+		diff = mlx->ray->wall_top;
 		mlx->ray->wall_top  = 0;
 	}
 	ft_draw_wall(mlx,wall_height, diff);
