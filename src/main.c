@@ -32,25 +32,28 @@ void	ft_init_player(t_mlx *mlx)
 	mlx->player->pdx = cos(ft_deg_to_rad(mlx->player->pa));
 	mlx->player->pdy = -sin(ft_deg_to_rad(mlx->player->pa));
 }
-void	ft_init_data(t_mlx *mlx)
+
+void	ft_init_structs(t_player *player, t_mlx *mlx, t_ray *ray)
 {
 	mlx->mlx_ptr = NULL;
 	mlx->win_ptr = NULL;
 	mlx->img = NULL;
-}
-void	ft_init_structs(t_player *player, t_mlx *mlx, t_ray *ray)
-{
 	mlx->player = player;
 	mlx->ray = ray;
 	ft_init_player(mlx);
+	mlx->mlx_ptr = mlx_init();
+	if (!mlx->mlx_ptr)
+		return ;
+	txtr_checkload(mlx);
+	ft_init_txtr_images(mlx);
+	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
+			"cube");
 }
 
 float	ft_adjust_angle(float angle)
 {
 	if (angle < 0)
 		angle = angle + 360;
-	// if (angle > 359.998)
-	// 	angle = 359.9248;
 	else if (angle > 360)
 		angle = angle - 360;
 	return (angle);
@@ -311,24 +314,11 @@ int	main(int argc, char **argv)
 	if ((!ft_parse_valid(&map) || !ft_map_playable(&map, &data))
 		&& ft_free(&map))
 		return (0);
-	printf("%s\n", data.txtr_tab[0].path);
-	printf("%s\n", data.txtr_tab[1].path);
-	printf("%s\n", data.txtr_tab[2].path);
-	printf("%s\n", data.txtr_tab[3].path);
 	mlx.data = &data;
 	ft_init_structs(&player, &mlx, &ray);
-	printf("structs well initiated!\n");
-	mlx.mlx_ptr = mlx_init();
-	txtr_checkload(&mlx);
-	ft_init_txtr_images(&mlx);
-	if (!mlx.mlx_ptr)
-		return (0);
-	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
-			"cube");
 	mlx_hook(mlx.win_ptr, 2, 1L << 0, &key_press, &mlx);
 	mlx_hook(mlx.win_ptr, 3, 1L << 1, &key_release, &mlx);
 	mlx_loop_hook(mlx.mlx_ptr, &ft_main_loop, &mlx);
-	printf("Entering mlx_loop...\n");
 	mlx_loop(mlx.mlx_ptr);
 	ft_free_data(&data);
 	return (0);
