@@ -12,8 +12,8 @@
 # include <string.h>
 # include <unistd.h>
 
-# define SCREEN_WIDTH 1500
-# define SCREEN_HEIGHT 1500
+# define SCREEN_WIDTH 800
+# define SCREEN_HEIGHT 800
 # define TILE 64
 # define FIELD_OF_VIEW 60
 # define ROTATION_S 500
@@ -38,12 +38,6 @@
 #define MV_VERT_RIGHT_DOWN (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) > 0.0000001)
 #define MV_VERT_LEFT_UP (cos(ft_deg_to_rad(mlx->player->pa)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) < -0.0000001)
 #define MV_VERT_LEFT_DOWN (cos(ft_deg_to_rad(mlx->player->pa)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) < -0.0000001)
-#define MV_HOR_UP_LEFT (cos(ft_deg_to_rad(mlx->ray->ra)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) > 0.0000001)
-#define MV_HOR_UP_RIGHT (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) < -0.0000001)
-#define MV_HOR_DOWN_LEFT (cos(ft_deg_to_rad(mlx->ray->ra)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) > 0.0000001)
-#define MV_HOR_DOWN_RIGHT (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) < -0.0000001)
-#define MV_VERTICAL (MV_VERT_RIGHT_UP | MV_VERT_RIGHT_DOWN | MV_VERT_LEFT_UP | MV_VERT_LEFT_DOWN)
-#define MV_HORIZONTAL (MV_HOR_UP_LEFT | MV_HOR_DOWN_LEFT | MV_HOR_UP_RIGHT | MV_HOR_DOWN_RIGHT)
 
 typedef struct s_img
 {
@@ -104,8 +98,8 @@ typedef struct s_image
 }				t_image;
 typedef struct s_player
 {
-	int start_x; // start x pos
-	int start_y; // start y pos
+	int 		start_x; // start x pos
+	int 		start_y; // start y pos
 	float		px;
 	float		py;
 	float		pdx;
@@ -117,6 +111,8 @@ typedef struct s_player
 	int			moving_left_right;
 	int			moving_back_forth;
 	int			look_rot;
+	float		x_var;
+	float		y_var;
 }				t_player;
 typedef struct s_ray
 {
@@ -149,6 +145,7 @@ typedef struct s_mlx
 	t_image		*img;
 }				t_mlx;
 
+//PARSING
 void			ft_system_error(void);
 char			*ft_custom_error(char *str);
 int				ft_free(t_map *map);
@@ -194,9 +191,16 @@ int				ft_map_playable(t_map *map, t_data *data);
 
 // RAYCASTING
 float			ft_deg_to_rad(float ray_angle);
-int				ft_cast_rays(t_mlx *mlx);
+void			ft_cast_rays(t_mlx *mlx);
 float			ft_adjust_angle(float angle);
-int				ft_cast_rays(t_mlx *mlx);
+float			ft_final_dist(t_mlx *mlx, float rx, float ry, int flag);
+float			ft_get_dist(float rx, float ry, t_mlx *mlx, int flag);
+int				ft_calculate_distH(float Tan, t_mlx *mlx);
+int				ft_calculate_distV(float Tan, t_mlx *mlx);
+void 			ft_compare_dis(float disV, float disH, t_mlx *mlx);
+void			ft_set_flag(t_mlx *mlx, float *Tan);
+void			ft_cast_rays(t_mlx *mlx);	
+
 // RENDERING
 int				ft_get_wall_color(t_mlx *mlx, int orientation_flag);
 int				ft_draw_px_collumn(t_mlx *mlx, int ray_num, int wall_top_px,
@@ -206,10 +210,19 @@ int				ft_put_pixel_to_screen(t_mlx *mlx, int x, int y, int color);
 // MOVEMENT
 int				key_release(int keycode, void *ml);
 int				key_press(int keycode, void *ml);
-int				ft_set_player(t_mlx *mlx);
+void			ft_set_player(t_mlx *mlx);
+int				ft_main_loop(void *mlx_ptr);
+void 			ft_move_backward(t_mlx *mlx);
+void 			ft_move_forward(t_mlx *mlx);
+void 			ft_backward_along_wall(t_mlx *mlx);
+void 			ft_forward_along_wall(t_mlx *mlx);
+int				ft_oblique_right(t_mlx *mlx);
+int				ft_oblique_left(t_mlx *mlx);
+
+
 // Textures
 int				txtr_checkload(t_mlx *mlx);
-void			ft_init_txtr_images(t_mlx *mlx);
+int				ft_init_txtr_images(t_mlx *mlx);
 void			ft_draw_wall(t_mlx *mlx, int bottom_px, int top_px, double wall_height,int diff);
 void			ft_draw_floor(t_mlx *mlx, int bottom_px);
 
