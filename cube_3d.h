@@ -33,7 +33,8 @@
 # define KEY_ESCAPE 65307
 // SPEEDS
 # define ROT_SPEED 0.05
-# define SPEED 10
+# define SPEED 8
+# define ANGLE 4
 #define MV_VERT_RIGHT_UP (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) > 0.0000001)
 #define MV_VERT_RIGHT_DOWN (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) > 0.0000001)
 #define MV_VERT_LEFT_UP (cos(ft_deg_to_rad(mlx->player->pa)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) < -0.0000001)

@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:48:25 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/16 15:01:43 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/16 15:18:19 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	ft_move_backward(t_mlx *mlx)
 	int		flag;
 
 	flag = 1;
-	pos_x = mlx->player->px - (mlx->player->pdx * 25);
-	pos_y = mlx->player->py - (mlx->player->pdy * 25);
+	pos_x = mlx->player->px - (mlx->player->pdx * 24);
+	pos_y = mlx->player->py - (mlx->player->pdy * 24);
 	if (mlx->data->tab[(int)pos_y / 64][(int)pos_x / 64] == '1')
 	{
 		ft_backward_along_wall(mlx);
@@ -28,8 +28,8 @@ void	ft_move_backward(t_mlx *mlx)
 	}
 	if (flag == 1)
 	{
-		mlx->player->px = mlx->player->px - (mlx->player->pdx * 10);
-		mlx->player->py = mlx->player->py - (mlx->player->pdy * 10);
+		mlx->player->px = mlx->player->px - (mlx->player->pdx * SPEED);
+		mlx->player->py = mlx->player->py - (mlx->player->pdy * SPEED);
 	}
 }
 
@@ -45,13 +45,13 @@ void	ft_set_player(t_mlx *mlx)
 		ft_oblique_right(mlx);
 	if (mlx->player->look_rot == -1)
 	{
-		mlx->player->pa = ft_adjust_angle(mlx->player->pa + 5);
+		mlx->player->pa = ft_adjust_angle(mlx->player->pa + ANGLE);
 		mlx->player->pdx = cos(ft_deg_to_rad(mlx->player->pa));
 		mlx->player->pdy = -sin(ft_deg_to_rad(mlx->player->pa));
 	}
 	if (mlx->player->look_rot == 1)
 	{
-		mlx->player->pa = ft_adjust_angle(mlx->player->pa - 5);
+		mlx->player->pa = ft_adjust_angle(mlx->player->pa - ANGLE);
 		mlx->player->pdx = cos(ft_deg_to_rad(mlx->player->pa));
 		mlx->player->pdy = -sin(ft_deg_to_rad(mlx->player->pa));
 	}
