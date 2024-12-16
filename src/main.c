@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/16 17:31:01 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/16 22:07:08 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,8 @@ int	main(int argc, char **argv)
 	map.path = ft_check_args(argc, argv[1]);
 	if (!map.path)
 		return (0);
-	if ((!ft_parse_valid(&map) || !ft_map_playable(&map, &data))
-		&& ft_free(&map))
-		return (0);
+	if ((!ft_parse_valid(&map) || !ft_map_playable(&map, &data)))
+		return (ft_free(&map));
 	mlx.data = &data;
 	if (!ft_init_structs(&player, &mlx, &ray))
 		return (ft_free_data(&data));

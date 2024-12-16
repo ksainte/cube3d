@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:48:23 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/13 19:52:57 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/16 22:18:35 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ int	ft_map_to_parse(t_map *map)
 	}
 	if (map->line == 0 && map->row == 0)
 		return (ft_map_error(3));
-	if (spawn != 1)
-		return (ft_map_error(5));
 	if (map->line != 0 && !ft_check_map_left_over(map))
 		return (ft_map_error(2));
+	if (spawn != 1)
+		return (ft_map_error(5));
 	write(1, "Map is well parsed!\n", 21);
 	return (1);
 }
