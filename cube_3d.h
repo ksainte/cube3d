@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cube_3d.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 00:49:54 by ks19              #+#    #+#             */
+/*   Updated: 2024/12/17 00:52:43 by ks19             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUBE_3D_H
 # define CUBE_3D_H
 
@@ -17,9 +29,7 @@
 # define TILE 64
 # define FIELD_OF_VIEW 60
 # define ROTATION_S 500
-# define PLAYER_S 10
 # define PI 3.14159265358979323846
-# define PI_90 1.57079632679
 // # define PI_270
 # define VERTICAL_WALL 0
 # define HORIZONTAL_WALL 1
@@ -31,30 +41,28 @@
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
 # define KEY_ESCAPE 65307
-// SPEEDS
-# define ROT_SPEED 0.05
-# define SPEED 8
+# define SPEED 5
 # define ANGLE 4
-#define MV_VERT_RIGHT_UP (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) > 0.0000001)
-#define MV_VERT_RIGHT_DOWN (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) > 0.0000001)
-#define MV_VERT_LEFT_UP (cos(ft_deg_to_rad(mlx->player->pa)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) < -0.0000001)
-#define MV_VERT_LEFT_DOWN (cos(ft_deg_to_rad(mlx->player->pa)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) < -0.0000001)
+# define MV_VERT_RIGHT_UP (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) > 0.0000001)
+# define MV_VERT_RIGHT_DOWN (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) > 0.0000001)
+# define MV_VERT_LEFT_UP (cos(ft_deg_to_rad(mlx->player->pa)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) < -0.0000001)
+# define MV_VERT_LEFT_DOWN (cos(ft_deg_to_rad(mlx->player->pa)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) < -0.0000001)
 
 typedef struct s_img
 {
 	void		*img;
-	char *img_data; // Raw image data (pointer returned by mlx_get_data_addr)
-	int pixel_bits; // Bits per pixel (bpp)
-	int size_line;  // Bytes per line (line_length)
-	int endian;     // Endian format
+	char		*img_data;
+	int			pixel_bits;
+	int			size_line;
+	int			endian;
 }				t_img;
 
 typedef struct s_txtr
 {
-	char *key;      // Texture key (e.g., "NO", "SO", etc.)
-	char *value;    // Texture value (e.g., file path or ID)
-	char *path;     // Path to the texture file
-	t_img img_data; // Image data (this contains the actual texture data)
+	char *key;
+	char *value;
+	char *path;
+	t_img img_data;
 }				t_txtr;
 
 typedef struct s_map
@@ -86,6 +94,7 @@ typedef struct s_data
 	int			row;
 	int			F[3];
 	int			C[3];
+	int			color;
 	t_txtr		txtr_tab[4];
 
 }				t_data;
@@ -100,8 +109,8 @@ typedef struct s_image
 }				t_image;
 typedef struct s_player
 {
-	int 		start_x; // start x pos
-	int 		start_y; // start y pos
+	int start_x;
+	int start_y;
 	float		px;
 	float		py;
 	float		pdx;
@@ -130,13 +139,13 @@ typedef struct s_ray
 	int			ray_coord;
 	int			Tan_slope;
 	int			index;
-	float 		rx_distH;
-	float 		ry_distH;
-	float 		rx_distV;
-	float 		ry_distV;
+	float		rx_distH;
+	float		ry_distH;
+	float		rx_distV;
+	float		ry_distV;
 	double		wall_top;
 	double		wall_bottom;
-	
+
 }				t_ray;
 typedef struct s_mlx
 {
@@ -174,7 +183,8 @@ int				ft_has_valid_suffix(char *str);
 int				ft_open_path(char *str);
 char			*ft_remove_spaces(char *str);
 char			*ft_handle_spaces(char *str);
-void			ft_atoi_valid_range(char *str, int index, t_map *map, int range);
+void			ft_atoi_valid_range(char *str, int index, t_map *map,
+					int range);
 int				ft_fill_color(char *str, t_map *map, int index);
 int				ft_fill_texture(char *str, int index, t_map *map);
 void			ft_init_textures_to_null(t_map *map);
@@ -198,11 +208,11 @@ void			ft_cast_rays(t_mlx *mlx);
 float			ft_adjust_angle(float angle);
 float			ft_final_dist(t_mlx *mlx, float rx, float ry, int flag);
 float			ft_get_dist(float rx, float ry, t_mlx *mlx, int flag);
-int				ft_calculate_distH(float Tan, t_mlx *mlx);
-int				ft_calculate_distV(float Tan, t_mlx *mlx);
-void 			ft_compare_dis(float disV, float disH, t_mlx *mlx);
+int				ft_calculate_dis_h(float Tan, t_mlx *mlx);
+int				ft_calculate_dis_v(float Tan, t_mlx *mlx);
+void			ft_compare_dis(float disV, float disH, t_mlx *mlx);
 void			ft_set_flag(t_mlx *mlx, float *Tan);
-void			ft_cast_rays(t_mlx *mlx);	
+void			ft_cast_rays(t_mlx *mlx);
 
 // RENDERING
 int				ft_get_wall_color(t_mlx *mlx, int orientation_flag);
@@ -215,18 +225,17 @@ int				key_release(int keycode, void *ml);
 int				key_press(int keycode, void *ml);
 void			ft_set_player(t_mlx *mlx);
 int				ft_main_loop(void *mlx_ptr);
-void 			ft_move_backward(t_mlx *mlx);
-void 			ft_move_forward(t_mlx *mlx);
-void 			ft_backward_along_wall(t_mlx *mlx);
-void 			ft_forward_along_wall(t_mlx *mlx);
+void			ft_move_backward(t_mlx *mlx);
+void			ft_move_forward(t_mlx *mlx);
+void			ft_backward_along_wall(t_mlx *mlx);
+void			ft_forward_along_wall(t_mlx *mlx);
 int				ft_oblique_right(t_mlx *mlx);
 int				ft_oblique_left(t_mlx *mlx);
 int				ft_close(t_mlx *mlx);
 
-
 // Textures
 int				txtr_checkload(t_mlx *mlx);
 int				ft_init_txtr_images(t_mlx *mlx);
-void			ft_draw_wall(t_mlx *mlx,double wall_height, int diff);
+void			ft_draw_wall(t_mlx *mlx, double wall_height, int diff);
 
 #endif
