@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   elements_parsing_utils_2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:11:58 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/13 19:52:37 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/16 23:30:13 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ char	*ft_handle_spaces(char *str)
 	return (str);
 }
 
-void	ft_atoi_valid_range(char *str, int index, t_map *map, int range,
-		int rgb)
+void	ft_atoi_valid_range(char *str, int index, t_map *map, int range)
 {
 	char	*dup;
 	int		nb;
@@ -57,33 +56,32 @@ void	ft_atoi_valid_range(char *str, int index, t_map *map, int range,
 	dup[range] = '\0';
 	nb = ft_atoi(dup);
 	if (index == 4)
-		map->F[rgb] = nb;
+		map->F[map->rgb] = nb;
 	else
-		map->C[rgb] = nb;
+		map->C[map->rgb] = nb;
 	free(dup);
 }
 
 int	ft_fill_color(char *str, t_map *map, int index)
 {
 	int	i;
-	int	rgb;
 
 	i = 0;
-	rgb = 0;
+	map->rgb = 0;
 	str++;
 	str = ft_handle_spaces(str);
 	while (str[i])
 	{
 		if (str[i] == 44)
 		{
-			ft_atoi_valid_range(str, index, map, i, rgb);
+			ft_atoi_valid_range(str, index, map, i);
 			str = str + i + 1;
 			i = -1;
-			rgb++;
+			map->rgb = map->rgb + 1;
 		}
 		i++;
 	}
-	ft_atoi_valid_range(str, index, map, i, rgb);
+	ft_atoi_valid_range(str, index, map, i);
 	return (1);
 }
 

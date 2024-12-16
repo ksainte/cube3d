@@ -13,7 +13,7 @@
 # include <unistd.h>
 
 # define SCREEN_WIDTH 800
-# define SCREEN_HEIGHT 1800
+# define SCREEN_HEIGHT 800
 # define TILE 64
 # define FIELD_OF_VIEW 60
 # define ROTATION_S 500
@@ -65,6 +65,7 @@ typedef struct s_map
 	int			s_y;
 	char		*line;
 	int			row;
+	int			rgb;
 	char		*path;
 	char		**tab;
 	char		**tmp;
@@ -173,8 +174,7 @@ int				ft_has_valid_suffix(char *str);
 int				ft_open_path(char *str);
 char			*ft_remove_spaces(char *str);
 char			*ft_handle_spaces(char *str);
-void			ft_atoi_valid_range(char *str, int index, t_map *map, int range,
-					int rgb);
+void			ft_atoi_valid_range(char *str, int index, t_map *map, int range);
 int				ft_fill_color(char *str, t_map *map, int index);
 int				ft_fill_texture(char *str, int index, t_map *map);
 void			ft_init_textures_to_null(t_map *map);

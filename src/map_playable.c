@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_playable.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:03:25 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/13 19:53:04 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/16 23:39:50 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,18 @@ void	ft_find_start_pos(t_map *map)
 	}
 }
 
+void	ft_init_txtr_tab(t_map *map, t_data *data)
+{
+	data->txtr_tab[0].path = ft_strdup(map->NO);
+	data->txtr_tab[0].key = ft_strdup("NO");
+	data->txtr_tab[1].path = ft_strdup(map->SO);
+	data->txtr_tab[1].key = ft_strdup("SO");
+	data->txtr_tab[2].path = ft_strdup(map->WE);
+	data->txtr_tab[2].key = ft_strdup("WE");
+	data->txtr_tab[3].path = ft_strdup(map->EA);
+	data->txtr_tab[3].key = ft_strdup("EA");
+}
+
 int	ft_copy_to_data(t_map *map, t_data *data)
 {
 	int	i;
@@ -90,14 +102,7 @@ int	ft_copy_to_data(t_map *map, t_data *data)
 	i = -1;
 	while (++i < 3)
 		data->C[i] = map->C[i];
-	data->txtr_tab[0].path = ft_strdup(map->NO);
-	data->txtr_tab[0].key = ft_strdup("NO");
-	data->txtr_tab[1].path = ft_strdup(map->SO);
-	data->txtr_tab[1].key = ft_strdup("SO");
-	data->txtr_tab[2].path = ft_strdup(map->WE);
-	data->txtr_tab[2].key = ft_strdup("WE");
-	data->txtr_tab[3].path = ft_strdup(map->EA);
-	data->txtr_tab[3].key = ft_strdup("EA");
+	ft_init_txtr_tab(map, data);
 	return (1);
 }
 

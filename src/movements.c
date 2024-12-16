@@ -6,11 +6,9 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 14:46:37 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/16 15:20:14 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/16 23:44:42 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "../cube_3d.h"
 
@@ -49,6 +47,7 @@ int	ft_oblique_right(t_mlx *mlx)
 	mlx->player->py = mlx->player->py + (move_y * SPEED);
 	return (0);
 }
+
 void	ft_forward_along_wall(t_mlx *mlx)
 {
 	if (MV_VERT_RIGHT_UP && mlx->data->tab[((int)mlx->player->py - (SPEED + 20)) / 64][((int)mlx->player->px) / 64] != '1')

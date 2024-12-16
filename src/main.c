@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/16 23:02:57 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/16 23:16:02 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_init_structs(t_player *player, t_mlx *mlx, t_ray *ray)
 	if (SCREEN_WIDTH > 2560 || SCREEN_HEIGHT > 1440)
 	{
 		ft_custom_error("Map size is exceeding screen size!\n");
-		return(0);
+		return (0);
 	}
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
 			"cube");
