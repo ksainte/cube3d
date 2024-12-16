@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/16 17:00:03 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/16 17:31:01 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,13 @@ int	ft_init_structs(t_player *player, t_mlx *mlx, t_ray *ray)
 	mlx->mlx_ptr = mlx_init();
 	if (!mlx->mlx_ptr || !txtr_checkload(mlx) || !ft_init_txtr_images(mlx))
 	{
-		ft_custom_error("*mlx failed to init or texture not rightly loaded!");
+		ft_custom_error("*mlx failed to init or texture not rightly loaded!\n");
 		return (0);
+	}
+	if (SCREEN_WIDTH > 2560 || SCREEN_HEIGHT > 1440)
+	{
+		ft_custom_error("Map size is exceeding screen size!\n");
+		return(0);
 	}
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
 			"cube");
@@ -79,7 +84,7 @@ int	main(int argc, char **argv)
 		return (0);
 	mlx.data = &data;
 	if (!ft_init_structs(&player, &mlx, &ray))
-		return (0);
+		return (ft_free_data(&data));
 	mlx_hook(mlx.win_ptr, 2, 1L << 0, &key_press, &mlx);
 	mlx_hook(mlx.win_ptr, 3, 1L << 1, &key_release, &mlx);
 	mlx_hook(mlx.win_ptr, 17, 0, *ft_close, &mlx);

@@ -13,7 +13,7 @@
 # include <unistd.h>
 
 # define SCREEN_WIDTH 800
-# define SCREEN_HEIGHT 800
+# define SCREEN_HEIGHT 1800
 # define TILE 64
 # define FIELD_OF_VIEW 60
 # define ROTATION_S 500
