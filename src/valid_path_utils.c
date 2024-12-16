@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid_path_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:03:51 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/13 20:17:42 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/17 00:42:14 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ char	*ft_check_args(int argc, char *str)
 		str = "Error\nExtension of the map file not valid : <map>.cub\n";
 		return (ft_custom_error(str));
 	}
-	if (!(path = ft_strjoin("./maps/", path)))
+	path = ft_strjoin("./maps/", path);
+	if (!path)
 	{
 		str = "Error\nPath allocation failed\n";
 		return (ft_custom_error(str));
