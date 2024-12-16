@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 00:49:54 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/17 00:52:43 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 00:54:05 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ typedef struct s_img
 
 typedef struct s_txtr
 {
-	char *key;
-	char *value;
-	char *path;
-	t_img img_data;
+	char		*key;
+	char		*value;
+	char		*path;
+	t_img		img_data;
 }				t_txtr;
 
 typedef struct s_map
@@ -109,8 +109,8 @@ typedef struct s_image
 }				t_image;
 typedef struct s_player
 {
-	int start_x;
-	int start_y;
+	int			start_x;
+	int			start_y;
 	float		px;
 	float		py;
 	float		pdx;
