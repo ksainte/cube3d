@@ -1,15 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   movements.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/16 14:46:37 by ks19              #+#    #+#             */
+/*   Updated: 2024/12/16 15:03:19 by ks19             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-/* ************************************************************************** */
-/* */
-/* ::: :::::::: */
-/* movement.c :+: :+: :+: */
-/* +:+ +:+ +:+ */
-/* By: roko <roko@student.42.fr> +#+ +:+ +#+ */
-/* +#+#+#+#+#+ +#+ */
-/* Created: 2024/12/01 14:52:32 by roko #+# #+# */
-/* Updated: 2024/12/01 20:41:30 by roko ### ########.fr */
-/* */
-/* ************************************************************************** */
+
 
 #include "../cube_3d.h"
 
@@ -26,8 +27,8 @@ int	ft_oblique_left(t_mlx *mlx)
 	pos_y = mlx->player->py + (move_y * 25);
 	if (mlx->data->tab[(int)pos_y / 64][(int)pos_x / 64] == '1')
 		return (0);
-	mlx->player->px = mlx->player->px + (move_x * 15);
-	mlx->player->py = mlx->player->py + (move_y * 15);
+	mlx->player->px = mlx->player->px + (move_x * 10);
+	mlx->player->py = mlx->player->py + (move_y * 10);
 	return (0);
 }
 
@@ -44,67 +45,53 @@ int	ft_oblique_right(t_mlx *mlx)
 	pos_y = mlx->player->py + (move_y * 25);
 	if (mlx->data->tab[(int)pos_y / 64][(int)pos_x / 64] == '1')
 		return (0);
-	mlx->player->px = mlx->player->px + (move_x * 15);
-	mlx->player->py = mlx->player->py + (move_y * 15);
+	mlx->player->px = mlx->player->px + (move_x * 10);
+	mlx->player->py = mlx->player->py + (move_y * 10);
 	return (0);
 }
 void	ft_forward_along_wall(t_mlx *mlx)
 {
-	if (MV_VERT_RIGHT_UP &&
-		mlx->data->tab[((int)mlx->player->py - 30)                // 1 cadrant
-						/ 64][((int)mlx->player->px) / 64] != '1') // droite
+	if (MV_VERT_RIGHT_UP && mlx->data->tab[((int)mlx->player->py - 30) / 64][((int)mlx->player->px) / 64] != '1')
 		mlx->player->py = mlx->player->py - 10;
-	else if (MV_VERT_RIGHT_DOWN &&
-				mlx->data->tab[((int)mlx->player->py // 4 cad
-								+ 30) /
-							64][((int)mlx->player->px) / 64] != '1') // droite
+	else if (MV_VERT_RIGHT_DOWN && mlx->data->tab[((int)mlx->player->py + 30) / 64][((int)mlx->player->px) / 64] != '1') 
 		mlx->player->py = mlx->player->py + 10;
-	else if (MV_VERT_LEFT_UP && mlx->data->tab[((int)mlx->player->py - 30)
-		/ 64][(int)mlx->player->px / 64] != '1') // droite
+	else if (MV_VERT_LEFT_UP && mlx->data->tab[((int)mlx->player->py - 30) / 64][(int)mlx->player->px / 64] != '1')
 		mlx->player->py = mlx->player->py - 10;
-	else if (MV_VERT_LEFT_DOWN && mlx->data->tab[((int)mlx->player->py + 30)
-		/ 64][(int)mlx->player->px / 64] != '1') // droite
+	else if (MV_VERT_LEFT_DOWN && mlx->data->tab[((int)mlx->player->py + 30) / 64][(int)mlx->player->px / 64] != '1')
 		mlx->player->py = mlx->player->py + 10;
-	else if (MV_VERT_RIGHT_UP &&
-				mlx->data->tab[(int)mlx->player->py                           
-					// 1 cadrant
-							/ 64][((int)mlx->player->px + 10) / 64] != '1')
-								// droite
+	else if (MV_VERT_RIGHT_UP && mlx->data->tab[(int)mlx->player->py / 64][((int)mlx->player->px + 10) / 64] != '1')
 		mlx->player->px = mlx->player->px + 10;
-	else if (MV_VERT_RIGHT_DOWN && mlx->data->tab[(int)mlx->player->py
-		/ 64][((int)mlx->player->px + 10) / 64] != '1') // droite
+	else if (MV_VERT_RIGHT_DOWN && mlx->data->tab[(int)mlx->player->py / 64][((int)mlx->player->px + 10) / 64] != '1')
 		mlx->player->px = mlx->player->px + 10;
-	else if (MV_VERT_LEFT_UP && mlx->data->tab[(int)mlx->player->py
-		/ 64][((int)mlx->player->px - 10) / 64] != '1')
+	else if (MV_VERT_LEFT_UP && mlx->data->tab[(int)mlx->player->py / 64][((int)mlx->player->px - 10) / 64] != '1')
 		mlx->player->px = mlx->player->px - 10;
-	else if (MV_VERT_LEFT_DOWN && mlx->data->tab[(int)mlx->player->py
-		/ 64][((int)mlx->player->px - 10) / 64] != '1')
+	else if (MV_VERT_LEFT_DOWN && mlx->data->tab[(int)mlx->player->py / 64][((int)mlx->player->px - 10) / 64] != '1')
 		mlx->player->px = mlx->player->px - 10;
 }
 
 void	ft_backward_along_wall(t_mlx *mlx)
 {
 	if (MV_VERT_RIGHT_UP && mlx->data->tab[((int)mlx->player->py)
-		/ 64][((int)mlx->player->px - 10) / 64] != '1') // droite
+		/ 64][((int)mlx->player->px - 10) / 64] != '1')
 		mlx->player->px = mlx->player->px - 10;
 	else if (MV_VERT_RIGHT_DOWN && mlx->data->tab[((int)mlx->player->py)
-		/ 64][((int)mlx->player->px - 10) / 64] != '1') // droite
+		/ 64][((int)mlx->player->px - 10) / 64] != '1') 
 		mlx->player->px = mlx->player->px - 10;
 	else if (MV_VERT_LEFT_UP && mlx->data->tab[((int)mlx->player->py)
-		/ 64][((int)mlx->player->px + 10) / 64] != '1') // droite
+		/ 64][((int)mlx->player->px + 10) / 64] != '1') 
 		mlx->player->px = mlx->player->px + 10;
 	else if (MV_VERT_LEFT_DOWN && mlx->data->tab[((int)mlx->player->py)
-		/ 64][((int)mlx->player->px + 10) / 64] != '1') // droite
+		/ 64][((int)mlx->player->px + 10) / 64] != '1')
 		mlx->player->px = mlx->player->px + 10;
 	else if (MV_VERT_RIGHT_UP && mlx->data->tab[((int)mlx->player->py + 30)
-		/ 64][((int)mlx->player->px) / 64] != '1') // droite
+		/ 64][((int)mlx->player->px) / 64] != '1') 
 		mlx->player->py = mlx->player->py + 10;
 	else if (MV_VERT_RIGHT_DOWN && mlx->data->tab[((int)mlx->player->py - 30)
-		/ 64][((int)mlx->player->px) / 64] != '1') // droite
+		/ 64][((int)mlx->player->px) / 64] != '1')
 		mlx->player->py = mlx->player->py - 10;
 	else if (MV_VERT_LEFT_UP && mlx->data->tab[((int)mlx->player->py + 30)
 		/ 64][((int)mlx->player->px) / 64] != '1')
-		mlx->player->py = mlx->player->py + 5;
+		mlx->player->py = mlx->player->py + 10;
 	else if (MV_VERT_LEFT_DOWN && mlx->data->tab[((int)mlx->player->py - 30)
 		/ 64][((int)mlx->player->px) / 64] != '1')
 		mlx->player->py = mlx->player->py - 10;
