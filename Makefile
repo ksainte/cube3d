@@ -6,12 +6,12 @@
 #    By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 13:51:16 by ks19              #+#    #+#              #
-#    Updated: 2024/12/13 15:58:28 by ks19             ###   ########.fr        #
+#    Updated: 2024/12/16 16:10:28 by ks19             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -Werror
 SRCS =  src/main.c src/error_free_utils.c src/valid_colors_utils.c src/map_parsing_utils.c src/elements_parsing_utils.c \
 		src/valid_path_utils.c src/elements_parsing_utils_2.c src/helpers.c src/helpers_2.c src/map_playable.c src/coloring.c \
 		src/movements.c render_wall_image.c ray_casting.c ray_casting_2.c movements_2.c

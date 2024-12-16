@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/13 20:37:06 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:20:25 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,20 @@ int	ft_init_structs(t_player *player, t_mlx *mlx, t_ray *ray)
 	ft_init_player(mlx);
 	mlx->mlx_ptr = mlx_init();
 	if (!mlx->mlx_ptr || !txtr_checkload(mlx) || !ft_init_txtr_images(mlx))
+	{
+		ft_custom_error("*mlx failed to init or texture not rightly loaded!");
 		return (0);
+	}
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
 			"cube");
 	return (1);
+}
+
+int	ft_close(t_mlx *mlx)
+{
+	ft_free_data(mlx->data);
+	// mlx_clear_window(mlx, mlx->win_ptr); ca seg
+	exit(1);
 }
 
 int	main(int argc, char **argv)
@@ -72,6 +82,7 @@ int	main(int argc, char **argv)
 		return (0);
 	mlx_hook(mlx.win_ptr, 2, 1L << 0, &key_press, &mlx);
 	mlx_hook(mlx.win_ptr, 3, 1L << 1, &key_release, &mlx);
+	mlx_hook(mlx.win_ptr, 17, 0, *ft_close, &mlx);
 	mlx_loop_hook(mlx.mlx_ptr, &ft_main_loop, &mlx);
 	mlx_loop(mlx.mlx_ptr);
 	ft_free_data(&data);

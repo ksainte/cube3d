@@ -221,6 +221,7 @@ void 			ft_backward_along_wall(t_mlx *mlx);
 void 			ft_forward_along_wall(t_mlx *mlx);
 int				ft_oblique_right(t_mlx *mlx);
 int				ft_oblique_left(t_mlx *mlx);
+int				ft_close(t_mlx *mlx);
 
 
 // Textures

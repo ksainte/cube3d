@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:48:25 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/16 15:18:19 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/16 16:15:48 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	key_press(int keycode, void *ml)
 
 	mlx = (t_mlx *)ml;
 	if (keycode == KEY_ESCAPE)
-		exit(0);
+		ft_close(mlx);
 	else if (keycode == KEY_A)
 		mlx->player->moving_left_right = -1;
 	else if (keycode == KEY_D)

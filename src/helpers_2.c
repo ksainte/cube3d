@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:52:00 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/13 20:20:03 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:31:51 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ int	ft_copy_table(t_map *map)
 int	ft_free_data(t_data *data)
 {
 	ft_free_table(data->tab);
+	free(data->txtr_tab[0].path);
+	free(data->txtr_tab[0].key);
+	free(data->txtr_tab[1].path);
+	free(data->txtr_tab[1].key);
+	free(data->txtr_tab[2].path);
+	free(data->txtr_tab[2].key);
+	free(data->txtr_tab[3].path);
+	free(data->txtr_tab[3].key);
 	return (1);
 }
 
