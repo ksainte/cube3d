@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:48:25 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/16 16:15:48 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 00:15:12 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	key_press(int keycode, void *ml)
 		mlx->player->look_rot = 1;
 	return (0);
 }
+
 int	key_release(int keycode, void *ml)
 {
 	t_mlx	*mlx;
@@ -94,8 +95,8 @@ int	key_release(int keycode, void *ml)
 
 int	ft_main_loop(void *mlx_ptr)
 {
-	t_mlx *mlx;
-	t_image img;
+	t_mlx	*mlx;
+	t_image	img;
 
 	mlx = mlx_ptr;
 	mlx->img = &img;

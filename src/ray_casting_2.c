@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:35:00 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/13 19:53:13 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/17 00:22:48 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ float	ft_adjust_angle(float angle)
 		angle = angle - 360;
 	return (angle);
 }
+
 float	ft_deg_to_rad(float ray_angle)
 {
 	float	ray_radian;

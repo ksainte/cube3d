@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 14:52:32 by roko              #+#    #+#             */
-/*   Updated: 2024/12/16 17:16:40 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 00:40:09 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,15 @@ int	ft_init_txtr_images(t_mlx *mlx)
 		txtr->img_data.img = mlx_xpm_file_to_image(mlx->mlx_ptr, txtr->path, &w,
 				&h);
 		if (txtr->img_data.img == NULL)
-		{
-			printf("Error loading texture %d\n", i);
 			return (0);
-		}
-		txtr->img_data.img_data = mlx_get_data_addr(txtr->img_data.img,
-				&txtr->img_data.pixel_bits, &txtr->img_data.size_line,
+		txtr->img_data.img_data
+			= mlx_get_data_addr(
+				txtr->img_data.img,
+				&txtr->img_data.pixel_bits,
+				&txtr->img_data.size_line,
 				&txtr->img_data.endian);
 		i++;
 	}
-	printf("Textures initialized!\n");
 	return (1);
 }
 
@@ -93,16 +92,16 @@ int	ft_get_texture(t_mlx *mlx)
 	if (mlx->ray->wall_touch == VERTICAL_WALL)
 	{
 		if (mlx->ray->ra > 90 && mlx->ray->ra < 270)
-			i = 2;//2 c est west
+			i = 2;
 		else
-			i = 3;//1 c est est
+			i = 3;
 	}
 	else
 	{
 		if (mlx->ray->ra > 0 && mlx->ray->ra < 180)
-			i = 0;//o nord
+			i = 0;
 		else
-			i = 1;//sud
+			i = 1;
 	}
 	return (i);
 }
@@ -114,7 +113,6 @@ void	ft_draw_wall(t_mlx *mlx, double wall_height, int diff)
 	double	tex_x;
 	int		y;
 	int		tex_y;
-	int		color;
 
 	texture_step = (64 / wall_height);
 	texture_pos = 0.0 + (diff * -1) * texture_step;
@@ -126,8 +124,9 @@ void	ft_draw_wall(t_mlx *mlx, double wall_height, int diff)
 	while (y < mlx->ray->wall_bottom)
 	{
 		tex_y = (int)texture_pos;
-		color = ft_get_textr_color(mlx, tex_x, tex_y, ft_get_texture(mlx));
-		ft_put_pixel_to_screen(mlx, mlx->ray->index, y, color);
+		mlx->data->color = ft_get_textr_color(mlx, tex_x, tex_y,
+				ft_get_texture(mlx));
+		ft_put_pixel_to_screen(mlx, mlx->ray->index, y, mlx->data->color);
 		texture_pos += texture_step;
 		y++;
 	}

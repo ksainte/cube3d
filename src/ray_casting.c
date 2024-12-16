@@ -6,19 +6,19 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:31:47 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/16 14:41:32 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 00:30:33 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube_3d.h"
 
-int	ft_calculate_distH(float Tan, t_mlx *mlx)
+int	ft_calculate_dis_h(float Tan, t_mlx *mlx)
 {
 	float	ry;
 	float	rx;
 	float	px;
 	float	py;
-	float	distH;
+	float	disth;
 
 	px = mlx->player->px;
 	py = mlx->player->py;
@@ -36,17 +36,17 @@ int	ft_calculate_distH(float Tan, t_mlx *mlx)
 		rx = px;
 	else
 		rx = px + (py - ry) / Tan;
-	distH = ft_get_dist(rx, ry, mlx, 2);
-	return (distH);
+	disth = ft_get_dist(rx, ry, mlx, 2);
+	return (disth);
 }
 
-int	ft_calculate_distV(float Tan, t_mlx *mlx)
+int	ft_calculate_dis_v(float Tan, t_mlx *mlx)
 {
 	float	px;
 	float	py;
 	float	ry;
 	float	rx;
-	float	distV;
+	float	distv;
 
 	px = mlx->player->px;
 	py = mlx->player->py;
@@ -58,8 +58,8 @@ int	ft_calculate_distV(float Tan, t_mlx *mlx)
 	else if (cos(ft_deg_to_rad(mlx->ray->ra)) < -0.0000001)
 		rx = (((int)px >> 6) << 6) - 0.0001;
 	ry = py + (px - rx) * Tan;
-	distV = ft_get_dist(rx, ry, mlx, 1);
-	return (distV);
+	distv = ft_get_dist(rx, ry, mlx, 1);
+	return (distv);
 }
 
 void	ft_compare_dis(float disV, float disH, t_mlx *mlx)
@@ -88,6 +88,7 @@ void	ft_compare_dis(float disV, float disH, t_mlx *mlx)
 	disV = disV * cos(ft_deg_to_rad(ca));
 	mlx->ray->wall_distance = disV;
 }
+
 void	ft_set_flag(t_mlx *mlx, float *Tan)
 {
 	mlx->ray->Tan_slope = 1;
@@ -109,28 +110,29 @@ void	ft_set_flag(t_mlx *mlx, float *Tan)
 
 void	ft_cast_rays(t_mlx *mlx)
 {
-	int i;
-	float disV;
-	float disH;
-	float Tan;
+	int		i;
+	float	disv;
+	float	dish;
+	float	tan;
 
 	i = 0;
 	mlx->ray->ra = ft_adjust_angle(mlx->player->pa + 30);
 	while (i < SCREEN_WIDTH)
 	{
-		ft_set_flag(mlx, &Tan);
+		ft_set_flag(mlx, &tan);
 		if (mlx->ray->ra != 0 && mlx->ray->ra != 180)
-			disH = ft_calculate_distH(Tan, mlx);
-		ft_set_flag(mlx, &Tan);
+			dish = ft_calculate_dis_h(tan, mlx);
+		ft_set_flag(mlx, &tan);
 		if (mlx->ray->ra != 90 && mlx->ray->ra != 270)
-			disV = ft_calculate_distV(Tan, mlx);
+			disv = ft_calculate_dis_v(tan, mlx);
 		else
-			disV = disH + 1;
+			disv = dish + 1;
 		if (mlx->ray->ra == 0 || mlx->ray->ra == 180)
-			disH = disV + 1;
-		ft_compare_dis(disV, disH, mlx);
+			dish = disv + 1;
+		ft_compare_dis(disv, dish, mlx);
 		ft_fill_colors(mlx, i);
-		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)FIELD_OF_VIEW / SCREEN_WIDTH));
+		mlx->ray->ra = ft_adjust_angle(mlx->ray->ra - ((float)FIELD_OF_VIEW
+					/ SCREEN_WIDTH));
 		i++;
 	}
 }
