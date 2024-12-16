@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_wall_image.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 14:52:32 by roko              #+#    #+#             */
-/*   Updated: 2024/12/13 20:28:18 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:16:40 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,16 @@ int	ft_get_texture(t_mlx *mlx)
 	if (mlx->ray->wall_touch == VERTICAL_WALL)
 	{
 		if (mlx->ray->ra > 90 && mlx->ray->ra < 270)
-			i = 2;
+			i = 2;//2 c est west
 		else
-			i = 1;
+			i = 3;//1 c est est
 	}
 	else
 	{
 		if (mlx->ray->ra > 0 && mlx->ray->ra < 180)
-			i = 0;
+			i = 0;//o nord
 		else
-			i = 3;
+			i = 1;//sud
 	}
 	return (i);
 }
