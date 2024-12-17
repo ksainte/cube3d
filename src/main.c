@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/16 23:16:02 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 14:50:34 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	ft_init_structs(t_player *player, t_mlx *mlx, t_ray *ray)
 int	ft_close(t_mlx *mlx)
 {
 	ft_free_data(mlx->data);
+	mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr);
 	exit(1);
 }
 

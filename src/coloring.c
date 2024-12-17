@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   coloring.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 14:52:32 by roko              #+#    #+#             */
-/*   Updated: 2024/12/17 14:36:23 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/17 14:48:58 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,19 @@ int	reverse_bytes(int c)
 int	ft_draw_ceiling_floor(t_mlx *mlx, int ray_num)
 {
 	int	i;
+
 	i = mlx->ray->wall_bottom;
 	while (i < SCREEN_HEIGHT)
 	{
-		ft_put_pixel_to_screen(mlx, ray_num, i, rgb_to_hex(mlx->data->f[0], mlx->data->f[1], mlx->data->f[2]));
+		ft_put_pixel_to_screen(mlx, ray_num, i, rgb_to_hex(mlx->data->f[0],
+				mlx->data->f[1], mlx->data->f[2]));
 		i++;
 	}
 	i = 0;
 	while (i < mlx->ray->wall_top)
 	{
-		ft_put_pixel_to_screen(mlx, ray_num, i, rgb_to_hex(mlx->data->c[0], mlx->data->c[1], mlx->data->c[2]));
+		ft_put_pixel_to_screen(mlx, ray_num, i, rgb_to_hex(mlx->data->c[0],
+				mlx->data->c[1], mlx->data->c[2]));
 		i++;
 	}
 	return (0);
