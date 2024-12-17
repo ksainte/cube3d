@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:11:58 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/16 23:30:13 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 01:01:45 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	ft_atoi_valid_range(char *str, int index, t_map *map, int range)
 	dup[range] = '\0';
 	nb = ft_atoi(dup);
 	if (index == 4)
-		map->F[map->rgb] = nb;
+		map->f[map->rgb] = nb;
 	else
-		map->C[map->rgb] = nb;
+		map->c[map->rgb] = nb;
 	free(dup);
 }
 
@@ -96,12 +96,12 @@ int	ft_fill_texture(char *str, int index, t_map *map)
 		str++;
 	dup = ft_strdup(str);
 	if (index == 0)
-		map->NO = dup;
+		map->no = dup;
 	else if (index == 1)
-		map->SO = dup;
+		map->so = dup;
 	else if (index == 2)
-		map->WE = dup;
+		map->we = dup;
 	else if (index == 3)
-		map->EA = dup;
+		map->ea = dup;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 00:49:54 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/17 00:54:05 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 01:13:06 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ typedef struct s_map
 	char		*path;
 	char		**tab;
 	char		**tmp;
-	char		*NO;
-	char		*SO;
-	char		*WE;
-	char		*EA;
-	int			F[3];
-	int			C[3];
+	char		*no;
+	char		*so;
+	char		*we;
+	char		*ea;
+	int			f[3];
+	int			c[3];
 
 }				t_map;
 
@@ -92,8 +92,8 @@ typedef struct s_data
 	int			s_x;
 	int			s_y;
 	int			row;
-	int			F[3];
-	int			C[3];
+	int			f[3];
+	int			c[3];
 	int			color;
 	t_txtr		txtr_tab[4];
 
@@ -137,12 +137,12 @@ typedef struct s_ray
 	int			flag_cos;
 	int			flag_sin;
 	int			ray_coord;
-	int			Tan_slope;
+	int			tan_slope;
 	int			index;
-	float		rx_distH;
-	float		ry_distH;
-	float		rx_distV;
-	float		ry_distV;
+	float		rx_disth;
+	float		ry_disth;
+	float		rx_distv;
+	float		ry_distv;
 	double		wall_top;
 	double		wall_bottom;
 

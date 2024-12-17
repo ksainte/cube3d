@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:35:00 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/17 00:22:48 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 01:11:41 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ float	ft_final_dist(t_mlx *mlx, float rx, float ry, int flag)
 		dis = 100000;
 	if (flag == 1)
 	{
-		mlx->ray->rx_distV = rx;
-		mlx->ray->ry_distV = ry;
+		mlx->ray->rx_distv = rx;
+		mlx->ray->ry_distv = ry;
 	}
 	else if (flag == 2)
 	{
-		mlx->ray->rx_distH = rx;
-		mlx->ray->ry_distH = ry;
+		mlx->ray->rx_disth = rx;
+		mlx->ray->ry_disth = ry;
 	}
 	return (dis);
 }

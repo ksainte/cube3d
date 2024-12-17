@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:20 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/13 20:30:55 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/17 01:02:15 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	ft_init_textures_to_null(t_map *map)
 {
 	map->index = -1;
-	map->NO = NULL;
-	map->SO = NULL;
-	map->EA = NULL;
-	map->WE = NULL;
+	map->no = NULL;
+	map->so = NULL;
+	map->ea = NULL;
+	map->we = NULL;
 	map->tab = NULL;
 	map->tmp = NULL;
 }
@@ -30,19 +30,19 @@ void	ft_print_elements(t_map *map)
 	i = 0;
 	while (i < 3)
 	{
-		printf("F %d\n", map->F[i]);
+		printf("F %d\n", map->f[i]);
 		i++;
 	}
 	i = 0;
 	while (i < 3)
 	{
-		printf("C %d\n", map->C[i]);
+		printf("C %d\n", map->c[i]);
 		i++;
 	}
-	printf("NO %s\n", map->NO);
-	printf("SO %s\n", map->SO);
-	printf("EA %s\n", map->EA);
-	printf("WE %s\n", map->WE);
+	printf("NO %s\n", map->no);
+	printf("SO %s\n", map->so);
+	printf("EA %s\n", map->ea);
+	printf("WE %s\n", map->we);
 	printf("-----------------\n");
 	ft_print_table(map->tab);
 }

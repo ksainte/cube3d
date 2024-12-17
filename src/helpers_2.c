@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:52:00 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/16 15:31:51 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 01:02:33 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ void	ft_print_data(t_data *data)
 
 	i = -1;
 	while (++i < 3)
-		printf("F %d\n", data->F[i]);
+		printf("F %d\n", data->f[i]);
 	i = -1;
 	while (++i < 3)
-		printf("C %d\n", data->C[i]);
+		printf("C %d\n", data->c[i]);
 	printf("row is %d\n", data->row);
 	printf("s->y is %d\n", data->s_y);
 	printf("s->x is %d\n", data->s_x);

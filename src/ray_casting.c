@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:31:47 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/17 00:30:33 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 01:14:53 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_calculate_dis_h(float Tan, t_mlx *mlx)
 	px = mlx->player->px;
 	py = mlx->player->py;
 	mlx->player->y_var = 64;
-	mlx->ray->flag_sin = mlx->ray->flag_sin * mlx->ray->Tan_slope;
+	mlx->ray->flag_sin = mlx->ray->flag_sin * mlx->ray->tan_slope;
 	if (mlx->ray->ra != 90 && mlx->ray->ra != 270)
 		mlx->player->x_var = mlx->player->y_var / Tan;
 	else
@@ -51,7 +51,7 @@ int	ft_calculate_dis_v(float Tan, t_mlx *mlx)
 	px = mlx->player->px;
 	py = mlx->player->py;
 	mlx->player->x_var = 64;
-	mlx->ray->flag_cos = mlx->ray->flag_cos * mlx->ray->Tan_slope;
+	mlx->ray->flag_cos = mlx->ray->flag_cos * mlx->ray->tan_slope;
 	mlx->player->y_var = mlx->player->x_var * Tan;
 	if (cos(ft_deg_to_rad(mlx->ray->ra)) > 0.0000001)
 		rx = (((int)px >> 6) << 6) + 64;
@@ -68,21 +68,21 @@ void	ft_compare_dis(float disV, float disH, t_mlx *mlx)
 
 	if (disH < disV)
 	{
-		mlx->ray->rx = mlx->ray->rx_distH;
-		mlx->ray->ry = mlx->ray->ry_distH;
+		mlx->ray->rx = mlx->ray->rx_disth;
+		mlx->ray->ry = mlx->ray->ry_disth;
 		disV = disH;
 		mlx->ray->wall_touch = HORIZONTAL_WALL;
 	}
 	else if (disH > disV)
 	{
-		mlx->ray->rx = mlx->ray->rx_distV;
-		mlx->ray->ry = mlx->ray->ry_distV;
+		mlx->ray->rx = mlx->ray->rx_distv;
+		mlx->ray->ry = mlx->ray->ry_distv;
 		mlx->ray->wall_touch = VERTICAL_WALL;
 	}
 	else if (disH == disV)
 	{
-		mlx->ray->rx = mlx->ray->rx_distV;
-		mlx->ray->ry = mlx->ray->ry_distV;
+		mlx->ray->rx = mlx->ray->rx_distv;
+		mlx->ray->ry = mlx->ray->ry_distv;
 	}
 	ca = ft_adjust_angle(mlx->player->pa - mlx->ray->ra);
 	disV = disV * cos(ft_deg_to_rad(ca));
@@ -91,7 +91,7 @@ void	ft_compare_dis(float disV, float disH, t_mlx *mlx)
 
 void	ft_set_flag(t_mlx *mlx, float *Tan)
 {
-	mlx->ray->Tan_slope = 1;
+	mlx->ray->tan_slope = 1;
 	mlx->ray->flag_cos = 1;
 	mlx->ray->flag_sin = 1;
 	if (cos(ft_deg_to_rad(mlx->ray->ra)) > 0.0000001)
@@ -102,10 +102,10 @@ void	ft_set_flag(t_mlx *mlx, float *Tan)
 	{
 		*Tan = tan(ft_deg_to_rad(mlx->ray->ra));
 		if (*Tan < -0.0000001)
-			mlx->ray->Tan_slope = -1;
+			mlx->ray->tan_slope = -1;
 	}
 	if (mlx->ray->ra == 90 || mlx->ray->ra == 180)
-		mlx->ray->Tan_slope = -1;
+		mlx->ray->tan_slope = -1;
 }
 
 void	ft_cast_rays(t_mlx *mlx)
