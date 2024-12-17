@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube_3d.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 00:49:54 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/17 01:51:58 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 14:33:23 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,5 +237,6 @@ int				mv_vert_left_down(t_mlx *mlx);
 int				txtr_checkload(t_mlx *mlx);
 int				ft_init_txtr_images(t_mlx *mlx);
 void			ft_draw_wall(t_mlx *mlx, double wall_height, int diff);
+int 			rgb_to_hex(int r, int g, int b) ;
 
 #endif
