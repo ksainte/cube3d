@@ -6,7 +6,7 @@
 /*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 00:49:54 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/17 14:33:23 by asideris         ###   ########.fr       */
+/*   Updated: 2024/12/17 16:53:05 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <string.h>
 # include <unistd.h>
 
-# define SCREEN_WIDTH 800
-# define SCREEN_HEIGHT 800
+# define SCREEN_WIDTH 1400
+# define SCREEN_HEIGHT 1400
 # define TILE 64
 # define FIELD_OF_VIEW 60
 # define ROTATION_S 500
@@ -41,8 +41,9 @@
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
 # define KEY_ESCAPE 65307
-# define SPEED 5
-# define ANGLE 4
+# define SPEED 10
+# define ANGLE 5
+# define LOG 0
 
 typedef struct s_img
 {

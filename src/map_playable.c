@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_playable.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 11:03:25 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/17 01:02:57 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 16:52:55 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int	ft_map_playable(t_map *map, t_data *data)
 	ft_free_table(map->tmp);
 	if (!ft_copy_to_data(map, data))
 		return (ft_map_error(0));
-	write(1, "The player has a playable map!\n", 32);
+	if (LOG)
+		write(1, "The player has a playable map!\n", 32);
 	return (ft_free(map));
 }

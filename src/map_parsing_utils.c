@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: asideris <asideris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:48:23 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/17 14:44:36 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 16:52:19 by asideris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int	ft_map_to_parse(t_map *map)
 	int	spawn;
 
 	spawn = 0;
-	write(1, "First 6 elements are well parsed!\n", 35);
+	if (LOG)
+		write(1, "First 6 elements are well parsed!\n", 35);
 	map->row = 0;
 	while (map->line != NULL)
 	{
@@ -90,6 +91,7 @@ int	ft_map_to_parse(t_map *map)
 		return (ft_map_error(2));
 	if (spawn != 1)
 		return (ft_map_error(5));
-	write(1, "Map is well parsed!\n", 21);
+	if (LOG)
+		write(1, "Map is well parsed!\n", 21);
 	return (1);
 }
