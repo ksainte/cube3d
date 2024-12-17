@@ -237,6 +237,6 @@ int				mv_vert_left_down(t_mlx *mlx);
 int				txtr_checkload(t_mlx *mlx);
 int				ft_init_txtr_images(t_mlx *mlx);
 void			ft_draw_wall(t_mlx *mlx, double wall_height, int diff);
-int 			rgb_to_hex(int r, int g, int b) ;
+int				rgb_to_hex(int r, int g, int b);
 
 #endif
