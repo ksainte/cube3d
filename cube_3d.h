@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 00:49:54 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/17 01:13:06 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 01:29:44 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,7 @@ void			ft_forward_along_wall(t_mlx *mlx);
 int				ft_oblique_right(t_mlx *mlx);
 int				ft_oblique_left(t_mlx *mlx);
 int				ft_close(t_mlx *mlx);
+int				mv_vert_right_up(t_mlx *mlx);
 
 // Textures
 int				txtr_checkload(t_mlx *mlx);
