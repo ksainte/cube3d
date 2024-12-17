@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/17 16:10:53 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 16:36:42 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,6 @@ int	ft_init_structs(t_player *player, t_mlx *mlx, t_ray *ray)
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT,
 			"cube");
 	return (1);
-}
-
-int	ft_close(t_mlx *mlx)
-{
-	ft_free_data(mlx->data);
-	mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr);
-	exit(1);
 }
 
 int	main(int argc, char **argv)

@@ -6,11 +6,18 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 01:27:12 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/17 01:58:04 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 16:37:59 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube_3d.h"
+
+int	ft_close(t_mlx *mlx)
+{
+	ft_free_data(mlx->data);
+	mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr);
+	exit(1);
+}
 
 int	mv_vert_right_up(t_mlx *mlx)
 {
