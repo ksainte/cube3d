@@ -6,7 +6,7 @@
 #    By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 13:51:16 by ks19              #+#    #+#              #
-#    Updated: 2024/12/17 14:46:40 by ks19             ###   ########.fr        #
+#    Updated: 2024/12/17 15:22:59 by ks19             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LIBFT_PATH = Libft
 MLX_PATH = mlx
 LIBFT_ARCHIVE = $(LIBFT_PATH)/libft.a
 MLX_ARCHIVE = $(MLX_PATH)/libmlx.a
-EXEC_NAME = cube3d
+EXEC_NAME = cub3D
 OBJS = $(notdir $(SRCS:.c=.o))
 FLAGS = -L Libft -lft -L mlx -lmlx -lm -lbsd -lX11 -lXext 
 
