@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:55 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/17 14:50:34 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 16:10:53 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ void	ft_init_player(t_mlx *mlx)
 	int	y;
 	int	x;
 
+	mlx->player->moving_left_right = 0;
+	mlx->player->moving_back_forth = 0;
+	mlx->player->look_rot = 0;
 	mlx->player->player_fov_radians = FIELD_OF_VIEW * (PI / 180);
 	mlx->player->start_x = mlx->data->s_x;
 	mlx->player->start_y = mlx->data->s_y;
