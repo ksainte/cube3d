@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "cube_3d.h": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "get_next_line.h": "c"
     }
 }

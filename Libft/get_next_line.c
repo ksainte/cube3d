@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:46:50 by ksainte           #+#    #+#             */
-/*   Updated: 2024/11/14 12:22:12 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 02:21:21 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*get_str(char *test, char *buff, char *str)
 	}
 	else
 		str[i] = '\0';
+	free(test);
 	return (str);
 }
 
@@ -59,7 +60,6 @@ void	*ft_bzero(void *s, size_t n)
 char	*ft_read_str(int fd, char *buff, char *test)
 {
 	int		nb_bytes_to_read;
-	char	*first_line;
 	char	*str;
 	char	*tmp;
 
@@ -82,9 +82,7 @@ char	*ft_read_str(int fd, char *buff, char *test)
 		}
 	}
 	str = "salut";
-	first_line = get_str(test, buff, str);
-	free(test);
-	return (first_line);
+	return (get_str(test, buff, str));
 }
 
 char	*get_next_line(int fd)
@@ -109,10 +107,7 @@ char	*get_next_line(int fd)
 	line = ft_read_str(fd, buff, test);
 	if (line == NULL)
 		return (NULL);
-	if (*line == '\0')
-	{
-		free(line);
+	if (*line == '\0' && ft_free_str(line))
 		return (NULL);
-	}
 	return (line);
 }

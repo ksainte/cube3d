@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 14:46:37 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/17 01:47:41 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 02:05:20 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ void	ft_forward_along_wall(t_mlx *mlx)
 	if (mv_vert_right_up(mlx) && mlx->data->tab[((int)mlx->player->py - (SPEED
 					+ 20)) / 64][((int)mlx->player->px) / 64] != '1')
 		mlx->player->py = mlx->player->py - SPEED;
-	else if (mv_vert_right_down(mlx) && mlx->data->tab[((int)mlx->player->py + (SPEED
-					+ 20)) / 64][((int)mlx->player->px) / 64] != '1')
+	else if (mv_vert_right_down(mlx) && mlx->data->tab[((int)mlx->player->py
+				+ (SPEED + 20)) / 64][((int)mlx->player->px) / 64] != '1')
 		mlx->player->py = mlx->player->py + SPEED;
-	else if (mv_vert_left_up(mlx) && mlx->data->tab[((int)mlx->player->py - (SPEED
-					+ 20)) / 64][(int)mlx->player->px / 64] != '1')
+	else if (mv_vert_left_up(mlx) && mlx->data->tab[((int)mlx->player->py
+				- (SPEED + 20)) / 64][(int)mlx->player->px / 64] != '1')
 		mlx->player->py = mlx->player->py - SPEED;
-	else if (mv_vert_left_down(mlx) && mlx->data->tab[((int)mlx->player->py + (SPEED
-					+ 20)) / 64][(int)mlx->player->px / 64] != '1')
+	else if (mv_vert_left_down(mlx) && mlx->data->tab[((int)mlx->player->py
+				+ (SPEED + 20)) / 64][(int)mlx->player->px / 64] != '1')
 		mlx->player->py = mlx->player->py + SPEED;
 	else if (mv_vert_right_up(mlx) && mlx->data->tab[(int)mlx->player->py
 			/ 64][((int)mlx->player->px + SPEED) / 64] != '1')
@@ -90,17 +90,17 @@ void	ft_backward_along_wall(t_mlx *mlx)
 	else if (mv_vert_left_down(mlx) && mlx->data->tab[((int)mlx->player->py)
 			/ 64][((int)mlx->player->px + SPEED) / 64] != '1')
 		mlx->player->px = mlx->player->px + SPEED;
-	else if (mv_vert_right_up(mlx) && mlx->data->tab[((int)mlx->player->py + (SPEED
-					+ 20)) / 64][((int)mlx->player->px) / 64] != '1')
+	else if (mv_vert_right_up(mlx) && mlx->data->tab[((int)mlx->player->py
+				+ (SPEED + 20)) / 64][((int)mlx->player->px) / 64] != '1')
 		mlx->player->py = mlx->player->py + SPEED;
-	else if (mv_vert_right_down(mlx) && mlx->data->tab[((int)mlx->player->py - (SPEED
-					+ 20)) / 64][((int)mlx->player->px) / 64] != '1')
+	else if (mv_vert_right_down(mlx) && mlx->data->tab[((int)mlx->player->py
+				- (SPEED + 20)) / 64][((int)mlx->player->px) / 64] != '1')
 		mlx->player->py = mlx->player->py - SPEED;
-	else if (mv_vert_left_up(mlx) && mlx->data->tab[((int)mlx->player->py + (SPEED
-					+ 20)) / 64][((int)mlx->player->px) / 64] != '1')
+	else if (mv_vert_left_up(mlx) && mlx->data->tab[((int)mlx->player->py
+				+ (SPEED + 20)) / 64][((int)mlx->player->px) / 64] != '1')
 		mlx->player->py = mlx->player->py + SPEED;
-	else if (mv_vert_left_down(mlx) && mlx->data->tab[((int)mlx->player->py - (SPEED
-					+ 20)) / 64][((int)mlx->player->px) / 64] != '1')
+	else if (mv_vert_left_down(mlx) && mlx->data->tab[((int)mlx->player->py
+				- (SPEED + 20)) / 64][((int)mlx->player->px) / 64] != '1')
 		mlx->player->py = mlx->player->py - SPEED;
 }
 

@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 09:56:56 by ksainte           #+#    #+#             */
-/*   Updated: 2024/11/13 14:33:51 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 02:16:14 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include "./get_next_line.h"
-
 
 typedef struct s_list
 {

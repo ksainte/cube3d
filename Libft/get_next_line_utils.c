@@ -6,11 +6,17 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:47:16 by ksainte           #+#    #+#             */
-/*   Updated: 2024/11/13 14:31:41 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 02:21:11 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./get_next_line.h"
+
+int	ft_free_str(char *line)
+{
+	free(line);
+	return (1);
+}
 
 int	ft_n_present(char *left_str, char c)
 {
@@ -27,5 +33,3 @@ int	ft_n_present(char *left_str, char c)
 	}
 	return (0);
 }
-
-
