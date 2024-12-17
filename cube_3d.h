@@ -229,9 +229,9 @@ int				ft_oblique_right(t_mlx *mlx);
 int				ft_oblique_left(t_mlx *mlx);
 int				ft_close(t_mlx *mlx);
 int				mv_vert_right_up(t_mlx *mlx);
-int 			mv_vert_right_down(t_mlx *mlx);
-int 			mv_vert_left_up(t_mlx *mlx);
-int 			mv_vert_left_down(t_mlx *mlx);
+int				mv_vert_right_down(t_mlx *mlx);
+int				mv_vert_left_up(t_mlx *mlx);
+int				mv_vert_left_down(t_mlx *mlx);
 
 // Textures
 int				txtr_checkload(t_mlx *mlx);
