@@ -6,7 +6,7 @@
 /*   By: ks19 <ks19@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 00:49:54 by ks19              #+#    #+#             */
-/*   Updated: 2024/12/17 01:29:44 by ks19             ###   ########.fr       */
+/*   Updated: 2024/12/17 01:51:58 by ks19             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,6 @@
 # define KEY_ESCAPE 65307
 # define SPEED 5
 # define ANGLE 4
-# define MV_VERT_RIGHT_UP (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) > 0.0000001)
-# define MV_VERT_RIGHT_DOWN (cos(ft_deg_to_rad(mlx->player->pa)) > 0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) > 0.0000001)
-# define MV_VERT_LEFT_UP (cos(ft_deg_to_rad(mlx->player->pa)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa + 90))) < -0.0000001)
-# define MV_VERT_LEFT_DOWN (cos(ft_deg_to_rad(mlx->player->pa)) < -0.0000001 && cos(ft_deg_to_rad(ft_adjust_angle(mlx->player->pa - 90))) < -0.0000001)
 
 typedef struct s_img
 {
@@ -233,6 +229,9 @@ int				ft_oblique_right(t_mlx *mlx);
 int				ft_oblique_left(t_mlx *mlx);
 int				ft_close(t_mlx *mlx);
 int				mv_vert_right_up(t_mlx *mlx);
+int 			mv_vert_right_down(t_mlx *mlx);
+int 			mv_vert_left_up(t_mlx *mlx);
+int 			mv_vert_left_down(t_mlx *mlx);
 
 // Textures
 int				txtr_checkload(t_mlx *mlx);
